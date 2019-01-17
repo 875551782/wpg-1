@@ -3,5 +3,39 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wpg.dao.HardwareDao">
+
+	<!-- 查询所有物料 -->
+	<select id="selAllHardware" resultType="com.wpg.pojo.Hardware">
+		select * from hardware
+	</select>
 	
+	<!-- 按功能查询物料 -->
+	<select id="selHardwareByModule" resultType="com.wpg.pojo.Hardware">
+		select * from hardware
+		where module=#{0}
+	</select>
+	
+	<!-- 增加类 -->
+	<insert id="addHardware_Group">
+		insert into hardware_group
+		values(#{group.mark},#{group.desct},#{states})
+	</insert>
+	
+	<!-- 增加物料 -->
+	<insert id="addHardWare">
+		insert into hardware
+		values(null,#{hardware.module},#{hardware.name},#{hardware.type},
+			   #{hardware.num},#{hardware.unit},#{hardware.brand},
+			   #{hardware.mark},#{hardware.dflag},#{hardware.price}
+			   )
+	</insert>
+	
+	<!-- 修改物料信息 -->
+	<update id="updateHardWare">
+		update hardware
+		set module=#{hardware.module},name=#{hardware.name},type#{hardware.type},
+			num=#{hardware.num},unit=#{hardware.unit},brand=#{hardware.brand},
+			mark=#{hardware.mark},dflag=#{hardware.dflag},price=#{hardware.price}
+		where id=${id}
+	</update>
 </mapper>
