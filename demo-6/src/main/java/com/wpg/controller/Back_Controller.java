@@ -38,7 +38,6 @@ public class Back_Controller {
 	//修改物料信息
 	public String updateHardWare(Hardware hardware) {
 		hardwareService.updateHardWare(hardware);
-		
 		return "";
 	}
 	
