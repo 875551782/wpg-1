@@ -6,9 +6,6 @@ import com.wpg.pojo.Users;
 
 public interface UsersDao {
 
-	public int get();
-
-	
-	List<Users> selUser(String username);
+	List<Users> selUser(String username);	
 
 }
