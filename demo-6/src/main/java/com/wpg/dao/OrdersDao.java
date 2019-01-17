@@ -7,5 +7,7 @@ import com.wpg.pojo.Orders;
 
 public interface OrdersDao {
 
-	public List<Orders> getList();
+	public List<Orders> getAllOrders();
+	
+	
 }
