@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wpg.dao.ServerDao">
+
+	<select id="getAllServer" resultType="com.wpg.pojo.Server">
+		select * from serverselect 
+	</select>
+	
+	<select id="getOneServer" resultType="com.wpg.pojo.Server">
+		select * from serverselect where id = #{0}
+	</select>
+	
+	<update id="updateServer" parameterType="com.wpg.pojo.Server">
+		update serverselect set video = #{server.video},mq_ds = #{server.mq_ds},
+		front_rear_end =#{server.front_rear_end},mysql=#{server.mysql}, gp=#{server.gp}, hard_disk=#{server.hard_disk},
+		theoretical_bandwidth=#{server.theoretical_bandwidth}, recommended_bandwidth=#{server.recommended_bandwidth}, 
+		server_number=#{server.server_number}, recommended_server=#{server.recommended_server} where id =#{server.id}
+	</update>
+</mapper>
