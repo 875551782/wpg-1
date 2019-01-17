@@ -6,5 +6,5 @@ import com.wpg.pojo.Hardware;
 
 public interface HardwareDao {
 
-	public int getList();
+	
 }
