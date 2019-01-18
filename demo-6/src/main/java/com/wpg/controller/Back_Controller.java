@@ -15,13 +15,14 @@ public class Back_Controller {
 	
 	private HardwareService hardwareService;
 	
+	
+	//通过功能查询物料信息
 	@RequestMapping("admin_viewHardware.do")
 	public String selHardware(ModelMap map, String module) {
 		List<Hardware> hardwares = hardwareService.selHardwareByModule(module);
 		map.addAttribute("hardwareList", hardwares);
 		return "";
 	}
-	
 	//增加物料数据
 	@RequestMapping("admin_insertHardware.do")
 	public String addHardware(ModelMap map, Hardware hardware) {
