@@ -11,7 +11,7 @@
 		<result property="unit" column="unit"/>
 		<result property="num" column="num"/>
 		<result property="brand" column="brand"/>
-		<result property="dflag" column="dflag"/>
+		<result property="dFlag" column="dflag"/>
 		<result property="price" column="price"/>
 	</resultMap>
 
