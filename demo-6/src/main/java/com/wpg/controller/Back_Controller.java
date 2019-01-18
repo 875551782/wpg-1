@@ -31,6 +31,15 @@ public class Back_Controller {
 		map.addAttribute("hardwareList", hardwares);
 		return hardwares;
 	}
+	
+	//通过功能查询物料全部信息
+	@ResponseBody
+	@RequestMapping("admin_viewHardwareAll.do")
+	public List<Hardware_Group> selAllModuleByModule(String module){
+		List<Hardware_Group> mGroups = hardwareService.selAllModuleByModule(module);
+		return mGroups;
+	}
+	
 	//增加物料数据
 	@RequestMapping("admin_insertHardware.do")
 	public String addHardware(Hardware hardware) {

@@ -29,6 +29,11 @@ public class HardwareService {
 		return hardwareDao.selHardwareByModule(module);
 	}
 
+	
+	//按功能查询物料（两张表的全信息）
+	public List<Hardware_Group> selAllModuleByModule(String module){
+		return hardwareDao.selAllModuleByModule(module);
+	}
 	// 增加物料类
 	public void addHardware_Group(Hardware_Group group) {
 		hardwareDao.addHardware_Group(group);

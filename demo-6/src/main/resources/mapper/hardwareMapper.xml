@@ -3,6 +3,24 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wpg.dao.HardwareDao">
+	<resultMap type="com.wpg.pojo.Hardware" id="hardwareResult">
+		<id property="id" column="id"/>
+		<result property="module" column="module"/>
+		<result property="name" column="name"/>
+		<result property="type" column="type"/>
+		<result property="unit" column="unit"/>
+		<result property="num" column="num"/>
+		<result property="brand" column="brand"/>
+		<result property="dflag" column="dflag"/>
+		<result property="price" column="price"/>
+	</resultMap>
+
+	<resultMap type="com.wpg.pojo.Hardware_Group" id="moduleResult">
+		<id property="mark" column="mark"/>	
+		<result property="desct" column="desct"/>
+		<result property="states" column="states"/>
+		<collection property="hardwareList" resultMap="hardwareResult"></collection>
+	</resultMap>
 
 	<!-- 查询所有物料 -->
 	<select id="selAllHardware" resultType="com.wpg.pojo.Hardware">
@@ -12,6 +30,12 @@
 	<!-- 查询所有物料名 -->
 	<select id="selModuleName" resultType="java.lang.String">
 		select distinct module from hardware
+	</select>
+	
+	<!-- hardware 和 hardware_group 按功能连接查询 -->
+	<select id="selAllModuleByModule" resultMap="moduleResult">
+		select a.* ,b.desct,b.states from hardware a, hardware_group b
+		where a.mark = b.mark and a.module = #{0}
 	</select>
 	
 	<!-- 按功能查询物料 -->
