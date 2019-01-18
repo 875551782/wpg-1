@@ -15,6 +15,11 @@ public class Back_Controller {
 	
 	private HardwareService hardwareService;
 	
+	@RequestMapping("init")
+	public String init() {
+		return "index";
+	}
+
 	//通过功能查询物料信息
 	@RequestMapping("admin_viewHardware.do")
 	public String selHardware(ModelMap map, String module) {
