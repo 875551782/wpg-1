@@ -2,7 +2,6 @@
 <html>
 <head>
 <meta charset="utf-8">
-
 <title>Insert title here</title>
 <link
 	href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -125,7 +124,8 @@ a:hover, a:focus {
 .right {
 	flex: 4;
 }
-.right>div{
+
+.right>div {
 	display: none;
 }
 </style>
@@ -139,29 +139,29 @@ a:hover, a:focus {
 			</ul>
 		</div>
 		<div class="right">
-			<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true"></div>
-			<div class="orderList">
-				还没有订单哦~
-			</div>
+			<div class="panel-group" id="accordion" role="tablist"
+				aria-multiselectable="true"></div>
+			<div class="orderList">还没有订单哦~</div>
 		</div>
 	</div>
 </body>
 <script>
 	changState(0);
-	function changState(state){
+	function changState(state) {
 		$(".nav-stacked li").removeClass("active");
 		$(".nav-stacked li").eq(state).addClass("active");
-		if(state==0){
-			$("#accordion").css("display","block");
-			$(".orderList").css("display","none");
-		}else{
-			$("#accordion").css("display","none");
-			$(".orderList").css("display","block");
+		if (state == 0) {
+			$("#accordion").css("display", "block");
+			$(".orderList").css("display", "none");
+		} else {
+			$("#accordion").css("display", "none");
+			$(".orderList").css("display", "block");
 		}
 	}
 	getModule();
 	function getModule() {
-		$.ajax({
+		$
+				.ajax({
 					type : "GET",
 					url : "user_showModule.do",
 					dataType : "json",

@@ -30,4 +30,5 @@ public interface HardwareDao {
 	
 	//假删除物料信息
 	public void fdelHardware(int id);
+
 }
