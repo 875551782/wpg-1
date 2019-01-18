@@ -9,6 +9,11 @@
 		select * from hardware
 	</select>
 	
+	<!-- 查询所有物料名 -->
+	<select id="selModuleName">
+		select distinct module from hardware
+	</select>
+	
 	<!-- 按功能查询物料 -->
 	<select id="selHardwareByModule" resultType="com.wpg.pojo.Hardware">
 		select * from hardware
@@ -18,7 +23,7 @@
 	<!-- 增加类 -->
 	<insert id="addHardware_Group">
 		insert into hardware_group
-		values(#{group.mark},#{group.desct},#{states})
+		values(#{group.mark},#{group.desct},#{group.states})
 	</insert>
 	
 	<!-- 增加物料 -->
@@ -36,6 +41,14 @@
 		set module=#{hardware.module},name=#{hardware.name},type#{hardware.type},
 			num=#{hardware.num},unit=#{hardware.unit},brand=#{hardware.brand},
 			mark=#{hardware.mark},dflag=#{hardware.dflag},price=#{hardware.price}
-		where id=${id}
+		where id=${hardware.id}
 	</update>
+	
+	<!-- 修改物料类信息 -->
+	<update id="updateHardware_Group">
+		update hardware_group
+		set desct=#{group.desct},states=#{group.states}
+		where mark=#{group.mark}
+	</update>
+	
 </mapper>
