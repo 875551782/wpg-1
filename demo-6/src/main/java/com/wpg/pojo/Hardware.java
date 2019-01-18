@@ -6,6 +6,7 @@ public class Hardware {
 	private String module;
 	private String name;
 	private String type;
+	private Integer num;
 	private String unit;
 	private String brand;
 	private Integer mark;
@@ -65,6 +66,11 @@ public class Hardware {
 	public void setPrice(Double price) {
 		this.price = price;
 	}
-	
+	public Integer getNum() {
+		return num;
+	}
+	public void setNum(Integer num) {
+		this.num = num;
+	}
 	
 }

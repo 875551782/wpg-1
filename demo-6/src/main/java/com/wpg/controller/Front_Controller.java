@@ -1,6 +1,8 @@
 package com.wpg.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,8 +36,14 @@ public class Front_Controller {
 	
 	@RequestMapping("user_showModule.do")
 	@ResponseBody
-	public List<String> showModule(){
-		
-		return hardwareService.selModuleName();
+	public Map<Integer, String> showModule(){
+		HashMap<Integer, String> moduleMap = new HashMap<>();
+		List<String> moduleList = hardwareService.selModuleName();
+		for(int i = 1;i<=moduleList.size();i++) {
+			
+			moduleMap.put(i, moduleList.get(i-1));
+		}
+		System.out.println("--------------");
+		return moduleMap;
 	}
 }
