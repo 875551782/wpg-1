@@ -10,7 +10,7 @@ public class Hardware {
 	private String unit;
 	private String brand;
 	private Integer mark;
-	private Integer dFalg;
+	private Integer dFlag;
 	private Double price;
 	public Integer getId() {
 		return id;
@@ -54,11 +54,12 @@ public class Hardware {
 	public void setMark(Integer mark) {
 		this.mark = mark;
 	}
-	public Integer getdFalg() {
-		return dFalg;
+	
+	public Integer getdFlag() {
+		return dFlag;
 	}
-	public void setdFalg(Integer dFalg) {
-		this.dFalg = dFalg;
+	public void setdFlag(Integer dFlag) {
+		this.dFlag = dFlag;
 	}
 	public Double getPrice() {
 		return price;
