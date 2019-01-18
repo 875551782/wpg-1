@@ -10,7 +10,7 @@
 	</select>
 	
 	<!-- 查询所有物料名 -->
-	<select id="selModuleName">
+	<select id="selModuleName" resultType="java.lang.String">
 		select distinct module from hardware
 	</select>
 	
