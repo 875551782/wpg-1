@@ -112,7 +112,7 @@
 	$("#vedio").click(function(){
 		$.ajax({
 			url:"admin_viewHardware.do",
-			data:{"module":"vedios"},
+			data:{"module":"videos"},
 			success:function(data){
 				$("#panel-253567").html(data);
 			}
@@ -164,7 +164,7 @@
 		})
 	})
 	$("#water").click(function(){
-		$.ajax({
+		$.ajax({	
 			url:"admin_viewHardware.do",
 			data:{"module":"waters"},
 			success:function(data){

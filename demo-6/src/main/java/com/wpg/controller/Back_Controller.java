@@ -2,6 +2,7 @@ package com.wpg.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import com.wpg.service.HardwareService;
 @Controller
 public class Back_Controller {
 	
+	@Autowired
 	private HardwareService hardwareService;
 	
 	@RequestMapping("init")
@@ -25,7 +27,7 @@ public class Back_Controller {
 	public String selHardware(ModelMap map, String module) {
 		List<Hardware> hardwares = hardwareService.selHardwareByModule(module);
 		map.addAttribute("hardwareList", hardwares);
-		return "";
+		return "content";
 	}
 	//增加物料数据
 	@RequestMapping("admin_insertHardware.do")
