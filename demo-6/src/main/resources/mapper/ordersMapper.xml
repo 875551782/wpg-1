@@ -3,5 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wpg.dao.OrdersDao">
-
+	<select id="getAllOrders" resultType="com.wpg.pojo.Orders">
+		select * from orders
+	</select>
 </mapper>
