@@ -40,7 +40,6 @@ public class Front_Controller {
 		HashMap<Integer, String> moduleMap = new HashMap<>();
 		List<String> moduleList = hardwareService.selModuleName();
 		for(int i = 1;i<=moduleList.size();i++) {
-			
 			moduleMap.put(i, moduleList.get(i-1));
 		}
 		return moduleMap;
