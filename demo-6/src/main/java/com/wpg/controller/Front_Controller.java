@@ -33,6 +33,7 @@ public class Front_Controller {
 	}
 	
 	@RequestMapping("user_showModule.do")
+	@ResponseBody
 	public List<String> showModule(){
 		
 		return hardwareService.selModuleName();
