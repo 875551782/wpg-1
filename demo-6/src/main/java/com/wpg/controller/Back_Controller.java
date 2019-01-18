@@ -61,6 +61,7 @@ public class Back_Controller {
 	@RequestMapping("admin_delHardware.do")
 	public String fdelHardware(int id) {
 		hardwareService.fdelHardware(id);
+		
 		return "";
 	}
 }
