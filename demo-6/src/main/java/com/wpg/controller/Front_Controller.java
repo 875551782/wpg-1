@@ -32,4 +32,9 @@ public class Front_Controller {
 		return hardwareService.selAllHardware();
 	}
 	
+	@RequestMapping("/")
+	public String showIndex() {
+		return "WEB-INF/index.html";
+	}
+	
 }
