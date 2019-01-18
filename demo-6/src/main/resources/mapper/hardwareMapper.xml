@@ -51,4 +51,10 @@
 		where mark=#{group.mark}
 	</update>
 	
+	<!-- 假删除物料 -->
+	<update id="fdelHardware">
+		update hardware
+		set flag=0
+		where id=#{0}
+	</update>
 </mapper>
