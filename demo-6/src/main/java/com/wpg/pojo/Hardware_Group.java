@@ -1,12 +1,22 @@
 package com.wpg.pojo;
 
+import java.util.List;
+
 public class Hardware_Group {
 
 	private Integer mark;
 	private String desct;
 	private Integer states;
+	private List<Hardware> hardwareList;
 	
 	
+	public List<Hardware> getHardwareList() {
+		return hardwareList;
+	}
+	
+	public void setHardwareList(List<Hardware> hardwareList) {
+		this.hardwareList = hardwareList;
+	}
 	public Integer getMark() {
 		return mark;
 	}
