@@ -32,4 +32,10 @@ public class Front_Controller {
 		return hardwareService.selAllHardware();
 	}
 	
+	@RequestMapping("user_showModule.do")
+	@ResponseBody
+	public List<String> showModule(){
+		
+		return hardwareService.selModuleName();
+	}
 }

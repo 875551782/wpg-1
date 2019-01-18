@@ -27,4 +27,7 @@ public interface HardwareDao {
 	
 	//修改物料类信息
 	public void updateHardware_Group(Hardware_Group group);
+	
+	//假删除物料信息
+	public void fdelHardware(int id);
 }

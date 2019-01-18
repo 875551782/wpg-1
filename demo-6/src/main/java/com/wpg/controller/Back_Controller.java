@@ -37,23 +37,31 @@ public class Back_Controller {
 	}
 	
 	//增加一个新类
-	@RequestMapping("admin_addHardware_Group")
+	@RequestMapping("admin_addHardware_Group.do")
 	public String addHardware_Group(Hardware_Group group) {
 		hardwareService.addHardware_Group(group);
 		return "";
 	}
 	
 	//修改物料信息
-	@RequestMapping("admin_updateHardware")
+	@RequestMapping("admin_updateHardware.do")
 	public String updateHardWare(Hardware hardware) {
 		hardwareService.updateHardWare(hardware);
 		return "";
 	}
 	
 	//修改物料类信息
-	@RequestMapping("admin_updateHardware_Group")
+	@RequestMapping("admin_updateHardware_Group.do")
 	public String updateHardware_Group(Hardware_Group group) {
 		hardwareService.updateHardware_Group(group);
+		return "";
+	}
+	
+	//假删除物料信息
+	@RequestMapping("admin_delHardware.do")
+	public String fdelHardware(int id) {
+		hardwareService.fdelHardware(id);
+		
 		return "";
 	}
 }
