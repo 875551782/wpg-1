@@ -25,4 +25,7 @@ public interface OrdersDao {
 	 */
 	public List<Order_Hardware> getOrder_HardwaresByOrdersId(int ordersId);
 	
+	public int deleteOrder_Hardware(int oId);
+	
+	public int deleteOrders(int oId);
 }

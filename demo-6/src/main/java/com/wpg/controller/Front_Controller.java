@@ -60,4 +60,23 @@ public class Front_Controller {
 		}
 		return map;
 	}
+	
+	@RequestMapping("user_delete.do")
+	@ResponseBody
+	public int deleteOrder(int oId) {
+		
+		int i = ordersService.deleteOrder_Hardware(oId);
+		if(i>0) {
+			return 1;
+		}
+		return 0;
+		
+	}
+	
+	@RequestMapping("user_showOrder.do")
+	@ResponseBody
+	public Orders showOrders() {
+		
+		return null;
+	}
 }

@@ -6,4 +6,12 @@
 	<select id="getAllOrders" resultType="com.wpg.pojo.Orders">
 		select * from orders
 	</select>
+	
+	<delete id="deleteOrder_Hardware">
+		delete from order_hardware where id = #{0}
+	</delete>
+	
+	<delete id="deleteOrders">
+		delete from orders where id = #{0}
+	</delete>
 </mapper>
