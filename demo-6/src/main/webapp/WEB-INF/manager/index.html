@@ -20,78 +20,38 @@
 			<div class="tabbable" id="tabs-362670">
 				<ul class="nav nav-tabs">
 					<li class="active">
-						 <a href="#panel-340860" data-toggle="tab" id="data">数据采集</a>
+						 <a href="#panel-1" data-toggle="tab" id="data" name="doors">数据采集</a>
 					</li>
 					<li>
-						 <a href="#panel-253567" data-toggle="tab" id="vedio">视频系统</a>
+						 <a href="#panel-1" data-toggle="tab" id="vedio" name="videos">视频系统</a>
 					</li>
 					<li>
-						 <a href="#panel-1" data-toggle="tab" id="door">门禁系统</a>
+						 <a href="#panel-1" data-toggle="tab" id="door" name="doors">门禁系统</a>
 					</li>
 					<li>
-						 <a href="#panel-2" data-toggle="tab" id="talk">对讲系统</a>
+						 <a href="#panel-1" data-toggle="tab" id="talk" name="talks">对讲系统</a>
 					</li>
 					<li>
-						 <a href="#panel-3" data-toggle="tab" id="safe">安防系统</a>
+						 <a href="#panel-1" data-toggle="tab" id="safe" name="safes">安防系统</a>
 					</li>
 					<li>
-						 <a href="#panel-4" data-toggle="tab" id="internet">网络设备</a>
+						 <a href="#panel-1" data-toggle="tab" id="internet" name="internets">网络设备</a>
 					</li>
 					<li>
-						 <a href="#panel-5" data-toggle="tab" id="energy">能量分析</a>
+						 <a href="#panel-1" data-toggle="tab" id="energy" name="energys">能量分析</a>
 					</li>
 					<li>
-						 <a href="#panel-6" data-toggle="tab" id="water">水质监测</a>
+						 <a href="#panel-1" data-toggle="tab" id="water" name="waters">水质监测</a>
 					</li>
 					<li>
-						 <a href="#panel-7" data-toggle="tab" id="enviroment">环境监测</a>
+						 <a href="#panel-1" data-toggle="tab" id="enviroment" name="environments">环境监测</a>
 					</li>
 				</ul>
 				<div class="tab-content">
-					<div class="tab-pane active" id="panel-340860">
-						<p>
-						</p>
-					</div>
-					<div class="tab-pane" id="panel-253567">
-						<p>
-							
-						</p>
-					</div>
-					<div class="tab-pane" id="panel-1">
-						<p>
-							
-						</p>
-					</div>
-					<div class="tab-pane" id="panel-2">
-						<p>
-							
-						</p>
-					</div>
-					<div class="tab-pane" id="panel-3">
-						<p>
-							
-						</p>
-					</div>						
-					<div class="tab-pane" id="panel-4">
-						<p>
-							
-						</p>
-					</div>
-					<div class="tab-pane" id="panel-5">
-						<p>
+					<div class="tab-pane active" id="panel-1">
 						
-						</p>
 					</div>
-					<div class="tab-pane" id="panel-6">
-						<p>
-					
-						</p>
-					</div>
-					<div class="tab-pane" id="panel-7">
-						<p>
-					
-						</p>
-					</div>
+
 				</div>
 			</div>
 		</div>
@@ -100,85 +60,32 @@
 </body>
 </html>
 <script>
-	$("#data").click(function(){
+	$("a").click(function(){
 		$.ajax({
 			url:"admin_viewHardware.do",
-			data:{"module":"datas"},
+			data:{"module":this.name},
 			success:function(data){
-				$("#panel-340860").html(data);
+				var str="";
+				if(data.length>0){
+					for(var i=0;i<data.length;i++){
+						str+="<tr><td>"+data[i].name+"</td><td>"+data[i].type+"</td><td>"+data[i].unit+"</td>"+
+						"<td>"+data[i].num+"</td><td>"+data[i].brand+"</td><td>"
+						if(datas[i].states==1){
+							str+="是";
+						}else{
+							str+="否";
+						}
+						str+="</td><td>"+data[i].price+"</td><td>"+datas[i].desc+"</td><td>"+
+						"<button type='button' class='btn btn-default'>修改</button>"+
+						"<button type='button' class='btn btn-default'>删除</button></td><tr>"
+					}
+				}
+				$("#panel-1").html("<table class='table table-bordered'><tr><th>物料名称</th><th>规格型号</th><th>单位</th>"+
+				"<th>数量</th><th>品牌</th><th>是否标配</th><th>价格</th><th>说明</th><th></th></tr>"+str+"</table><button type='button' class='btn btn-default'>添加物料</button>");
 			}
 		})
+		
 	})
-	$("#vedio").click(function(){
-		$.ajax({
-			url:"admin_viewHardware.do",
-			data:{"module":"videos"},
-			success:function(data){
-				$("#panel-253567").html(data);
-			}
-		})
-	})
-	$("#door").click(function(){
-		$.ajax({
-			url:"admin_viewHardware.do",
-			data:{"module":"doors"},
-			success:function(data){
-				$("#panel-1").html(data);
-			}
-		})
-	})
-	$("#talk").click(function(){
-		$.ajax({
-			url:"admin_viewHardware.do",
-			data:{"module":"talks"},
-			success:function(data){
-				$("#panel-2").html(data);
-			}
-		})
-	})
-	$("#safe").click(function(){
-		$.ajax({
-			url:"admin_viewHardware.do",
-			data:{"module":"safes"},
-			success:function(data){
-				$("#panel-3").html(data);
-			}
-		})
-	})
-	$("#internet").click(function(){
-		$.ajax({
-			url:"admin_viewHardware.do",
-			data:{"module":"internets"},
-			success:function(data){
-				$("#panel-4").html(data);
-			}
-		})
-	})
-	$("#energy").click(function(){
-		$.ajax({
-			url:"admin_viewHardware.do",
-			data:{"module":"energys"},
-			success:function(data){
-				$("#panel-5").html(data);
-			}
-		})
-	})
-	$("#water").click(function(){
-		$.ajax({	
-			url:"admin_viewHardware.do",
-			data:{"module":"waters"},
-			success:function(data){
-				$("#panel-6").html(data);
-			}
-		})
-	})
-	$("#enviroment").click(function(){
-		$.ajax({
-			url:"admin_viewHardware.do",
-			data:{"module":"environments"},
-			success:function(data){
-				$("#panel-7").html(data);
-			}
-		})
-	})
+	
+
 </script>
