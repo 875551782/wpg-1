@@ -10,6 +10,9 @@ public interface HardwareDao {
 	//查询所有物料
 	public List<Hardware> selAllHardware();
 	
+	//查询所有功能名
+	public List<String> selModuleName();
+	
 	//按功能查询物料
 	public List<Hardware> selHardwareByModule(String module);
 	
@@ -21,4 +24,7 @@ public interface HardwareDao {
 	
 	//修改物料信息
 	public void updateHardWare(Hardware hardware);
+	
+	//修改物料类信息
+	public void updateHardware_Group(Hardware_Group group);
 }

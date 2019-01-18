@@ -19,6 +19,11 @@ public class HardwareService {
 		return hardwareDao.selAllHardware();
 	}
 	
+	//查询所有的功能名
+	public List<String> selModuleName(){
+		return hardwareDao.selModuleName();
+	}
+	
 	//按功能查询物料
 	public List<Hardware> selHardwareByModule(String module){
 		return hardwareDao.selHardwareByModule(module);
@@ -34,9 +39,13 @@ public class HardwareService {
 		hardwareDao.addHardWare(hardware);
 	}
 	
-	//更新物料信息
+	//修改物料信息
 	public void updateHardWare(Hardware hardware) {
 		hardwareDao.updateHardWare(hardware);
 	}
 
+	//修改物料类信息
+	public void updateHardware_Group(Hardware_Group group) {
+		hardwareDao.updateHardware_Group(group);
+	}
 }

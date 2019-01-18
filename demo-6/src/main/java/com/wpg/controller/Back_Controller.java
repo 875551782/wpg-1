@@ -26,22 +26,29 @@ public class Back_Controller {
 	
 	//增加物料数据
 	@RequestMapping("admin_insertHardware.do")
-	public String addHardware(ModelMap map, Hardware hardware) {
+	public String addHardware(Hardware hardware) {
 		hardwareService.addHardWare(hardware);
 		return "";
 	}
 	
 	//增加一个新类
+	@RequestMapping("admin_addHardware_Group")
 	public String addHardware_Group(Hardware_Group group) {
 		hardwareService.addHardware_Group(group);
 		return "";
 	}
 	
 	//修改物料信息
+	@RequestMapping("admin_updateHardware")
 	public String updateHardWare(Hardware hardware) {
 		hardwareService.updateHardWare(hardware);
-		
 		return "";
 	}
 	
+	//修改物料类信息
+	@RequestMapping("admin_updateHardware_Group")
+	public String updateHardware_Group(Hardware_Group group) {
+		hardwareService.updateHardware_Group(group);
+		return "";
+	}
 }
