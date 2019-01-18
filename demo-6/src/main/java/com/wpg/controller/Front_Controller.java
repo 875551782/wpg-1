@@ -29,8 +29,7 @@ public class Front_Controller {
 	
 	@RequestMapping("user_hardwares.do")
 	@ResponseBody
-	public List<Hardware> showHardwares(){
-		
+	public List<Hardware> showHardwares(){	
 		return hardwareService.selAllHardware();
 	}
 	

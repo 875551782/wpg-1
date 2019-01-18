@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+
+<title>Insert title here</title>
+<link
+	href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"
+	rel="stylesheet">
+<script src="https://code.jquery.com/jquery.js"></script>
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style type="text/css">
+/* 手风琴样式 */
+a:hover, a:focus {
+	text-decoration: none;
+	outline: none;
+}
+
+#accordion .panel {
+	border: none;
+	border-radius: 0;
+	box-shadow: none;
+	margin: 0 30px 10px 30px;
+	overflow: hidden;
+	position: relative;
+}
+
+#accordion .panel-heading {
+	padding: 0;
+	border: none;
+	border-radius: 0;
+	position: relative;
+}
+
+#accordion .panel-title a {
+	display: block;
+	padding: 15px 20px;
+	margin: 0;
+	background: #fe7725;
+	font-size: 18px;
+	font-weight: 700;
+	letter-spacing: 1px;
+	color: #fff;
+	border-radius: 0;
+	position: relative;
+}
+
+#accordion .panel-title a.collapsed {
+	background: #1c2336;
+}
+
+#accordion .panel-title a:before, #accordion .panel-title a.collapsed:before
+	{
+	content: "\f068";
+	font-family: fontawesome;
+	width: 30px;
+	height: 30px;
+	line-height: 25px;
+	border-radius: 50%;
+	background: #fe7725;
+	font-size: 14px;
+	font-weight: normal;
+	color: #fff;
+	text-align: center;
+	border: 3px solid #fff;
+	position: absolute;
+	top: 10px;
+	right: 14px;
+}
+
+#accordion .panel-title a.collapsed:before {
+	content: "\f067";
+	background: #ababab;
+	border: 4px solid #626262;
+}
+
+#accordion .panel-title a:after, #accordion .panel-title a.collapsed:after
+	{
+	content: "";
+	width: 17px;
+	height: 7px;
+	background: #fff;
+	position: absolute;
+	top: 22px;
+	right: 0;
+}
+
+#accordion .panel-title a.collapsed:after {
+	width: 19px;
+	background: #ababab;
+}
+
+#accordion .panel-body {
+	border-left: 3px solid #fe7725;
+	border-top: none;
+	background: #fff;
+	font-size: 15px;
+	color: #1c2336;
+	line-height: 27px;
+	position: relative;
+}
+
+#accordion .panel-body:before {
+	content: "";
+	height: 3px;
+	width: 50%;
+	background: #fe7725;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+}
+/*整体样式  */
+.con {
+	display: flex;
+}
+
+.left {
+	flex: 1;
+}
+
+.right {
+	flex: 4;
+}
+.right>div{
+	display: none;
+}
+</style>
+</head>
+<body>
+	<div class="con">
+		<div class="left">
+			<ul class="nav nav-pills nav-stacked">
+				<li role="presentation"><a href="javascript:changState(0)">生成订单</a></li>
+				<li role="presentation"><a href="javascript:changState(1)">查看订单</a></li>
+			</ul>
+		</div>
+		<div class="right">
+			<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true"></div>
+			<div class="orderList">
+				还没有订单哦~
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+	changState(0);
+	function changState(state){
+		$(".nav-stacked li").removeClass("active");
+		$(".nav-stacked li").eq(state).addClass("active");
+		if(state==0){
+			$("#accordion").css("display","block");
+			$(".orderList").css("display","none");
+		}else{
+			$("#accordion").css("display","none");
+			$(".orderList").css("display","block");
+		}
+	}
+	getModule();
+	function getModule() {
+		$.ajax({
+					type : "GET",
+					url : "user_showModule.do",
+					dataType : "json",
+					success : function(data) {
+						console.log(data);
+						for ( var key in data) {
+							if (key == 1) {
+								$("#accordion")
+										.append(
+												"<div class='panel panel-default'>"
+														+ "<div class='panel-heading' role='tab' id='heading"+key+"'>"
+														+ "<h4 class='panel-title'>"
+														+ "<a role='button' data-toggle='collapse' data-parent='#accordion' href='#collapse"+key+"' aria-expanded='true'"+
+									"aria-controls='collapse"+key+"'>"
+														+ data[key]
+														+ "</a></h4></div>"
+														+ "<div id='collapse"+key+"' class='panel-collapse collapse in' role='tabpanel' aria-labelledby='heading"+key+"'>"
+														+ "<div class='panel-body'><table class='table table-striped'><tr><th></th><th>名称</th><th>型号</th><th>单位</th>"
+														+ "<th>数量</th><th>品牌</th><th>价格</th></tr></table></div></div></div>");
+							} else {
+								$("#accordion")
+										.append(
+												"<div class='panel panel-default'>"
+														+ "<div class='panel-heading' role='tab' id='heading"+key+"'>"
+														+ "<h4 class='panel-title'>"
+														+ "<a class='collapsed' role='button' data-toggle='collapse' data-parent='#accordion' href='#collapse"+key+"' aria-expanded='false'"+
+									"aria-controls='collapse"+key+"'>"
+														+ data[key]
+														+ "</a></h4></div>"
+														+ "<div id='collapse"+key+"' class='panel-collapse collapse' role='tabpanel' aria-labelledby='heading"+key+"'>"
+														+ "<div class='panel-body'><table class='table table-striped'><tr><th></th><th>名称</th><th>型号</th><th>单位</th>"
+														+ "<th>数量</th><th>品牌</th><th>价格</th></tr></table></div></div></div>");
+							}
+
+						}
+					}
+				})
+	}
+	getDate();
+	function getDate() {
+		$.ajax({
+			type : "GET",
+			url : "user_hardwares.do",
+			success : function(data) {
+				console.log(data);
+				for (var i = 0; i < data.length; i++) {
+					if (data[i].module == "datas") {
+						//将数据写入第一个框中
+						$("#collapse1>div")
+								.append(
+										"<input type='radio' value='"+data[i].id+"' name='datas'>"
+												+ data[i].name + data[i].type
+												+ data[i].unit + data[i].price
+												+ "<br>");
+					} else if (data[i].module == "videos") {
+						$("#collapse2>div").html("456");
+					} else if (data[i].module == "doors") {
+						$("#collapse3>div").html("123");
+					} else if (data[i].module == "talks") {
+						$("#collapse4>div").html("123");
+					} else if (data[i].module == "safes") {
+						$("#collapse5>div").html("123");
+					} else if (data[i].module == "internets") {
+						$("#collapse6>div").html("123");
+					} else if (data[i].module == "energys") {
+						$("#collapse7>div").html("123");
+					} else if (data[i].module == "waters") {
+						$("#collapse8>div").html("123");
+					} else if (data[i].module == "environments") {
+						$("#collapse9>div").html("123");
+					}
+				}
+			}
+		})
+	}
+</script>
+</html>
