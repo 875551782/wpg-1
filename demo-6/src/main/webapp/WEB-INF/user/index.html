@@ -125,10 +125,6 @@ a:hover, a:focus {
 .right {
 	flex: 4;
 }
-
-.right>div {
-	display: none;
-}
 </style>
 </head>
 <body>
@@ -277,7 +273,6 @@ a:hover, a:focus {
 			data:{ids:ids},
 			success:function(data){
 				if(data==1){
-					//changState(1);
 					console.log("提交成功！！！");
 				}
 			}
