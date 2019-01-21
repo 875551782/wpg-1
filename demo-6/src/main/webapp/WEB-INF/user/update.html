@@ -135,14 +135,13 @@ a:hover, a:focus {
 	<div class="con">
 		<div class="left">
 			<ul class="nav nav-pills nav-stacked">
-				<li role="presentation"><a href="javascript:changState(0)">生成订单</a></li>
-				<li role="presentation"><a href="javascript:changState(1)">查看订单</a></li>
+				<li role="presentation"><a>生成订单</a></li>
+				<li role="presentation" class="active"><a>查看订单</a></li>
 			</ul>
 		</div>
 		<div class="right">
 			<div class="panel-group" id="accordion" role="tablist"
 			aria-multiselectable="true"></div>
-			<div class="orderList">还没有订单哦~</div>
 		</div>
 	</div>
 </body>
@@ -155,7 +154,7 @@ a:hover, a:focus {
 					url : "user_showModule.do",
 					dataType : "json",
 					success : function(data) {
-						//console.log(data);
+						console.log(data);
 						allData=data;
 						for ( var key in data) {
 							if (key == 1) {

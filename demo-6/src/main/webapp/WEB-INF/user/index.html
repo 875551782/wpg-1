@@ -135,8 +135,8 @@ a:hover, a:focus {
 	<div class="con">
 		<div class="left">
 			<ul class="nav nav-pills nav-stacked">
-				<li role="presentation"><a href="javascript:changState(0)">生成订单</a></li>
-				<li role="presentation"><a href="javascript:changState(1)">查看订单</a></li>
+				<li role="presentation" class="active"><a href="user_forward.do?name=index">生成订单</a></li>
+				<li role="presentation"><a href="user_forward.do?name=checkOrder">查看订单</a></li>
 			</ul>
 		</div>
 		<div class="right">
@@ -147,18 +147,6 @@ a:hover, a:focus {
 	</div>
 </body>
 <script>
-	changState(0);
-	function changState(state) {
-		$(".nav-stacked li").removeClass("active");
-		$(".nav-stacked li").eq(state).addClass("active");
-		if (state == 0) {
-			$("#accordion").css("display", "block");
-			$(".orderList").css("display", "none");
-		} else {
-			$("#accordion").css("display", "none");
-			$(".orderList").css("display", "block");
-		}
-	}
 	getModule();
 	var allData;
 	function getModule() {
@@ -289,7 +277,7 @@ a:hover, a:focus {
 			data:{ids:ids},
 			success:function(data){
 				if(data==1){
-					changState(1);
+					//changState(1);
 					console.log("提交成功！！！");
 				}
 			}
