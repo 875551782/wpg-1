@@ -92,9 +92,9 @@ public class Front_Controller {
 	
 	@RequestMapping("user_showDetailOrder.do")
 	@ResponseBody
-	public List<Hardware_Group> showDetailOrders(){
+	public List<Hardware_Group> showDetailOrders(int oId){
+		return ordersService.getOrder_HardwaresByOrdersId(oId);
 		
-		return null;
 	}
 	/**
 	 * @param ids
