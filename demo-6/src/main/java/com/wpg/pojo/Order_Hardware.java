@@ -4,7 +4,13 @@ public class Order_Hardware {
 	
 	private Integer order_Id;
 	private Integer hardware_id;
-	
+	private Hardware_Group hardware_Group;
+	public Hardware_Group getHardware_Group() {
+		return hardware_Group;
+	}
+	public void setHardware_Group(Hardware_Group hardware_Group) {
+		this.hardware_Group = hardware_Group;
+	}
 	public Integer getOrder_Id() {
 		return order_Id;
 	}

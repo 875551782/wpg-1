@@ -2,6 +2,9 @@ package com.wpg.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
+import com.wpg.pojo.Hardware_Group;
 import com.wpg.pojo.Order_Hardware;
 import com.wpg.pojo.Orders;
 
@@ -23,9 +26,16 @@ public interface OrdersDao {
 	 * @param ordersId
 	 * @return
 	 */
-	public List<Order_Hardware> getOrder_HardwaresByOrdersId(int ordersId);
+	public List<Hardware_Group> getOrder_HardwaresByOrdersId(int ordersId);
 	
 	public int deleteOrder_Hardware(int oId);
 	
 	public int deleteOrders(int oId);
+	
+	public List<Orders> getAllOrdersByUserId(int userId);
+	
+	
+	public int insertOrders(int userId);
+	
+	public int insertOrder_Hardware(@Param("ids")int[] ids,@Param("order_Id")int order_Id);
 }

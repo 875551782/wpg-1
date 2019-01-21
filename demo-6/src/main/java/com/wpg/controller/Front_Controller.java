@@ -4,14 +4,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wpg.pojo.Hardware;
 import com.wpg.pojo.Hardware_Group;
 import com.wpg.pojo.Orders;
+import com.wpg.pojo.Users;
 import com.wpg.service.HardwareService;
 import com.wpg.service.OrdersService;
 
@@ -60,7 +65,7 @@ public class Front_Controller {
 		return map;
 	}
 	
-	@RequestMapping("user_delete.do")
+	@RequestMapping("user_deleteOrder.do")
 	@ResponseBody
 	public int deleteOrder(int oId) {
 		
@@ -74,8 +79,44 @@ public class Front_Controller {
 	
 	@RequestMapping("user_showOrder.do")
 	@ResponseBody
-	public Orders showOrders() {
+	public List<Orders> showOrders(HttpSession session) {
+		Users user = new Users();
+		user.setId(1);
+		
+		if(session.getAttribute("user") != null) {
+			user = (Users) session.getAttribute("user");
+		}
+		
+		return ordersService.getAllOrdersByUserId(user.getId());
+	}
+	
+	@RequestMapping("user_showDetailOrder.do")
+	@ResponseBody
+	public List<Hardware_Group> showDetailOrders(){
 		
 		return null;
+	}
+	/**
+	 * @param ids
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("user_submitOrder.do")
+	@ResponseBody
+	public int submitOrder(@RequestParam(value="ids[]")int[] ids,HttpSession session) {
+		Users user = new Users();
+		user.setId(1);
+		if(session.getAttribute("user") != null) {
+			user = (Users) session.getAttribute("user");
+		}
+		
+		int i = ordersService.insertOrders(ids, user.getId());
+		if(i>0) {
+			return 1;
+		}
+		else{
+			return 0;
+		}
+		
 	}
 }
