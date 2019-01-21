@@ -202,16 +202,19 @@ a:hover, a:focus {
 				})
 	}
 	getDate();
+	var allHardware;
 	function getDate() {
 		$.ajax({
 			type : "GET",
 			url : "user_group.do",
 			success : function(data) {
+				allHardware=data;
 				console.log(data);
 				//遍历共有几个功能
 				for(var k in allData){
 					var str="";
-					console.log(data[allData[k]]);
+					//console.log("123"+allData[k]);
+					//console.log(data[allData[k]]);
 					//遍历一个功能中有多少个类
 					for(var i=0;i<data[allData[k]].length;i++){
 						//获取类
@@ -219,6 +222,8 @@ a:hover, a:focus {
 						//获取类中的物料集合对象
 						var hardware=data[allData[k]][i].hardwareList;
 						var markSize=data[allData[k]][i].hardwareList.length;
+						//查看该类是否标配
+						var state=data[allData[k]][i].states;
 						if(markSize==1){
 							str+="<tr><td rowspan='"+markSize+"'></td>";
 						}else{
@@ -226,8 +231,14 @@ a:hover, a:focus {
 						}
 						//遍历一个类中有多少个物料
 						for(var j=0;j<markSize;j++){
-							str+="<td><input type='radio' name='"+mark+"' value='"+hardware[j].id+"'>"+hardware[j].name+"</td><td>"+hardware[j].type+"</td><td>"+hardware[j].unit+"</td>"+
-							"<td>"+hardware[j].num+"</td><td>"+hardware[j].brand+"</td><td>"+hardware[j].price+"</td></tr>";
+							//网络功能必须勾选
+							if(allData[k]=="internets"&&j==0&&state==1){
+								str+="<td><input type='radio' checked='checked' name='"+mark+"' value='"+hardware[j].id+"'>"+hardware[j].name+"</td><td>"+hardware[j].type+"</td><td>"+hardware[j].unit+"</td>"+
+								"<td>"+hardware[j].num+"</td><td>"+hardware[j].brand+"</td><td>"+hardware[j].price+"</td></tr>";
+							}else{
+								str+="<td><input type='radio' name='"+mark+"' value='"+hardware[j].id+"'>"+hardware[j].name+"</td><td>"+hardware[j].type+"</td><td>"+hardware[j].unit+"</td>"+
+								"<td>"+hardware[j].num+"</td><td>"+hardware[j].brand+"</td><td>"+hardware[j].price+"</td></tr>";
+							}
 						}
 					}
 					//往功能表中添加
@@ -237,9 +248,52 @@ a:hover, a:focus {
 		})
 	}
 	function submitData(){
-		$("[type='radio']:checked").each(function(){
-			console.log($(this).val());
+		//设置一个数组传递给后台
+		var ids=new Array();
+		$("[type='radio']:checked").each(function(index,element){
+			//将选中的物料的id写进数组中
+			ids[index]=$(this).val();
 		})
+		$.ajax({
+			type:"POST",
+			url:"user_submitOrder.do",
+			data:{ids:ids},
+			success:function(data){
+				if(data==1){
+					console.log("提交成功！！！");
+					changState(0);
+				}
+			}
+		})
+		//console.log(allHardware["internets"]);
+		/* var intIds=new Array();
+		var index=0;
+		//遍历网络功能找出必选的ID
+		for(var i=0;i<allHardware["internets"].length;i++){
+			if(allHardware["internets"][i].states==1){
+				var len=allHardware["internets"][i].hardwareList.length;
+				for(var j=0;j<len;j++){
+					intIds[index]=allHardware["internets"][i].hardwareList[j].id;
+					console.log(intIds[index]);
+					index++;
+				}
+			}
+		}
+		//遍历数组查看网络功能是否勾选，没有则不能提交；
+		var flag=0;
+		$.each(ids,function (i,v){
+			$.each(intIds,function(j,value){
+				if(ids[i]==intIds[j]){
+					flag=1;
+				}
+			})
+		})
+		if(flag==1){
+			//提交数据
+			
+		}else{
+			alert("您还没有勾选网络功能，请勾选后再提交！");
+		} */
 	}
 </script>
 </html>
