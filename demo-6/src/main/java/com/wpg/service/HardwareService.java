@@ -34,6 +34,12 @@ public class HardwareService {
 	public List<Hardware_Group> selAllModuleByModule(String module){
 		return hardwareDao.selAllModuleByModule(module);
 	}
+	
+	//按id查询物料的所有信息
+	public Hardware_Group selHardwareById(int id) {
+		return selHardwareById(id);
+	}
+	
 	// 增加物料类
 	public void addHardware_Group(Hardware_Group group) {
 		hardwareDao.addHardware_Group(group);

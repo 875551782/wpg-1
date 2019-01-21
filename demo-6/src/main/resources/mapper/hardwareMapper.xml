@@ -19,7 +19,17 @@
 		<id property="mark" column="mark"/>	
 		<result property="desct" column="desct"/>
 		<result property="states" column="states"/>
-		<collection property="hardwareList" resultMap="hardwareResult"></collection>
+		<collection property="hardwareList" ofType="com.wpg.pojo.Hardware">
+			<id property="id" column="id" />
+			<result property="module" column="module"/>
+			<result property="name" column="name"/>
+			<result property="type" column="type"/>
+			<result property="unit" column="unit"/>
+			<result property="num" column="num"/>
+			<result property="brand" column="brand"/>
+			<result property="dFlag" column="dflag"/>
+			<result property="price" column="price"/>
+		</collection>
 	</resultMap>
 
 	<!-- 查询所有物料 -->
@@ -42,6 +52,13 @@
 	<select id="selHardwareByModule" resultType="com.wpg.pojo.Hardware">
 		select * from hardware
 		where module=#{0}
+	</select>
+	
+	<!-- 按id查询物料的所有信息 -->
+	
+	<select id="selHardwareById" resultType="moduleResult">
+		select a.* ,b.desct,b.states from hardware a, hardware_group b
+		where a.mark = b.mark and a.id=#{0} 
 	</select>
 	
 	<!-- 增加类 -->
