@@ -57,7 +57,6 @@
 	<!-- 按id查询物料的所有信息 -->
 	
 	<select id="selHardwareById" resultMap="moduleResult">
-	
 		select a.* ,b.desct,b.states from hardware a, hardware_group b
 		where a.mark = b.mark and a.id=#{0} 
 	</select>
