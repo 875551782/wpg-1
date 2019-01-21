@@ -15,7 +15,7 @@
 		delete from orders where id = #{0}
 	</delete>
 	
-	<select id="getAllOrdersByUserId">
+	<select id="getAllOrdersByUserId" resultType="com.wpg.pojo.Orders">
 		select * from orders where user_id=#{0}
 	</select>
 	
