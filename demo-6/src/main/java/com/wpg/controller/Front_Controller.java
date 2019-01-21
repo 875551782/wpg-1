@@ -110,7 +110,7 @@ public class Front_Controller {
 			user = (Users) session.getAttribute("user");
 		}
 		
-		int i = ordersService.insertOrders(ids, user.getId());
+		int i = ordersService.insertOrders(ids,user.getId());
 		if(i>0) {
 			return 1;
 		}

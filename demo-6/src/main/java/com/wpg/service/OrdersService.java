@@ -10,6 +10,7 @@ import com.wpg.dao.OrdersDao;
 import com.wpg.pojo.Hardware_Group;
 import com.wpg.pojo.Order_Hardware;
 import com.wpg.pojo.Orders;
+import com.wpg.pojo.Users;
 
 @Service
 public class OrdersService {
@@ -37,8 +38,11 @@ public class OrdersService {
 		return ordersDao.getOrder_HardwaresByOrdersId(ordersId);
 	}
 	@Transactional
-	public int insertOrders(int[] ids,int userId) {
-		int order_Id = ordersDao.insertOrders(userId);
-		return ordersDao.insertOrder_Hardware(ids, order_Id);
+	public int insertOrders(int[] ids,int user_Id) {
+		Orders order = new Orders();
+		order.setUser_Id(user_Id);
+		ordersDao.insertOrders(order);
+		System.out.println(order.getOrder_Id());
+		return ordersDao.insertOrder_Hardware(ids, order);
 	}
 }

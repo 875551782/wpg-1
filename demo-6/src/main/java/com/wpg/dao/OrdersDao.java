@@ -35,7 +35,7 @@ public interface OrdersDao {
 	public List<Orders> getAllOrdersByUserId(int userId);
 	
 	
-	public int insertOrders(int userId);
+	public int insertOrders(@Param("order")Orders order);
 	
-	public int insertOrder_Hardware(@Param("ids")int[] ids,@Param("order_Id")int order_Id);
+	public int insertOrder_Hardware(@Param("ids")int[] ids,@Param("order")Orders order);
 }

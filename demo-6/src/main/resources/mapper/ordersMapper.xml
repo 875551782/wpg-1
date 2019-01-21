@@ -19,18 +19,18 @@
 		select * from orders where user_id=#{0}
 	</select>
 	
-	<insert id="insertOrders">
-		<selectKey order="AFTER" resultType="java.lang.Integer">
+	<insert id="insertOrders" parameterType="com.wpg.pojo.Orders">
+		
+		insert into orders values(null,#{order.user_Id})
+		<selectKey order="AFTER"  keyColumn="order_id" keyProperty="order.order_Id" resultType="java.lang.Integer">
 			select LAST_INSERT_ID()
 		</selectKey>
-		
-		insert into orders values(null,#{0})
 	</insert>
 	
-	<insert id="insertOrder_Hardware">
+	<insert id="insertOrder_Hardware" parameterType="com.wpg.pojo.Orders">
 	insert into order_hardware values
 		<foreach collection="ids" item="id" separator=",">
-			(#{order_Id},#{id})
+			(#{order.order_Id},#{id})
 		</foreach>
 	</insert>
 	
