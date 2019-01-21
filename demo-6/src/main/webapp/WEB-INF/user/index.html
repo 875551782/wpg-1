@@ -167,7 +167,7 @@ a:hover, a:focus {
 					url : "user_showModule.do",
 					dataType : "json",
 					success : function(data) {
-						console.log(data);
+						//console.log(data);
 						allData=data;
 						for ( var key in data) {
 							if (key == 1) {
@@ -209,12 +209,10 @@ a:hover, a:focus {
 			url : "user_group.do",
 			success : function(data) {
 				allHardware=data;
-				console.log(data);
+				//console.log(data);
 				//遍历共有几个功能
 				for(var k in allData){
 					var str="";
-					//console.log("123"+allData[k]);
-					//console.log(data[allData[k]]);
 					//遍历一个功能中有多少个类
 					for(var i=0;i<data[allData[k]].length;i++){
 						//获取类
@@ -232,11 +230,21 @@ a:hover, a:focus {
 						//遍历一个类中有多少个物料
 						for(var j=0;j<markSize;j++){
 							//网络功能必须勾选
-							if(allData[k]=="internets"&&j==0&&state==1){
-								str+="<td><input type='radio' checked='checked' name='"+mark+"' value='"+hardware[j].id+"'>"+hardware[j].name+"</td><td>"+hardware[j].type+"</td><td>"+hardware[j].unit+"</td>"+
-								"<td>"+hardware[j].num+"</td><td>"+hardware[j].brand+"</td><td>"+hardware[j].price+"</td></tr>";
+							if(allData[k]=="internets"){
+								if(j==0){
+									if(state==1){
+										str+="<td><input type='radio' checked='' name='"+mark+"' value='"+hardware[j].id+"'>"+hardware[j].name+"</td><td>"+hardware[j].type+"</td><td>"+hardware[j].unit+"</td>"+
+										"<td>"+hardware[j].num+"</td><td>"+hardware[j].brand+"</td><td>"+hardware[j].price+"</td></tr>";
+									}else{
+										str+="<td><input class='d1' type='checkbox' name='"+mark+"' value='"+hardware[j].id+"'>"+hardware[j].name+"</td><td>"+hardware[j].type+"</td><td>"+hardware[j].unit+"</td>"+
+										"<td>"+hardware[j].num+"</td><td>"+hardware[j].brand+"</td><td>"+hardware[j].price+"</td></tr>";
+									}
+								}else{
+									str+="<td><input type='radio' name='"+mark+"' value='"+hardware[j].id+"'>"+hardware[j].name+"</td><td>"+hardware[j].type+"</td><td>"+hardware[j].unit+"</td>"+
+									"<td>"+hardware[j].num+"</td><td>"+hardware[j].brand+"</td><td>"+hardware[j].price+"</td></tr>";
+								}
 							}else{
-								str+="<td><input type='radio' name='"+mark+"' value='"+hardware[j].id+"'>"+hardware[j].name+"</td><td>"+hardware[j].type+"</td><td>"+hardware[j].unit+"</td>"+
+								str+="<td><input type='checkbox' name='"+mark+"' value='"+hardware[j].id+"'>"+hardware[j].name+"</td><td>"+hardware[j].type+"</td><td>"+hardware[j].unit+"</td>"+
 								"<td>"+hardware[j].num+"</td><td>"+hardware[j].brand+"</td><td>"+hardware[j].price+"</td></tr>";
 							}
 						}
@@ -260,40 +268,20 @@ a:hover, a:focus {
 			data:{ids:ids},
 			success:function(data){
 				if(data==1){
+					changState(1);
 					console.log("提交成功！！！");
-					changState(0);
 				}
 			}
 		})
-		//console.log(allHardware["internets"]);
-		/* var intIds=new Array();
-		var index=0;
-		//遍历网络功能找出必选的ID
-		for(var i=0;i<allHardware["internets"].length;i++){
-			if(allHardware["internets"][i].states==1){
-				var len=allHardware["internets"][i].hardwareList.length;
-				for(var j=0;j<len;j++){
-					intIds[index]=allHardware["internets"][i].hardwareList[j].id;
-					console.log(intIds[index]);
-					index++;
-				}
-			}
-		}
-		//遍历数组查看网络功能是否勾选，没有则不能提交；
-		var flag=0;
-		$.each(ids,function (i,v){
-			$.each(intIds,function(j,value){
-				if(ids[i]==intIds[j]){
-					flag=1;
-				}
-			})
-		})
-		if(flag==1){
-			//提交数据
-			
-		}else{
-			alert("您还没有勾选网络功能，请勾选后再提交！");
-		} */
 	}
+	$(".d1").on('click',function() { //选取同一name下的input
+		//var name=$(this).attr('name');
+		//console.log(name);
+		console.log("123");
+		if($('input[name="wechat"]').is(':checked')) { //判断input是否选中
+		$('input[name="wechat"]').prop('checked', false); //清除所有的选中状态
+		$(this).prop('checked',true); //设置点击的input为选中状态
+		}
+	})
 </script>
 </html>
