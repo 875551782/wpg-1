@@ -70,12 +70,12 @@
 					for(var i=0;i<data.length;i++){
 						str+="<tr><td>"+data[i].name+"</td><td>"+data[i].type+"</td><td>"+data[i].unit+"</td>"+
 						"<td>"+data[i].num+"</td><td>"+data[i].brand+"</td><td>"
-						if(datas[i].states==1){
+						if(data[i].states==1){
 							str+="是";
 						}else{
 							str+="否";
 						}
-						str+="</td><td>"+data[i].price+"</td><td>"+datas[i].desc+"</td><td>"+
+						str+="</td><td>"+data[i].price+"</td><td>"+data[i].desc+"</td><td>"+
 						"<button type='button' class='btn btn-default'>修改</button>"+
 						"<button type='button' class='btn btn-default'>删除</button></td><tr>"
 					}

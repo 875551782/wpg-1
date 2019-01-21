@@ -19,6 +19,9 @@ public interface HardwareDao {
 	//按功能查询物料（两张表的全信息）
 	public List<Hardware_Group> selAllModuleByModule(String module);
 	
+	//按id查询物料的所有信息
+	public Hardware_Group selHardwareById(int id);
+	
 	//增加类
 	public void addHardware_Group(Hardware_Group group);
 	
