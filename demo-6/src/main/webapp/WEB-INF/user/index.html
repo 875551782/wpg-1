@@ -252,6 +252,13 @@ a:hover, a:focus {
 					//往功能表中添加
 					$(".table").eq(k-1).append(str);
 				}
+				$("input[type='checkbox']").on('click',function() { //选取同一name下的input
+					var name=$(this).attr('name');			
+					if($('input[name="'+name+'"]').is(':checked')) { //判断input是否选中
+					$('input[name="'+name+'"]').prop('checked', false); //清除所有的选中状态
+					$(this).prop('checked',true); //设置点击的input为选中状态
+					}
+				})
 			}
 		})
 	}
@@ -261,6 +268,12 @@ a:hover, a:focus {
 		$("[type='radio']:checked").each(function(index,element){
 			//将选中的物料的id写进数组中
 			ids[index]=$(this).val();
+		})
+		var len=ids.length;
+		$("[type='checkbox']:checked").each(function(){
+			//将选中的物料的id写进数组中
+			ids[len]=$(this).val();
+			len++;
 		})
 		$.ajax({
 			type:"POST",
@@ -272,16 +285,7 @@ a:hover, a:focus {
 					console.log("提交成功！！！");
 				}
 			}
-		})
+		}) 
 	}
-	$(".d1").on('click',function() { //选取同一name下的input
-		//var name=$(this).attr('name');
-		//console.log(name);
-		console.log("123");
-		if($('input[name="wechat"]').is(':checked')) { //判断input是否选中
-		$('input[name="wechat"]').prop('checked', false); //清除所有的选中状态
-		$(this).prop('checked',true); //设置点击的input为选中状态
-		}
-	})
 </script>
 </html>
