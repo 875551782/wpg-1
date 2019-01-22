@@ -12,7 +12,7 @@
 	</delete> -->
 	
 	<delete id="deleteOrders">
-		delete from orders where id = #{0}
+		delete from orders where order_id = #{0}
 	</delete>
 	
 	<select id="getAllOrdersByUserId" resultType="com.wpg.pojo.Orders">

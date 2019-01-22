@@ -127,7 +127,7 @@ public class Front_Controller {
 		if(session.getAttribute("user") != null) {
 			user = (Users) session.getAttribute("user");
 		}
-		int i = ordersService.updateOrder_Hardware(user.getId(),ids);
+		int i = ordersService.updateOrder_Hardware(oId,ids);
 		
 		if(i>0) {
 			return 1;
