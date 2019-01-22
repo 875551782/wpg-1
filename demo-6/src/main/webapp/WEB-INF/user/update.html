@@ -196,7 +196,8 @@ var oId=window.localStorage["oId"];
 														+ "<th>数量</th><th>品牌</th><th>价格</th></tr></table></div></div></div>");
 							}
 						}
-						$("#accordion").append("<input onclick='submitData()' class='btn btn-default' type='button' value='修改订单' >");
+						$("#accordion").append("<input onclick='submitData()' class='btn btn-default' type='button' value='修改订单' >"+
+								"<input onclick='cancelUpdate()' class='btn btn-default' type='button' value='取消' >");
 					}
 				})
 	}
@@ -234,7 +235,7 @@ var oId=window.localStorage["oId"];
 								str+="<tr><td rowspan='"+markSize+"'>"+markSize+"选1<br></td>";
 							}
 						}
-						//遍历一个类中有多少个物料
+						//遍历一个类中有多少个物料 
 						for(var j=0;j<markSize;j++){
 							//网络功能必须勾选
 							if(allData[k]=="internets"){
@@ -289,11 +290,14 @@ var oId=window.localStorage["oId"];
 			data:{ids:ids,oId:oId},
 			success:function(data){
 				if(data==1){
-					console.log("修改成功！！！");
+					alert("修改成功！！！");
 					location.href="user_forward.do?name=checkOrder";
 				}
 			}
 		}) 
+	}
+	function cancelUpdate(){
+		location.href="user_forward.do?name=checkOrder";
 	}
 </script>
 </html>
