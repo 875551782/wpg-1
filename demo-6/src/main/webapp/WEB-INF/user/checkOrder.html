@@ -33,17 +33,15 @@ a:hover, a:focus {
 	flex: 4;
 }
 /* order样式 */
-
 .list-group-item {
 	display: block;
 	margin: 15px 100px;
 	text-align: center;
-	width:600px;
-	
+	width: 600px;
 }
-.orderList input{
-	display:block;
-	
+
+.orderList input {
+	display: block;
 }
 
 #order th {
@@ -53,16 +51,17 @@ a:hover, a:focus {
 #order {
 	text-align: center;
 	display: none;
-	
 }
-#tableOrder input{
-	width:50px;
+
+#tableOrder input {
+	width: 50px;
 }
-#total{
-position:relative;
-left:600px;
-top:-30px;
-color:red;
+
+#total {
+	position: relative;
+	left: 600px;
+	top: -30px;
+	color: red;
 }
 </style>
 </head>
@@ -76,54 +75,55 @@ color:red;
 			</ul>
 		</div>
 		<div class="right">
-		<div class="panel panel-default">
-  <div class="panel-body">
-    	<div class="orderList"></div>
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="orderList"></div>
+					<div class="showDetail" id="order">
+						<table class="table table-hover table-bordered" id="tableOrder">
+							<tr>
+								<th>功能名称</th>
+								<th>物料名称</th>
+								<th>规格型号</th>
+								<th>单位</th>
+								<th>数量</th>
+								<th>品牌</th>
+								<th>价格</th>
 
-			<div class="showDetail" id="order">
-				<table class="table table-hover table-bordered" id="tableOrder">
-					<tr>
-						<th>功能名称</th>
-						<th>物料名称</th>
-						<th>规格型号</th>
-						<th>单位</th>
-						<th>数量</th>
-						<th>品牌</th>
-						<th>价格</th>
-						
-					</tr>
-				</table>
+							</tr>
+						</table>
+					</div>
+				</div>
 			</div>
-  </div>
-</div>
-			
-
 		</div>
 	</div>
 	<script type="text/javascript">
 		getOrder();
 		function getOrder() {
-			$.ajax({
-				type : "GET",
+			$
+					.ajax({
+						type : "GET",
 
-				url : "user_showOrder.do",
+						url : "user_showOrder.do",
 
-				success : function(data) {
+						success : function(data) {
 
-					console.log(data);
-					//拿到所有的订单编号
-					for ( var key in data) {
-						console.log(key);
-						$(".orderList").append(
-								"<a href='#order' class='list-group-item ' onclick='showOrder("
-										+ data[key].order_Id + ")'>"
-										+ data[key].order_Id + "</a>"+
-										"<a class='btn btn-default' href='#' role='button'>删除</a>");
-					}
+							console.log(data);
+							//拿到所有的订单编号
+							for ( var key in data) {
+								console.log(key);
+								$(".orderList")
+										.append(
+												"<a href='#order' class='list-group-item ' onclick='showOrder("
+														+ data[key].order_Id
+														+ ")'>"
+														+ data[key].order_Id
+														+ "</a>"
+														+ "<a class='btn btn-default' href='#' role='button'>删除</a>");
+							}
 
-					item();
-				}
-			})
+							item();
+						}
+					})
 		}
 		//选订单时改变样式
 		function item() {
@@ -144,35 +144,48 @@ color:red;
 				},
 				success : function(data) {
 					console.log(data);
-					var total=0;
+					var total = 0;
 					if (data.length > 0) {
 						for (var i = 0; i < data.length; i++) {
 							//对数据进行遍历，拿到hardware_Group里的hardwareList
 							var list = data[i].hardware_Group.hardwareList;
 							//对hardwareList进行遍历，将数据写入单元格
-							if(list.length>0){
+							if (list.length > 0) {
 								for (var j = 0; j < list.length; j++) {
-									total+=list[j].price;
-									$("#tableOrder").append("<tr><td>"+list[j].module+"</td><td>"+list[j].name+"</td>"+
-											"<td>"+list[j].type+"</td><td>"+list[j].unit+"</td>"+
-											"<td>"+list[j].num+"</td><td>"+list[j].brand+"</td>"+
-											"<td>"+list[j].price+"</td></tr>");
-									
+									total += list[j].price;
+									$("#tableOrder").append(
+											"<tr><td>" + list[j].module
+													+ "</td><td>"
+													+ list[j].name + "</td>"
+													+ "<td>" + list[j].type
+													+ "</td><td>"
+													+ list[j].unit + "</td>"
+													+ "<td>" + list[j].num
+													+ "</td><td>"
+													+ list[j].brand + "</td>"
+													+ "<td>" + list[j].price
+													+ "</td></tr>");
 								}
 							}
-							
-							
+
 						}
 					}
 					console.log(id);
-					$("#order").append("<a class='btn btn-default' href='javascript:updateShow("+id+")' role='button'>修改订单</a>&nbsp;"+
-							"&nbsp;&nbsp;&nbsp;<div id='total'>总价:"+total+"</div>");
+					$("#order").append(
+							"<a class='btn btn-default' href='javascript:updateShow("
+									+ id + ")' role='button'>修改订单</a>&nbsp;"
+									+ "&nbsp;&nbsp;&nbsp;<div id='total'>总价:"
+									+ total + "</div>");
 				}
-
 			})
-
 			$(".orderList").css("display", "none");
 			$("#order").css("display", "block");
+		}
+		function updateShow(oId){
+			console.log("12312321432");
+			var storage=window.localStorage;
+			storage["oId"]=oId;
+			location.href="user_forward.do?name=update";
 		}
 	</script>
 </body>

@@ -131,8 +131,8 @@ a:hover, a:focus {
 	<div class="con">
 		<div class="left">
 			<ul class="nav nav-pills nav-stacked">
-				<li role="presentation"><a>生成订单</a></li>
-				<li role="presentation" class="active"><a>查看订单</a></li>
+				<li role="presentation"><a href="user_forward.do?name=index">生成订单</a></li>
+				<li role="presentation" class="active"><a  href="user_forward.do?name=checkOrder">查看订单</a></li>
 			</ul>
 		</div>
 		<div class="right">
@@ -142,11 +142,13 @@ a:hover, a:focus {
 	</div>
 </body>
 <script>
+
+var oId=window.localStorage["oId"];
 	$(document).ready(function(){
 		$.ajax({
 			type : "GET",
 			url : "user_showDetailOrder.do",
-			data:{oId:4},
+			data:{oId:oId},
 			dataType : "json",
 			success : function(data) {
 				for ( var key in data) {
@@ -280,13 +282,15 @@ a:hover, a:focus {
 			ids[len]=$(this).val();
 			len++;
 		})
+		console.log(ids);
 		$.ajax({
 			type:"POST",
 			url:"user_changeOrder.do",           
-			data:{ids:ids,oId:4},
+			data:{ids:ids,oId:oId},
 			success:function(data){
 				if(data==1){
 					console.log("修改成功！！！");
+					location.href="user_forward.do?name=checkOrder";
 				}
 			}
 		}) 

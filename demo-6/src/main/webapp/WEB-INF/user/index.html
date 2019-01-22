@@ -138,7 +138,6 @@ a:hover, a:focus {
 		<div class="right">
 			<div class="panel-group" id="accordion" role="tablist"
 			aria-multiselectable="true"></div>
-			<div class="orderList">还没有订单哦~</div>
 		</div>
 	</div>
 </body>
@@ -274,6 +273,7 @@ a:hover, a:focus {
 			success:function(data){
 				if(data==1){
 					console.log("提交成功！！！");
+					location.href="user_forward.do?name=checkOrder";
 				}
 			}
 		}) 
