@@ -35,15 +35,16 @@ a:hover, a:focus {
 }
 /* order样式 */
 
-.list-group-item {
-	/* display: block;
-	margin: 15px 100px; */
-	text-align: center;
-	width:600px; 
+.orderList{
+	text-align:center;
 	
-	
+	margin-right:50px;
+	margin-left:50px;
 }
-
+.showDetail{
+margin-left:50px;
+	margin-right:50px;
+}
 
 
 #order th {
@@ -62,6 +63,16 @@ a:hover, a:focus {
 text-align:right;
 color:red;
 }
+
+.td1{
+width:500px;
+
+}
+
+
+.td2,.td3{
+width:60px;
+}
 </style>
 </head>
 <body>
@@ -74,13 +85,20 @@ color:red;
 			</ul>
 		</div>
 		<div class="right">
-			<div class="panel panel-primary">
-				<div class="panel-heading">订单列表</div>
-  				<div class="panel-body">
-    				<div class="orderList">
+			<!-- 显示订单 -->
+    		<div class="orderList">
+    			<div class="panel panel-primary">
+					<div class="panel-heading">订单列表</div>
+  					<div class="panel-body">
 						<table class="table table-hover" id="tableList"></table>
 					</div>
-					<div class="showDetail" id="order">
+				</div>
+			</div>
+			<!-- 显示详细订单 -->
+			<div class="showDetail" id="order">
+				<div class="panel panel-primary">
+					<div class="panel-heading">订单详情</div>
+  					<div class="panel-body" id="tab">
 						<table class="table table-hover table-bordered" id="tableOrder">
 							<tr>
 								<th>功能名称</th>
@@ -90,13 +108,12 @@ color:red;
 								<th>数量</th>
 								<th>品牌</th>
 								<th>价格</th>
-						
 							</tr>
 						</table>
 					</div>
-  				</div>
+				</div>	
 			</div>
-		</div>
+  		</div>
 	</div>
 	<script type="text/javascript">
 		getOrder();
@@ -118,10 +135,10 @@ color:red;
 										+ data[key].order_Id + "</a>"+
 										"<a class='btn btn-default' href='#' role='button'>删除</a>"); */
 						$("#tableList").append(
-								"<tr><td><a href='#order' class='list-group-item' onclick='showOrder("
-										+ data[key].order_Id + ")'>"+ data[key].order_Id + "</a></td>"+
-										"<td><a class='btn btn-default' href='javascript:del("+data[key].order_Id+")' role='button'>删除</a></td>"+
-										"<td><a class='btn btn-default' href='user_orderUpload.do?oId="+data[key].order_Id+"' role='button'>下载</a></td></tr>");
+								"<tr><td class='td1'><a href='#order'  onclick='showOrder("
+										+ data[key].order_Id + ")'>订单"+ data[key].order_Id + "</a></td>"+
+										"<td class='td2'><a class='btn btn-default' href='javascript:del("+data[key].order_Id+")' role='button'>删除</a></td>"+
+										"<td class='td3'><a class='btn btn-default' href='user_orderUpload.do?oId="+data[key].order_Id+"' role='button'>下载</a></td></tr>");
 					}
 
 					/* item(); */
@@ -172,9 +189,9 @@ color:red;
 						}
 					}
 					console.log(id);
-					$("#order").append("<div id='total'>总价:"+total+"</div>"+
-							"<a class='btn btn-default' href='javascript:updateShow("+id+")' role='button'>修改订单</a>&nbsp;&nbsp;&nbsp;&nbsp;"+
-							"<a class='btn btn-default' href='http://localhost:8080/test/user_forward.do?name=checkOrder' role='button'>返回</a>");
+					$("#tab").append("<div id='total'>总价:"+total+"</div>"+
+							"<a class='btn btn-primary' href='javascript:updateShow("+id+")' role='button'>修改订单</a>&nbsp;&nbsp;&nbsp;&nbsp;"+
+							"<a class='btn btn-primary' href='http://localhost:8080/test/user_forward.do?name=checkOrder' role='button'>返回</a>");
 				}
 
 			})
