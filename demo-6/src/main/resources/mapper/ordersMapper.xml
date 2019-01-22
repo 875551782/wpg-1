@@ -7,12 +7,12 @@
 		select * from orders
 	</select>
 	
-	<delete id="deleteOrder_Hardware">
+	<!-- <delete id="deleteOrder_Hardware">
 		delete from order_hardware where id = #{0}
-	</delete>
+	</delete> -->
 	
 	<delete id="deleteOrders">
-		delete from orders where id = #{0}
+		delete from orders where order_id = #{0}
 	</delete>
 	
 	<select id="getAllOrdersByUserId" resultType="com.wpg.pojo.Orders">
@@ -33,6 +33,9 @@
 			(#{order.order_Id},#{id})
 		</foreach>
 	</insert>
+	<delete id="deleteOrder_HardwareById">
+		delete from order_hardware where order_id = #{0}
+	</delete>
 	
 	<select id="getOrder_HardwaresByOrdersId" resultMap="order_HardwareDetail">
 		select * from order_hardware where order_id = #{0}

@@ -119,4 +119,22 @@ public class Front_Controller {
 		}
 		
 	}
+	@RequestMapping("user_changeOrder.do")
+	@ResponseBody
+	public int updateOrder_Hardware(HttpSession session,int oId,@RequestParam(value="ids[]")int[] ids) {
+		Users user = new Users();
+		user.setId(1);
+		if(session.getAttribute("user") != null) {
+			user = (Users) session.getAttribute("user");
+		}
+		int i = ordersService.updateOrder_Hardware(oId,ids);
+		
+		if(i>0) {
+			return 1;
+		}
+		else{
+			return 0;
+		}
+	}
+	
 }

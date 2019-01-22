@@ -28,7 +28,7 @@ public interface OrdersDao {
 	 */
 	public List<Hardware_Group> getOrder_HardwaresByOrdersId(int ordersId);
 	
-	public int deleteOrder_Hardware(int oId);
+	//public int deleteOrder_Hardware(int oId);
 	
 	public int deleteOrders(int oId);
 	
@@ -38,4 +38,6 @@ public interface OrdersDao {
 	public int insertOrders(@Param("order")Orders order);
 	
 	public int insertOrder_Hardware(@Param("ids")int[] ids,@Param("order")Orders order);
+	
+	public int deleteOrder_HardwareById(int ordersId);
 }
