@@ -197,6 +197,11 @@ color:red;
 			}
 			
 		}
+		function updateShow(oId){
+			var storage=window.localStorage;
+			storage["oId"]=oId;
+			location.href="user_forward.do?name=update";
+		}
 	</script>
 </body>
 </html>
