@@ -146,22 +146,7 @@ a:hover, a:focus {
 	</div>
 </body>
 <script>
-
-var oId=window.localStorage["oId"];
-	$(document).ready(function(){
-		$.ajax({
-			type : "GET",
-			url : "user_showDetailOrder.do",
-			data:{oId:oId},
-			dataType : "json",
-			success : function(data) {
-				for ( var key in data) {
-					console.log(data[key].hardware_id);
-					$("."+data[key].hardware_id).prop('checked',true);
-				}
-			}
-		})
-	})
+	var oId=window.localStorage["oId"];
 	getModule();
 	var allData;
 	function getModule() {
@@ -271,6 +256,18 @@ var oId=window.localStorage["oId"];
 					$(this).prop('checked',true); //设置点击的input为选中状态
 					}
 				})
+					$.ajax({
+						type : "GET",
+						url : "user_showDetailOrder.do",
+						data:{oId:oId},
+						dataType : "json",
+						success : function(data) {
+							for ( var key in data) {
+								console.log(data[key].hardware_id);
+								$("."+data[key].hardware_id).prop('checked',true);
+							}
+						}
+					})
 			}
 		})
 	}
