@@ -6,6 +6,10 @@ import com.wpg.pojo.Users;
 
 public interface UsersDao {
 
-	List<Users> selUser(String username);	
+	// 获取用户表中所有用户名
+	public List<String> getAllUsers();
+
+	// 根据用户名查询用户信息
+	Users selUser(String username);
 
 }

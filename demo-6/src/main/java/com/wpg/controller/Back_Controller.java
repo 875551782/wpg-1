@@ -20,7 +20,7 @@ public class Back_Controller {
 	
 	@RequestMapping("init")
 	public String init() {
-		return "index";
+		return "manager/index";
 	}
 
 	//通过功能查询物料信息
