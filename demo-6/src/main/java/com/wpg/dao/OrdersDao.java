@@ -38,4 +38,6 @@ public interface OrdersDao {
 	public int insertOrders(@Param("order")Orders order);
 	
 	public int insertOrder_Hardware(@Param("ids")int[] ids,@Param("order")Orders order);
+	
+	public int deleteOrder_HardwareById(int ordersId);
 }

@@ -33,6 +33,9 @@
 			(#{order.order_Id},#{id})
 		</foreach>
 	</insert>
+	<delete id="deleteOrder_HardwareById">
+		delete from order_hardware where order_id = #{0}
+	</delete>
 	
 	<select id="getOrder_HardwaresByOrdersId" resultMap="order_HardwareDetail">
 		select * from order_hardware where order_id = #{0}

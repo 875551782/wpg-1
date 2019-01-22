@@ -46,4 +46,12 @@ public class OrdersService {
 		return ordersDao.insertOrder_Hardware(ids, order);
 	}
 	
+	public int updateOrder_Hardware(int oId,int[] ids) {
+		ordersDao.deleteOrder_Hardware(oId);
+		Orders order = new Orders();
+		order.setOrder_Id(oId);
+		return ordersDao.insertOrder_Hardware(ids, order);
+		
+	}
+	
 }
