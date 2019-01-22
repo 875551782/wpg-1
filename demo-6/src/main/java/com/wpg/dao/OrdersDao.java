@@ -26,7 +26,7 @@ public interface OrdersDao {
 	 * @param ordersId
 	 * @return
 	 */
-	public List<Hardware_Group> getOrder_HardwaresByOrdersId(int ordersId);
+	public List<Order_Hardware> getOrder_HardwaresByOrdersId(int ordersId);
 	
 	//public int deleteOrder_Hardware(int oId);
 	

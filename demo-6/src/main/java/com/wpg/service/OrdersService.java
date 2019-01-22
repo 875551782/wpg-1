@@ -34,7 +34,7 @@ public class OrdersService {
 	}
 	
 	
-	public List<Hardware_Group> getOrder_HardwaresByOrdersId(int ordersId){
+	public List<Order_Hardware> getOrder_HardwaresByOrdersId(int ordersId){
 		return ordersDao.getOrder_HardwaresByOrdersId(ordersId);
 	}
 	@Transactional
