@@ -26,7 +26,7 @@ public class OrdersService {
 	@Transactional
 	public int deleteOrder_Hardware(int oId) {
 		ordersDao.deleteOrders(oId);
-		return ordersDao.deleteOrder_Hardware(oId);
+		return ordersDao.deleteOrder_HardwareById(oId);
 	}
 	
 	public List<Orders> getAllOrdersByUserId(int userId){
@@ -47,7 +47,7 @@ public class OrdersService {
 	}
 	
 	public int updateOrder_Hardware(int oId,int[] ids) {
-		ordersDao.deleteOrder_Hardware(oId);
+		ordersDao.deleteOrder_HardwareById(oId);
 		Orders order = new Orders();
 		order.setOrder_Id(oId);
 		return ordersDao.insertOrder_Hardware(ids, order);

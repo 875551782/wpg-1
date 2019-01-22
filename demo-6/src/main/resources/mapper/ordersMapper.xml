@@ -7,9 +7,9 @@
 		select * from orders
 	</select>
 	
-	<delete id="deleteOrder_Hardware">
+	<!-- <delete id="deleteOrder_Hardware">
 		delete from order_hardware where id = #{0}
-	</delete>
+	</delete> -->
 	
 	<delete id="deleteOrders">
 		delete from orders where id = #{0}
