@@ -3,6 +3,7 @@ package com.wpg.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,9 @@ public class User_Controller {
 
 	@RequestMapping("login")
 	@ResponseBody
-	public String login(Users users) {
+	public String login(Users users,HttpSession session) {
+		
+		
 		String username = users.getUserName();
 		String password = users.getPassword();
 		System.out.println("username:" + username + ",password:" + password);
@@ -33,10 +36,12 @@ public class User_Controller {
 
 				if (1 == user.getRole()) {
 					//进入后台
+					session.setAttribute("admin", user);
 					return "admin";
 				
 				} else {
 					//进入用户页面
+					session.setAttribute("user", user);
 					return "user";
 				}
 			} else {
