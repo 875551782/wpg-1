@@ -131,18 +131,31 @@ a:hover, a:focus {
 	<div class="con">
 		<div class="left">
 			<ul class="nav nav-pills nav-stacked">
-				<li role="presentation" class="active"><a href="user_forward.do?name=index">生成订单</a></li>
-				<li role="presentation"><a href="user_forward.do?name=checkOrder">查看订单</a></li>
+				<li role="presentation"><a>生成订单</a></li>
+				<li role="presentation" class="active"><a>查看订单</a></li>
 			</ul>
 		</div>
 		<div class="right">
 			<div class="panel-group" id="accordion" role="tablist"
 			aria-multiselectable="true"></div>
-			<div class="orderList">还没有订单哦~</div>
 		</div>
 	</div>
 </body>
 <script>
+	$(document).ready(function(){
+		$.ajax({
+			type : "GET",
+			url : "user_showDetailOrder.do",
+			data:{oId:1},
+			dataType : "json",
+			success : function(data) {
+				for ( var key in data) {
+					console.log(data[key].hardware_id);
+					$("."+data[key].hardware_id).prop('checked',true);
+				}
+			}
+		})
+	})
 	getModule();
 	var allData;
 	function getModule() {
@@ -181,7 +194,7 @@ a:hover, a:focus {
 														+ "<th>数量</th><th>品牌</th><th>价格</th></tr></table></div></div></div>");
 							}
 						}
-						$("#accordion").append("<input onclick='submitData()' class='btn btn-default' type='button' value='生成订单'>");
+						$("#accordion").append("<input onclick='submitData()' class='btn btn-default' type='button' value='修改订单' >");
 					}
 				})
 	}
@@ -228,7 +241,7 @@ a:hover, a:focus {
 										str+="<td><input type='radio' checked='' name='"+mark+"' value='"+hardware[j].id+"'>"+hardware[j].name+"</td><td>"+hardware[j].type+"</td><td>"+hardware[j].unit+"</td>"+
 										"<td>"+hardware[j].num+"</td><td>"+hardware[j].brand+"</td><td>"+hardware[j].price+"</td></tr>";
 									}else{
-										str+="<td><input class='d1' type='checkbox' name='"+mark+"' value='"+hardware[j].id+"'>"+hardware[j].name+"</td><td>"+hardware[j].type+"</td><td>"+hardware[j].unit+"</td>"+
+										str+="<td><input class='"+hardware[j].id+"' type='checkbox' name='"+mark+"' value='"+hardware[j].id+"'>"+hardware[j].name+"</td><td>"+hardware[j].type+"</td><td>"+hardware[j].unit+"</td>"+
 										"<td>"+hardware[j].num+"</td><td>"+hardware[j].brand+"</td><td>"+hardware[j].price+"</td></tr>";
 									}
 								}else{
@@ -236,7 +249,7 @@ a:hover, a:focus {
 									"<td>"+hardware[j].num+"</td><td>"+hardware[j].brand+"</td><td>"+hardware[j].price+"</td></tr>";
 								}
 							}else{
-								str+="<td><input type='checkbox' name='"+mark+"' value='"+hardware[j].id+"'>"+hardware[j].name+"</td><td>"+hardware[j].type+"</td><td>"+hardware[j].unit+"</td>"+
+								str+="<td><input class='"+hardware[j].id+"' type='checkbox' name='"+mark+"' value='"+hardware[j].id+"'>"+hardware[j].name+"</td><td>"+hardware[j].type+"</td><td>"+hardware[j].unit+"</td>"+
 								"<td>"+hardware[j].num+"</td><td>"+hardware[j].brand+"</td><td>"+hardware[j].price+"</td></tr>";
 							}
 						}
@@ -269,11 +282,11 @@ a:hover, a:focus {
 		})
 		$.ajax({
 			type:"POST",
-			url:"user_submitOrder.do",
-			data:{ids:ids},
+			url:"user_changeOrder.do",
+			data:{ids:ids,oId:1},
 			success:function(data){
 				if(data==1){
-					console.log("提交成功！！！");
+					console.log("修改成功！！！");
 				}
 			}
 		}) 
