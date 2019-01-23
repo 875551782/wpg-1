@@ -64,4 +64,10 @@ public class HardwareService {
 	public void fdelHardware(int id) {
 		hardwareDao.fdelHardware(id);
 	}
+	//查找类的序号
+	public int selMarkByModule(String Module) {
+		int i =hardwareDao.selMarkByModule(Module);
+		return i;
+	}
+	
 }

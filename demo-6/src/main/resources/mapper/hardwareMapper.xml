@@ -45,7 +45,7 @@
 	<!-- hardware 和 hardware_group 按功能连接查询 -->
 	<select id="selAllModuleByModule" resultMap="moduleResult">
 		select a.* ,b.desct,b.states from hardware a, hardware_group b
-		where a.mark = b.mark and a.module = #{0}
+		where a.mark = b.mark and a.module = #{0} and a.dflag=1;
 	</select>
 	
 	<!-- 按功能查询物料 -->
@@ -64,38 +64,35 @@
 	<!-- 增加类 -->
 	<insert id="addHardware_Group">
 		insert into hardware_group
-		values(#{group.mark},#{group.desct},#{group.states})
+		values(#{mark},#{desct},#{states})
 	</insert>
 	
 	<!-- 增加物料 -->
 	<insert id="addHardWare">
-		insert into hardware
-		values(null,#{hardware.module},#{hardware.name},#{hardware.type},
-			   #{hardware.num},#{hardware.unit},#{hardware.brand},
-			   #{hardware.mark},#{hardware.dflag},#{hardware.price}
-			   )
+		insert into hardware(name,type,num,unit,brand,mark,price,module,dflag)
+		value(#{name},#{type},#{num},#{unit},#{brand},#{mark},#{price},#{module},#{dFlag})
 	</insert>
 	
 	<!-- 修改物料信息 -->
 	<update id="updateHardWare">
 		update hardware
-		set module=#{hardware.module},name=#{hardware.name},type#{hardware.type},
-			num=#{hardware.num},unit=#{hardware.unit},brand=#{hardware.brand},
-			mark=#{hardware.mark},dflag=#{hardware.dflag},price=#{hardware.price}
-		where id=${hardware.id}
+		set name=#{name},type=#{type},num=#{num},unit=#{unit},brand=#{brand},price=#{price} where id=#{id}
 	</update>
 	
 	<!-- 修改物料类信息 -->
 	<update id="updateHardware_Group">
 		update hardware_group
-		set desct=#{group.desct},states=#{group.states}
-		where mark=#{group.mark}
+		set desct=#{desct},states=#{states}
+		where mark=#{mark}
 	</update>
 	
 	<!-- 假删除物料 -->
 	<update id="fdelHardware">
 		update hardware
-		set flag=0
+		set dflag=0
 		where id=#{0}
 	</update>
+	<select id="selMarkByModule" resultType="Integer">
+		select max(mark) from hardware 
+	</select>
 </mapper>
