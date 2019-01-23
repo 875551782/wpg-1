@@ -13,4 +13,3 @@ public class Demo6Application {
 		SpringApplication.run(Demo6Application.class, args);
 	}
 }
-

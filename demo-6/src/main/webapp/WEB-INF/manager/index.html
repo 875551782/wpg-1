@@ -67,7 +67,7 @@
 			</div>
 			
 			<div id="addWare" class="addw">
-				<form method="post" id="form" action="admin_addHardware_Group.do">
+				<form method="post" id="form" action="admin_addHardware_Group.do" onsubmit="return check()">
 				  <div class="form-group">
 				    <label for="exampleInputEmail1">物料名称</label>
 				    <input type="text" class="form-control" id="exampleInputEmail1"  name="name">
@@ -105,7 +105,8 @@
 				    <input type="hidden" class="form-control"  name="flag" id="flag">
 				    <input type="hidden" class="form-control"  name="mark" id="mark">
 				 </div>
-			  	<button type="submit" class="btn btn-success" style="margin-left:180px;" id="submit">提交</button>
+			  	<button type="submit" class="btn btn-success" style="margin-left:180px;" id="submit" onclick="check()">提交</button>
+			  	</form>
 			</div>
 			
 			
@@ -159,6 +160,21 @@
 </body>
 </html>
 <script>
+
+function check(){
+	var num=/^[1-9]+$/;
+	if(!num.test($("input[name=num]").val())){
+		alert("数量必须为数字")
+		return false;
+	}else if(!num.test($("input[name=price]").val())){
+		alert("价格必须为数字")
+		return false;
+	}
+	else{
+		 return true;
+	}
+}
+
 $("a").click(function(){
 	$("#addWare").css("display","none");
 	$("#edit").css("display","none");
@@ -313,26 +329,32 @@ function update(id,name,type,unit,num,brand,price,desct,mark,module){
 		var mark=$("input[name=mark1]").val();
 		var module=$("input[name=module1]").val();
 		var id=$("input[name=id1]").val();
-		
-		$.ajax({
-			url:"admin_updateHardware.do",
-			data:{
-				"id":id,
-				"name":name1,
-				"type":type1,
-				"unit":unit1,
-				"num":num1,
-				"brand":brand1,
-				"price":price1,
-				"states":states1,
-				"mark":mark,
-				"module":module
-			},
-			success:function(data){
-				$("#edit").css("display","none");
-				getdata(data);
-			}
-		})
+		var num=/^[1-9]+$/;
+		if(!num.test($("input[name=num1]").val())){
+			alert("数量必须为数字")
+		}else if(!num.test($("input[name=price1]").val())){
+			alert("价格必须为数字")
+		}else{
+			$.ajax({
+				url:"admin_updateHardware.do",
+				data:{
+					"id":id,
+					"name":name1,
+					"type":type1,
+					"unit":unit1,
+					"num":num1,
+					"brand":brand1,
+					"price":price1,
+					"states":states1,
+					"mark":mark,
+					"module":module
+				},
+				success:function(data){
+					$("#edit").css("display","none");
+					getdata(data);
+				}
+			})
+		}
 	})
 	function Trim(str)
 	 { 
