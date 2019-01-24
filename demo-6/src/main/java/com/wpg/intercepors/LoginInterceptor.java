@@ -22,7 +22,6 @@ public class LoginInterceptor implements HandlerInterceptor{
         	
         	return true;
         }else {
-        	//System.out.println("====================");
         	response.sendRedirect("login.html");
         	return false;
         }

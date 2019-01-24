@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.wpg.pojo.Hardware;
 import com.wpg.pojo.Hardware_Group;
@@ -56,8 +57,9 @@ public class Front_Controller {
 		return moduleMap;
 	}
 	@RequestMapping("user_forward.do")
-	public String showPage(String name) {
-		return "user/"+name;
+	public ModelAndView showPage(String name) {
+		
+		return new ModelAndView("user/"+name);
 	}
 	@RequestMapping("user_group.do")
 	@ResponseBody
@@ -188,5 +190,4 @@ public class Front_Controller {
         workbook.write(response.getOutputStream());
 		
 	}
-	
 }
