@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wpg.dao.OrdersDao">
+	<select id="getAllOrders" resultType="com.wpg.pojo.Orders">
+		select * from orders
+	</select>
+	
+	<!-- <delete id="deleteOrder_Hardware">
+		delete from order_hardware where id = #{0}
+	</delete> -->
+	
+	<delete id="deleteOrders">
+		delete from orders where order_id = #{0}
+	</delete>
+	
+	<select id="getAllOrdersByUserId" resultType="com.wpg.pojo.Orders">
+		select * from orders where user_id=#{0}
+	</select>
+	
+	<insert id="insertOrders" parameterType="com.wpg.pojo.Orders">
+		
+		insert into orders values(null,#{order.user_Id})
+		<selectKey order="AFTER"  keyColumn="order_id" keyProperty="order.order_Id" resultType="java.lang.Integer">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<insert id="insertOrder_Hardware" parameterType="com.wpg.pojo.Orders">
+	insert into order_hardware values
+		<foreach collection="ids" item="id" separator=",">
+			(#{order.order_Id},#{id})
+		</foreach>
+	</insert>
+	<delete id="deleteOrder_HardwareById">
+		delete from order_hardware where order_id = #{0}
+	</delete>
+	
+	<select id="getOrder_HardwaresByOrdersId" resultMap="order_HardwareDetail">
+		select * from order_hardware where order_id = #{0}
+	</select>
+	
+	<resultMap type="com.wpg.pojo.Order_Hardware" id="order_HardwareDetail">
+		<id column="order_id" property="order_Id"></id>
+		<result column="hardware_id" property="hardware_id"></result>
+		<association  column="hardware_id" property="hardware_Group" select="com.wpg.dao.HardwareDao.selHardwareById">
+		</association>
+	</resultMap>	
+</mapper>

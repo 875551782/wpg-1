@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wpg.dao.HardwareDao">
+	<resultMap type="com.wpg.pojo.Hardware" id="hardwareResult">
+		<id property="id" column="id"/>
+		<result property="module" column="module"/>
+		<result property="name" column="name"/>
+		<result property="type" column="type"/>
+		<result property="unit" column="unit"/>
+		<result property="num" column="num"/>
+		<result property="brand" column="brand"/>
+		<result property="dFlag" column="dflag"/>
+		<result property="price" column="price"/>
+	</resultMap>
+
+	<resultMap type="com.wpg.pojo.Hardware_Group" id="moduleResult">
+		<id property="mark" column="mark"/>	
+		<result property="desct" column="desct"/>
+		<result property="states" column="states"/>
+		<collection property="hardwareList" ofType="com.wpg.pojo.Hardware">
+			<id property="id" column="id" />
+			<result property="module" column="module"/>
+			<result property="name" column="name"/>
+			<result property="type" column="type"/>
+			<result property="unit" column="unit"/>
+			<result property="num" column="num"/>
+			<result property="brand" column="brand"/>
+			<result property="dFlag" column="dflag"/>
+			<result property="price" column="price"/>
+		</collection>
+	</resultMap>
+
+	<!-- 查询所有物料 -->
+	<select id="selAllHardware" resultType="com.wpg.pojo.Hardware">
+		select * from hardware
+	</select>
+	
+	<!-- 查询所有物料名 -->
+	<select id="selModuleName" resultType="java.lang.String">
+		select distinct module from hardware
+	</select>
+	
+	<!-- hardware 和 hardware_group 按功能连接查询 -->
+	<select id="selAllModuleByModule" resultMap="moduleResult">
+		select a.* ,b.desct,b.states from hardware a, hardware_group b
+		where a.mark = b.mark and a.module = #{0} and a.dflag=1;
+	</select>
+	
+	<!-- 按功能查询物料 -->
+	<select id="selHardwareByModule" resultType="com.wpg.pojo.Hardware">
+		select * from hardware
+		where module=#{0}
+	</select>
+	
+	<!-- 按id查询物料的所有信息 -->
+	
+	<select id="selHardwareById" resultMap="moduleResult">
+		select a.* ,b.desct,b.states from hardware a, hardware_group b
+		where a.mark = b.mark and a.id=#{0} 
+	</select>
+	
+	<!-- 增加类 -->
+	<insert id="addHardware_Group">
+		insert into hardware_group
+		values(#{mark},#{desct},#{states})
+	</insert>
+	
+	<!-- 增加物料 -->
+	<insert id="addHardWare">
+		insert into hardware(name,type,num,unit,brand,mark,price,module,dflag)
+		value(#{name},#{type},#{num},#{unit},#{brand},#{mark},#{price},#{module},#{dFlag})
+	</insert>
+	
+	<!-- 修改物料信息 -->
+	<update id="updateHardWare">
+		update hardware
+		set name=#{name},type=#{type},num=#{num},unit=#{unit},brand=#{brand},price=#{price} where id=#{id}
+	</update>
+	
+	<!-- 修改物料类信息 -->
+	<update id="updateHardware_Group">
+		update hardware_group
+		set desct=#{desct},states=#{states}
+		where mark=#{mark}
+	</update>
+	
+	<!-- 假删除物料 -->
+	<update id="fdelHardware">
+		update hardware
+		set dflag=0
+		where id=#{0}
+	</update>
+	<select id="selMarkByModule" resultType="Integer">
+		select max(mark) from hardware 
+	</select>
+</mapper>
