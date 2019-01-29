@@ -3,6 +3,41 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+	.order_num{
+		width: 80px;
+		height: 34px;
+		text-align:center;
+		border-radius:5%;
+	}
+	.order_info{
+		width:450px;
+		overflow:hidden;
+	    white-space:nowrap;
+	    text-overflow:ellipsis;
+	}
+	.table th{
+		text-align: center;
+	}
+	.table{
+		 table-layout: fixed;
+		 text-align: center;
+	}
+	.det_info{
+		display:none;
+	}
+	.order-table tr:nth-child(1){
+
+		background: #337AB7;
+		color: white;
+		height: 45px;
+		line-height: 45px;
+	}
+	.order-table td{
+		width:250px;
+		background: white;
+	}
+</style>
 <link
 	href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -18,23 +53,11 @@
 <body>
 	<div class="header">威派格智慧水务</div>
 	<div class="container">
+		<div class="area"></div>
 		<!-- 添加手风琴样式内容 -->
 		<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-			<div class='panel panel-default'>
-				<div class='panel-heading' role='tab' id='heading1'>
-					<h4 class='panel-title'>
-						<a role='button' data-toggle='collapse' data-parent='#accordion'
-							href='#collapse1' aria-expanded='true' aria-controls='collapse1'>这是一个水司</a>
-					</h4>
-				</div>
-				
-				<div id='collapse1' class='panel-collapse collapse in'
-					role='tabpanel' aria-labelledby='heading1'>
-					<div class='panel-body'>
-						askdljfa<br>askdljfa<br>askdljfa<br>
-					</div>
-				</div>
-			</div>
+		</div>
+		<div class="det_info">
 		</div>
 	</div>
 	<div class="foot">
@@ -48,14 +71,96 @@
 			type : "GET",
 			url : "user_showWater_Division.do",
 			success : function(data) {
-				//data为当前大区的所有水司数据
-				for (var i = 0; i < 5; i++) {
-					console.log("123");
-					$("#accordion").append("");
-				}
 				//console.log(data);
+				if(data.length>0){
+					$(".area").html("<h3>"+data[0].region+"</h3>");
+				}
+				//data为当前大区的所有水司数据
+				for (var i = 0; i <data.length; i++) {
+					var str="<div class='panel panel-default'><div class='panel-heading' role='tab' id='heading"+i+"'><h4 class='panel-title'>";
+					if(i==0){
+						str+="<a role='button' data-toggle='collapse' data-parent='#accordion' href='#collapse"+i+"' aria-expanded='true' aria-controls='collapse"+i+"'>"+
+						data[i].wName+"负责人："+data[i].pic.pName+"电话："+data[i].pic.pTel+"</a></h4></div><div id='collapse"+i+"' class='panel-collapse collapse in' role='tabpanel' aria-labelledby='heading"+i+"'><div class='panel-body'>"+
+						"<table class='table table-bordered'><tr><th>订单编号</th><th>订单信息</th><th>订单总价 </th><th>订单数量</th><th></th></tr></table></div></div></div>";
+					}else{
+						str+="<a  class='collapsed' role='button' data-toggle='collapse' data-parent='#accordion' href='#collapse"+i+"' aria-expanded='false' aria-controls='collapse"+i+"'>"+
+						data[i].wName+"负责人："+data[i].pic.pName+"电话："+data[i].pic.pTel+"</a></h4></div><div id='collapse"+i+"' class='panel-collapse collapse' role='tabpanel' aria-labelledby='heading"+i+"'><div class='panel-body'>"+
+						"<table class='table table-bordered'><tr><th>订单编号</th><th>订单信息</th><th>订单总价 </th><th>订单数量</th><th></th></tr></table></div></div></div>";
+					}
+					$("#accordion").append(str);
+					//该水司的订单对象
+					var order=data[i].orderInfo;
+					//遍历订单，往表格中添加具体数据
+					for(var j=0;j<order.length;j++){
+						//当前订单的物料信息
+						var hardware=order[j].order_Hardwares;
+						//记录所有物料名称及数量
+						var hStr="";
+						//记录物料的总价
+						var sprice=0;
+						for(var k=0;k<hardware.length;k++){
+							sprice+=hardware[k].hardware_Group.hardwareList[0].price;
+							hStr+=hardware[k].hardware_Group.hardwareList[0].name+"X"+hardware[k].hardware_Group.hardwareList[0].num+" ";
+						}
+						$(".table").eq(i).append("<tr><td>"+j+"</td><td class='order_info'>"+hStr+"</td><td>"+sprice+"</td><td>"+
+						"<input class='order_num' type='number' onchange='changeNum("+data[i].wId+","+order[j].oId+",this)' value='"+order[j].num+"'>"+
+						"</td><td><button class='btn btn-default' type='button' onclick='checkInfo("+order[j].oId+")'>查看详细信息</button></td></tr>");
+					}
+				}
 			}
+		});
+	}
+	function checkInfo(oId){
+		$("#accordion").css("display","none");
+		$(".det_info").css("display","block");
+		//查询该订单的具体信息并写入表格中
+		$.ajax({
+				type : "GET",
+				url : "user_showDetailOrder.do",
+				data:{oId:oId},
+				dataType : "json",
+				success : function(data) {
+					console.log(data);
+					$(".det_info").html("");
+					$(".det_info").html("<table class='table table-bordered order-table'><tr><th>物料名称</th><th>规格型号 </th><th>单位</th><th>数量</th><th>品牌</th>"+
+					"<th>价格</th></tr></table>");
+					var str="";
+					for(var i=0;i<data.length;i++){
+						var hardware=data[i].hardware_Group.hardwareList[0];
+						console.log(hardware);
+						$(".order-table").append("<tr><td>"+hardware.name+"</td><td>"+hardware.type+"</td><td>"+hardware.unit+"</td>"+
+						"<td>"+hardware.num+"</td><td>"+hardware.brand+"</td><td>"+hardware.price+"</td></tr>");
+					}
+					$(".det_info").append("<button class='btn btn-default' type='button' onclick='updateShow("+oId+")'>修改订单 </button>"+
+							"<button class='btn btn-default' type='button' onclick='cancel()'>返回 </button>");
+				}
 		})
+	}
+	function updateShow(oId){
+		var storage=window.localStorage;
+		storage["oId"]=oId;
+		location.href="user_forward.do?name=update";
+	}
+	function cancel(){
+		$("#accordion").css("display","block");
+		$(".det_info").css("display","none");
+	}
+	function changeNum(wId,oId,obj){
+		if(window.confirm("您确定要修改该订单数量吗")){
+			$.ajax({
+				type:"GET",
+				url:"user_updateOrderNum.do",
+				data:{wId:wId,oId:oId,num:$(obj).val()},
+				success:function(data){
+					if(data==1){
+						alert("修改成功");
+						init();
+					}else{
+						alert("修改失败");
+					}
+				}
+			})
+		}
 	}
 </script>
 </html>
