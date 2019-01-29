@@ -19,7 +19,17 @@ public class Order_WaterInfo {
 	private Integer wId;
 	private String wName;
 	private String region;
+	private Integer num;
 	
+	public Integer getNum() {
+		return num;
+	}
+
+	public void setNum(Integer num) {
+		this.num = num;
+	}
+
+
 	//负责人
 	private Pic pic;
 	public Integer getwId() {

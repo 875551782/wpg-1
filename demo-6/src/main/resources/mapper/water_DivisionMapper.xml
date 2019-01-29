@@ -29,6 +29,7 @@
 		<id column="wid" property="wId"></id>
 		<result column="wname" property="wName"></result>
 		<result column="region" property="region"></result>
+		<result column="num" property="num"/>
 		<association property="pic" select="getPicByWid" column="wid" >
 			<result column="pid" property="pId"></result>
 			<result column="pname" property="pName"></result>
