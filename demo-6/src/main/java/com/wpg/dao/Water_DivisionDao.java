@@ -17,4 +17,6 @@ public interface Water_DivisionDao {
 	Pic getPicByWid(int id);
 	
 	List<Order_WaterInfo> getOrder_WaterInfos(String rName);
+	
+	List<Order_Hardware> getOrder_HardwaresByWId(int wId);
 }

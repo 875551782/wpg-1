@@ -17,8 +17,12 @@
 	</select>
 	
 	<select id="getOrder_WaterInfos" resultMap="Order_WaterInfo">
-		select * from water_division inner join order_water 
-		on water_division.wid=order_water.wid where region=#{0}
+		select * from water_division  where region=#{0}
+	</select>
+	
+	<select id="getOrder_HardwaresByWId" resultMap="order_HareWareInf">
+		select * from order_hardware where order_id 
+		in (select oid from order_water where wid=#{0})
 	</select>
 	
 	<resultMap type="com.wpg.bean.Order_WaterInfo" id="Order_WaterInfo">
@@ -26,17 +30,26 @@
 		<result column="wname" property="wName"></result>
 		<result column="region" property="region"></result>
 		<association property="pic" select="getPicByWid" column="wid" >
-			<id column="pid" property="pId"></id>
+			<result column="pid" property="pId"></result>
 			<result column="pname" property="pName"></result>
 			<result column="ptel" property="pTel"></result>
 		</association>
 		<collection property="order_Hardwares"
-		ofType="com.wpg.pojo.Order_Hardware" column="oid" 
-		select="com.wpg.dao.OrdersDao.getOrder_HardwaresByOrdersId">
+		ofType="com.wpg.pojo.Order_Hardware" column="wid" 
+		select="getOrder_HardwaresByWId" >
+			
+			<result column="order_id" property="order_Id"></result>
+			<result column="hardware_id" property="hardware_id"></result>
+			<association  column="hardware_id" property="hardware_Group" select="com.wpg.dao.HardwareDao.selHardwareById">
+		</association> 
+		</collection>
+	</resultMap>
+	
+	<resultMap type="com.wpg.pojo.Order_Hardware" id="order_HareWareInf" >
+			<id column="wid"/>
 			<id column="order_id" property="order_Id"></id>
 			<result column="hardware_id" property="hardware_id"></result>
 			<association  column="hardware_id" property="hardware_Group" select="com.wpg.dao.HardwareDao.selHardwareById">
-		</association>
-		</collection>
+			</association>
 	</resultMap>
 </mapper>
