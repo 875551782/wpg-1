@@ -44,6 +44,7 @@
 	<resultMap type="com.wpg.pojo.Order_Hardware" id="order_HardwareDetail">
 		<id column="order_id" property="order_Id"></id>
 		<result column="hardware_id" property="hardware_id"></result>
+		<result column="multiple" property="multiple"/>
 		<association  column="hardware_id" property="hardware_Group" select="com.wpg.dao.HardwareDao.selHardwareById">
 		</association>
 	</resultMap>	

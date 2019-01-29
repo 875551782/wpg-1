@@ -1,6 +1,7 @@
 package com.wpg.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -117,19 +118,20 @@ public class Front_Controller {
 	 */
 	@RequestMapping("user_submitOrder.do")
 	@ResponseBody
-	public int submitOrder(@RequestParam(value="id_Multiple[]")int[] id_Multiple,int oId) {
-		int i = 1;
+	public int submitOrder(@RequestParam(value="id_Multiple[]")String[] id_Multiple,int wId) {
 		int length = id_Multiple.length;
-		int[] ids = new int[length];
-		int[] multiples = new int[length];
+		List<Order_Hardware> order_Hardwares = new ArrayList<>(length);
+		for(int i=0;i<length;i++) {
+			Order_Hardware order_Hardware = new Order_Hardware();
+			int id = Integer.parseInt(id_Multiple[i].split("*")[0]);
+			int multiple = Integer.parseInt(id_Multiple[i].split("*")[1]);
+			order_Hardware.setHardware_id(id);
+			order_Hardware.setMultiple(multiple);
+			order_Hardwares.add(order_Hardware);
+		}
 		
 		
-		if(i>0) {
-			return 1;
-		}
-		else{
-			return 0;
-		}
+		return 0;
 		
 	}
 	@RequestMapping("user_changeOrder.do")
@@ -150,6 +152,8 @@ public class Front_Controller {
 		}
 	}
 	
+	
+	
 	@ResponseBody
 	@RequestMapping("user_showWater_Division.do")
 	public List<Order_WaterInfo> showWater_Division(HttpSession session) {
@@ -166,6 +170,28 @@ public class Front_Controller {
 		if(i>0) {
 			return 1;
 		}else {
+			return 0;
+		}
+	}
+	@ResponseBody
+	@RequestMapping("user_updateOrderHardwareNum.do")
+	public int changeOrder_HardwareNum(@RequestParam(value="id_Multiple[]")String[] id_Multiple,int oId) {
+		
+		int length = id_Multiple.length;
+		List<Order_Hardware> order_Hardwares = new ArrayList<>(length);
+		for(int i=0;i<length;i++) {
+			Order_Hardware order_Hardware = new Order_Hardware();
+			int id = Integer.parseInt(id_Multiple[i].split("*")[0]);
+			int multiple = Integer.parseInt(id_Multiple[i].split("*")[1]);
+			order_Hardware.setHardware_id(id);
+			order_Hardware.setMultiple(multiple);
+			order_Hardwares.add(order_Hardware);
+		}
+		int i = water_DivisionService.updateOrder_HardwareMultiple(order_Hardwares);
+		if(i>0) {
+			return 1;
+		}
+		else{
 			return 0;
 		}
 	}

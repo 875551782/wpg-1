@@ -2,6 +2,8 @@ package com.wpg.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.wpg.bean.OrderInfo;
 import com.wpg.bean.Order_WaterInfo;
 import com.wpg.pojo.Order_Hardware;
@@ -22,4 +24,6 @@ public interface Water_DivisionDao {
 	List<OrderInfo> getOrder_HardwaresByWId(int wId);
 	
 	int updateOrder_Water(int oId,int wId,int num);
+	
+	int updateOrder_HardwareMultiple(@Param("order_Hardwares")List<Order_Hardware> order_Hardwares);
 }

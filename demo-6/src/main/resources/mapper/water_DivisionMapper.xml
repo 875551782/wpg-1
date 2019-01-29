@@ -54,6 +54,7 @@
 			<result column="num" property="num"/>
 			<collection property="order_Hardwares" ofType="com.wpg.pojo.Order_Hardware">
 				<result column="hardware_id" property="hardware_id"></result>
+				<result column="multiple" property="multiple"/>
 				<association  column="hardware_id" property="hardware_Group" select="com.wpg.dao.HardwareDao.selHardwareById">
 				</association> 
 			</collection>
@@ -62,5 +63,14 @@
 	
 	<update id="updateOrder_Water">
 		update order_water set num=#{num} where oid=#{oId} and wid=#{wId}
+	</update>
+	
+	<update id="updateOrder_HardwareMultiple">
+		<foreach collection="order_Hardwares" separator=";" item="order_Hardware">
+			update order_hardware set multiple=#{order_Hardware.multiple} 
+			where hardware_id=#{order_Hardware.hardware_id} 
+			and order_id=#{order_Hardware.order_Id}
+		</foreach>
+		
 	</update>
 </mapper>

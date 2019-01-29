@@ -37,4 +37,8 @@ public class Water_DivisionService {
 	public int updateOrder_Water(int oId,int wId,int num) {
 		return water_DivisionDao.updateOrder_Water(oId, wId, num);
 	}
+	
+	public int updateOrder_HardwareMultiple(List<Order_Hardware> order_Hardwares) {
+		return water_DivisionDao.updateOrder_HardwareMultiple(order_Hardwares);
+	}
 }
