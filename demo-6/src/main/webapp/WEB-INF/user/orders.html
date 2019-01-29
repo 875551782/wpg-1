@@ -18,20 +18,42 @@
 <body>
 	<div class="header">威派格智慧水务</div>
 	<div class="container">
-		
+		<!-- 添加手风琴样式内容 -->
+		<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+			<div class='panel panel-default'>
+				<div class='panel-heading' role='tab' id='heading1'>
+					<h4 class='panel-title'>
+						<a role='button' data-toggle='collapse' data-parent='#accordion'
+							href='#collapse1' aria-expanded='true' aria-controls='collapse1'>这是一个水司</a>
+					</h4>
+				</div>
+				
+				<div id='collapse1' class='panel-collapse collapse in'
+					role='tabpanel' aria-labelledby='heading1'>
+					<div class='panel-body'>
+						askdljfa<br>askdljfa<br>askdljfa<br>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 	<div class="foot">
-		  Copyright ©2019 <a href="#">威派格智慧水务</a>. All rights reserved.
+		Copyright ©2019 <a href="#">威派格智慧水务</a>. All rights reserved.
 	</div>
 </body>
 <script>
 	init();
-	function init(){
+	function init() {
 		$.ajax({
-			type:"GET",
-			url:"user_showWater_Division.do",
-			success:function(data){
-				console.log(data);
+			type : "GET",
+			url : "user_showWater_Division.do",
+			success : function(data) {
+				//data为当前大区的所有水司数据
+				for (var i = 0; i < 5; i++) {
+					console.log("123");
+					$("#accordion").append("");
+				}
+				//console.log(data);
 			}
 		})
 	}
