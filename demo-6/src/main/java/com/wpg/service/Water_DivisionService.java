@@ -33,4 +33,8 @@ public class Water_DivisionService {
 	public List<Order_WaterInfo> getOrder_WaterInfos(String rName){
 		return water_DivisionDao.getOrder_WaterInfos(rName);
 	}
+	
+	public int updateOrder_Water(int oId,int wId,int num) {
+		return water_DivisionDao.updateOrder_Water(oId, wId, num);
+	}
 }

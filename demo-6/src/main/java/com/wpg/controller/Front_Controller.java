@@ -117,14 +117,13 @@ public class Front_Controller {
 	 */
 	@RequestMapping("user_submitOrder.do")
 	@ResponseBody
-	public int submitOrder(@RequestParam(value="ids[]")int[] ids,HttpSession session) {
-		Users user = new Users();
-		user.setId(1);
-		if(session.getAttribute("user") != null) {
-			user = (Users) session.getAttribute("user");
-		}
+	public int submitOrder(@RequestParam(value="id_Multiple[]")int[] id_Multiple,int oId) {
+		int i = 1;
+		int length = id_Multiple.length;
+		int[] ids = new int[length];
+		int[] multiples = new int[length];
 		
-		int i = ordersService.insertOrders(ids,user.getId());
+		
 		if(i>0) {
 			return 1;
 		}
@@ -153,13 +152,23 @@ public class Front_Controller {
 	
 	@ResponseBody
 	@RequestMapping("user_showWater_Division.do")
-	public List<Order_WaterInfo> get(HttpSession session) {
+	public List<Order_WaterInfo> showWater_Division(HttpSession session) {
 		Users user = (Users) session.getAttribute("user");
 		String rName = user.getrName();
 		List<Order_WaterInfo> order_WaterInfos = water_DivisionService.getOrder_WaterInfos(rName);
 		return order_WaterInfos;
 	}
 	
+	@RequestMapping("user_updateOrderNum.do")
+	@ResponseBody
+	public int updateOrder_Water(int oId,int wId,int num) {
+		int i = water_DivisionService.updateOrder_Water(oId, wId, num);
+		if(i>0) {
+			return 1;
+		}else {
+			return 0;
+		}
+	}
 	
 	@RequestMapping("user_orderUpload.do")
 	@ResponseBody
@@ -198,8 +207,6 @@ public class Front_Controller {
 		rows.createCell(7).setCellValue(sum);
 		//File file = new File("E:/test.xls");
 		//FileOutputStream xlsStream = new FileOutputStream(file);
-		
-
         response.setContentType("application/octet-stream");
         response.setHeader("Content-disposition", "attachment;filename=plan.xls");
         response.flushBuffer();

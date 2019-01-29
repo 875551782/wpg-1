@@ -20,4 +20,6 @@ public interface Water_DivisionDao {
 	List<Order_WaterInfo> getOrder_WaterInfos(String rName);
 	
 	List<OrderInfo> getOrder_HardwaresByWId(int wId);
+	
+	int updateOrder_Water(int oId,int wId,int num);
 }

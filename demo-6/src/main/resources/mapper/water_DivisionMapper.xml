@@ -58,4 +58,9 @@
 				</association> 
 			</collection>
 	</resultMap>
+	
+	
+	<update id="updateOrder_Water">
+		update order_water set num=#{num} where oid=#{oId} and wid=#{wId}
+	</update>
 </mapper>
