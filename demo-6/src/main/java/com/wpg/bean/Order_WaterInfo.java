@@ -11,7 +11,7 @@ public class Order_WaterInfo {
 
 	//订单的详细信息
 	//private HashMap<Integer,Order_Hardware> order_HardwareMap;
-	private List<Order_Hardware> order_Hardwares;
+	private List<OrderInfo> orderInfo;
 	
 
 	//水司的详细信息
@@ -19,16 +19,6 @@ public class Order_WaterInfo {
 	private Integer wId;
 	private String wName;
 	private String region;
-	private Integer num;
-	
-	public Integer getNum() {
-		return num;
-	}
-
-	public void setNum(Integer num) {
-		this.num = num;
-	}
-
 
 	//负责人
 	private Pic pic;
@@ -55,13 +45,14 @@ public class Order_WaterInfo {
 	public void setRegion(String region) {
 		this.region = region;
 	}
-	public List<Order_Hardware> getOrder_Hardwares() {
-		return order_Hardwares;
+	public List<OrderInfo> getOrderInfo() {
+		return orderInfo;
 	}
 
-	public void setOrder_Hardwares(List<Order_Hardware> order_Hardwares) {
-		this.order_Hardwares = order_Hardwares;
+	public void setOrderInfo(List<OrderInfo> orderInfo) {
+		this.orderInfo = orderInfo;
 	}
+
 	public Pic getPic() {
 		return pic;
 	}

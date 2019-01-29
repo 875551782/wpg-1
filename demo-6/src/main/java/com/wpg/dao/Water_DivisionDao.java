@@ -2,6 +2,7 @@ package com.wpg.dao;
 
 import java.util.List;
 
+import com.wpg.bean.OrderInfo;
 import com.wpg.bean.Order_WaterInfo;
 import com.wpg.pojo.Order_Hardware;
 import com.wpg.pojo.Order_Water;
@@ -18,5 +19,5 @@ public interface Water_DivisionDao {
 	
 	List<Order_WaterInfo> getOrder_WaterInfos(String rName);
 	
-	List<Order_Hardware> getOrder_HardwaresByWId(int wId);
+	List<OrderInfo> getOrder_HardwaresByWId(int wId);
 }
