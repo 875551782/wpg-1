@@ -1,0 +1,33 @@
+body {
+	min-width: 1000px;
+}
+*{
+	margin: 0px;
+	padding: 0px;
+}
+.container {
+	width: 80%;
+	margin: 0px auto;
+	background: #F5F7FB;
+	height:650px;
+}
+.foot {
+	width: 100%;
+	text-align: center;
+	height: 65px;
+	line-height: 65px;
+	color: #6E7687;
+	border-top: 1px solid #E0E5EC;
+}
+.foot>a {
+	text-decoration-style: none;
+	color: #495057;
+}
+.header {
+	width: 95%;
+	padding-left: 5%;
+	height: 65px;
+	line-height: 65px;
+	font-size: 22px;
+	border-bottom: 1px solid #E0E5EC;
+}
