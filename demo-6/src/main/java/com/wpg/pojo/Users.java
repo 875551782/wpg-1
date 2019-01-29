@@ -6,9 +6,16 @@ public class Users {
 	private String userName;
 	private Integer role;
 	private String password;
+	private String rName;
 	
 	
 	
+	public String getrName() {
+		return rName;
+	}
+	public void setrName(String rName) {
+		this.rName = rName;
+	}
 	public String getPassword() {
 		return password;
 	}
@@ -33,6 +40,4 @@ public class Users {
 	public void setRole(Integer role) {
 		this.role = role;
 	}
-	
-	
 }

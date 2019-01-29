@@ -19,13 +19,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.wpg.bean.Order_WaterInfo;
 import com.wpg.pojo.Hardware;
 import com.wpg.pojo.Hardware_Group;
 import com.wpg.pojo.Order_Hardware;
+import com.wpg.pojo.Order_Water;
 import com.wpg.pojo.Orders;
 import com.wpg.pojo.Users;
+import com.wpg.pojo.Water_Division;
 import com.wpg.service.HardwareService;
 import com.wpg.service.OrdersService;
+import com.wpg.service.Water_DivisionService;
 
 @Controller
 public class Front_Controller {
@@ -33,6 +37,8 @@ public class Front_Controller {
 	private OrdersService ordersService;
 	@Autowired
 	private HardwareService hardwareService;
+	@Autowired
+	private Water_DivisionService water_DivisionService;
 	
 	@RequestMapping("user_showOrders.do")
 	@ResponseBody
@@ -144,6 +150,16 @@ public class Front_Controller {
 			return 0;
 		}
 	}
+	
+	@ResponseBody
+	@RequestMapping("user_showWater_Division.do")
+	public List<Order_WaterInfo> get(HttpSession session) {
+		Users user = (Users) session.getAttribute("user");
+		String rName = user.getrName();
+		List<Order_WaterInfo> order_WaterInfos = water_DivisionService.getOrder_WaterInfos(rName);
+		return order_WaterInfos;
+	}
+	
 	
 	@RequestMapping("user_orderUpload.do")
 	@ResponseBody
