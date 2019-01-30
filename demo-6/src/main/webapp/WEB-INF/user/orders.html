@@ -71,7 +71,7 @@
 			type : "GET",
 			url : "user_showWater_Division.do",
 			success : function(data) {
-				//console.log(data);
+				console.log(data);
 				if(data.length>0){
 					$(".area").html("<h3>"+data[0].region+"</h3>");
 				}
@@ -81,11 +81,11 @@
 					if(i==0){
 						str+="<a role='button' data-toggle='collapse' data-parent='#accordion' href='#collapse"+i+"' aria-expanded='true' aria-controls='collapse"+i+"'>"+
 						data[i].wName+"负责人："+data[i].pic.pName+"电话："+data[i].pic.pTel+"</a></h4></div><div id='collapse"+i+"' class='panel-collapse collapse in' role='tabpanel' aria-labelledby='heading"+i+"'><div class='panel-body'>"+
-						"<table class='table table-bordered'><tr><th>订单编号</th><th>订单信息</th><th>订单总价 </th><th>订单数量</th><th></th></tr></table></div></div></div>";
+						"<table class='table table-bordered'><tr><th>订单编号</th><th>订单信息</th><th>订单总价 </th><th>订单数量</th><th></th></tr></table><button class='btn btn-default' type='button' onclick='createOrder("+data[i].wId+")'>生成订单</button></div></div></div>";
 					}else{
 						str+="<a  class='collapsed' role='button' data-toggle='collapse' data-parent='#accordion' href='#collapse"+i+"' aria-expanded='false' aria-controls='collapse"+i+"'>"+
 						data[i].wName+"负责人："+data[i].pic.pName+"电话："+data[i].pic.pTel+"</a></h4></div><div id='collapse"+i+"' class='panel-collapse collapse' role='tabpanel' aria-labelledby='heading"+i+"'><div class='panel-body'>"+
-						"<table class='table table-bordered'><tr><th>订单编号</th><th>订单信息</th><th>订单总价 </th><th>订单数量</th><th></th></tr></table></div></div></div>";
+						"<table class='table table-bordered'><tr><th>订单编号</th><th>订单信息</th><th>订单总价 </th><th>订单数量</th><th></th></tr></table><button class='btn btn-default' type='button' onclick='createOrder("+data[i].wId+")'>生成订单</button></div></div></div>";
 					}
 					$("#accordion").append(str);
 					//该水司的订单对象
@@ -100,7 +100,8 @@
 						var sprice=0;
 						for(var k=0;k<hardware.length;k++){
 							sprice+=hardware[k].hardware_Group.hardwareList[0].price;
-							hStr+=hardware[k].hardware_Group.hardwareList[0].name+"X"+hardware[k].hardware_Group.hardwareList[0].num+" ";
+							var num=hardware[k].hardware_Group.hardwareList[0].num*hardware[k].multiple;
+							hStr+=hardware[k].hardware_Group.hardwareList[0].name+"X"+num+" ";
 						}
 						$(".table").eq(i).append("<tr><td>"+j+"</td><td class='order_info'>"+hStr+"</td><td>"+sprice+"</td><td>"+
 						"<input class='order_num' type='number' onchange='changeNum("+data[i].wId+","+order[j].oId+",this)' value='"+order[j].num+"'>"+
@@ -110,26 +111,32 @@
 			}
 		});
 	}
+	function createOrder(wId){
+		//传递参数并进行页面跳转
+		var storage=window.localStorage;
+		storage["wId"]=wId;
+		location.href="user_forward.do?name=index";
+	}
 	function checkInfo(oId){
 		$("#accordion").css("display","none");
 		$(".det_info").css("display","block");
 		//查询该订单的具体信息并写入表格中
 		$.ajax({
-				type : "GET",
+				type:"GET",
 				url : "user_showDetailOrder.do",
 				data:{oId:oId},
 				dataType : "json",
 				success : function(data) {
-					console.log(data);
+					//console.log(data);
 					$(".det_info").html("");
 					$(".det_info").html("<table class='table table-bordered order-table'><tr><th>物料名称</th><th>规格型号 </th><th>单位</th><th>数量</th><th>品牌</th>"+
 					"<th>价格</th></tr></table>");
 					var str="";
 					for(var i=0;i<data.length;i++){
 						var hardware=data[i].hardware_Group.hardwareList[0];
-						console.log(hardware);
+						var num=hardware.num*data[i].multiple;
 						$(".order-table").append("<tr><td>"+hardware.name+"</td><td>"+hardware.type+"</td><td>"+hardware.unit+"</td>"+
-						"<td>"+hardware.num+"</td><td>"+hardware.brand+"</td><td>"+hardware.price+"</td></tr>");
+						"<td>"+num+"</td><td>"+hardware.brand+"</td><td>"+hardware.price+"</td></tr>");
 					}
 					$(".det_info").append("<button class='btn btn-default' type='button' onclick='updateShow("+oId+")'>修改订单 </button>"+
 							"<button class='btn btn-default' type='button' onclick='cancel()'>返回 </button>");
