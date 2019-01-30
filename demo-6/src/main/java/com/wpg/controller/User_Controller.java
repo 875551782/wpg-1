@@ -73,6 +73,7 @@ public class User_Controller {
 	public String delWater_divison(String id,String region) {
 		int id1=Integer.parseInt(id);
 		waterService.delWater_DivisionById(id1);
+		waterService.delPicById(id1);
 		return region;
 	}
 	
@@ -83,6 +84,8 @@ public class User_Controller {
 		w.setwName(rname);
 		w.setRegion(region);
 		waterService.addWater_Division(w);
+		int wid = waterService.selectWidByname(rname);
+		waterService.addPicByWid(wid);
 		return "华东大区";
 	}
 	

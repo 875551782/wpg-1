@@ -29,4 +29,10 @@ public interface Water_DivisionDao {
 	int updateOrder_Water(int oId,int wId,int num);
 	
 	int updateOrder_HardwareMultiple(@Param("order_Hardwares")List<Order_Hardware> order_Hardwares);
+	
+	void delPicById(int id);
+	
+	int selectWidByname(String rname);
+	
+	void addPicByWid(int wid);
 }

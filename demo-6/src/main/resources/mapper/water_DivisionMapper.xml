@@ -63,6 +63,7 @@
 	<delete id="delWater_DivisionById" parameterType="Integer">
 		delete from water_division	where wid=#{0}
 	</delete>
+	
 	<insert id="addWater_Division" parameterType="com.wpg.pojo.Water_Division">
 		insert into water_division(wname,region) value(#{wName},#{region})
 	</insert>
@@ -81,4 +82,18 @@
 		</foreach>
 		
 	</update>
+	
+	
+	<delete id="delPicById" parameterType="Integer">
+		delete from pic	where wid=#{0}
+	</delete>
+	
+	<select id="selectWidByname">
+		select wid from water_division 
+		where wname=#{0}
+	</select>
+	
+	<insert id="addPicByWid">
+		insert into pic(wid) value(#{wid})
+	</insert>
 </mapper>

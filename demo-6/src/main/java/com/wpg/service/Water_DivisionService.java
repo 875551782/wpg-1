@@ -47,4 +47,16 @@ public class Water_DivisionService {
 	public int updateOrder_HardwareMultiple(List<Order_Hardware> order_Hardwares) {
 		return water_DivisionDao.updateOrder_HardwareMultiple(order_Hardwares);
 	}
+	
+	public void delPicById(int id) {
+		water_DivisionDao.delPicById(id);
+	}
+	
+	public int selectWidByname(String rname) {
+		return water_DivisionDao.selectWidByname(rname);
+	}
+	
+	public void addPicByWid(int wid) {
+		water_DivisionDao.addPicByWid(wid);
+	}
 }
