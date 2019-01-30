@@ -123,6 +123,7 @@ public class User_Controller {
 		usersService.addManager(u);
 		Users user=(Users) session.getAttribute("admin");
 		logger.info(user.getUserName()+"添加了管理员，用户名是"+username+"密码是"+password);
+		System.out.println(111);
 		return "华东大区";
 	}
 }
