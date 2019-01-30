@@ -166,9 +166,8 @@ public class Front_Controller {
 			return 0;
 		}
 	}
-	@ResponseBody
-	@RequestMapping("user_updateOrderHardwareNum.do")
-	public int changeOrder_HardwareNum(@RequestParam(value="id_Multiple[]")String[] id_Multiple,int oId) {
+	
+	/*public int changeOrder_HardwareNum(@RequestParam(value="id_Multiple[]")String[] id_Multiple,int oId) {
 		List<Order_Hardware> order_Hardwares = parseString(id_Multiple);
 		for(int i=0;i<order_Hardwares.size();i++) {
 			order_Hardwares.get(i).setOrder_Id(oId);
@@ -180,7 +179,7 @@ public class Front_Controller {
 		else{
 			return 0;
 		}
-	}
+	}*/
 	
 	@RequestMapping("user_orderUpload.do")
 	@ResponseBody
