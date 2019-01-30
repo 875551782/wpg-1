@@ -288,7 +288,7 @@ public class Front_Controller {
 				rows.createCell(1).setCellValue(hardware.getName());
 				rows.createCell(2).setCellValue(hardware.getType());
 				rows.createCell(3).setCellValue(hardware.getUnit());
-				int num = hardware.getNum()*list.get(i).getMultiple();
+				int num = hardware.getNum()*list.get(j).getMultiple();
 				rows.createCell(4).setCellValue(num);
 				rows.createCell(5).setCellValue(hardware.getBrand());
 				rows.createCell(6).setCellValue(hardware_Group.getDesct());
