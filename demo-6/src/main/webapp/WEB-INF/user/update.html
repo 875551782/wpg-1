@@ -4,51 +4,50 @@
 <meta charset="utf-8">
 
 <title>Insert title here</title>
-<link href="./css/sfq.css" rel="stylesheet">
+<style type="text/css">
+	.hardwarenum{
+		width: 40px;
+		text-align: center;
+	}
+	.sumPrice{
+		float: right;
+		font-size: 20px;
+	}
+	.buts{
+		width: 96%;
+		margin:20px auto;
+	}
+	.buts>input:nth-child(2){
+		margin-left:40px;
+	}
+</style>
 <link
 	href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
 	rel="stylesheet">
 <link
 	href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"
 	rel="stylesheet">
+<link href="./css/both.css" rel="stylesheet">
+<link href="./css/sfq.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery.js"></script>
 <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 <script src="http://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<style type="text/css">
-/*整体样式  */
-.con {
-	display: flex;
-}
-
-.left {
-	flex: 1;
-}
-
-.right {
-	flex: 4;
-}
-.btn-default{
-	margin-top:20px;
-	margin-left:30px;
-}
-</style>
 </head>
 <body>
-	<div class="con">
-		<div class="left">
-			<ul class="nav nav-pills nav-stacked">
-				<li role="presentation"><a href="user_forward.do?name=index">生成订单</a></li>
-				<li role="presentation" class="active"><a  href="user_forward.do?name=checkOrder">查看订单</a></li>
-			</ul>
+	<div class="header">威派格智慧水务</div>
+	<div class="container">
+		<div class="panel-group" id="accordion" role="tablist"
+				aria-multiselectable="true"></div>
+		<div class="buts">
 		</div>
-		<div class="right">
-			<div class="panel-group" id="accordion" role="tablist"
-			aria-multiselectable="true"></div>
-		</div>
+	</div>
+	<div class="foot">
+		Copyright ©2019 <a href="#">威派格智慧水务</a>. All rights reserved.
 	</div>
 </body>
 <script>
-	var oId=window.localStorage["oId"];
+	var oId = window.localStorage["oId"];
+	//console.log(oId);
 	getModule();
 	var allData;
 	function getModule() {
@@ -58,10 +57,11 @@
 					dataType : "json",
 					success : function(data) {
 						//console.log(data);
-						allData=data;
+						allData = data;
 						for ( var key in data) {
 							if (key == 1) {
-								$("#accordion").append(
+								$("#accordion")
+										.append(
 												"<div class='panel panel-default'>"
 														+ "<div class='panel-heading' role='tab' id='heading"+key+"'>"
 														+ "<h4 class='panel-title'>"
@@ -70,8 +70,8 @@
 														+ data[key]
 														+ "</a></h4></div>"
 														+ "<div id='collapse"+key+"' class='panel-collapse collapse in' role='tabpanel' aria-labelledby='heading"+key+"'>"
-														+ "<div class='panel-body'><table class='table'><tr><th>#</th><th>名称</th><th>型号</th><th>单位</th>"
-														+ "<th>数量</th><th>品牌</th><th>价格</th></tr></table></div></div></div>");
+														+ "<div class='panel-body'><table class='table table-bordered'><tr><th>#</th><th>名称</th><th>数量</th><th>单位</th><th>品牌</th><th>型号</th>"
+														+ "<th>价格</th></tr></table></div></div></div>");
 							} else {
 								$("#accordion")
 										.append(
@@ -83,124 +83,160 @@
 														+ data[key]
 														+ "</a></h4></div>"
 														+ "<div id='collapse"+key+"' class='panel-collapse collapse' role='tabpanel' aria-labelledby='heading"+key+"'>"
-														+ "<div class='panel-body'><table class='table'><tr><th>#</th><th>名称</th><th>型号</th><th>单位</th>"
-														+ "<th>数量</th><th>品牌</th><th>价格</th></tr></table></div></div></div>");
+														+ "<div class='panel-body'><table class='table table-bordered'><tr><th>#</th><th>名称</th><th>数量</th><th>单位</th><th>品牌</th><th>型号</th>"
+														+ "<th>价格</th></tr></table></div></div></div>");
 							}
 						}
-						$("#accordion").append("<input onclick='submitData()' class='btn btn-default' type='button' value='修改订单' >"+
-								"<input onclick='cancelUpdate()' class='btn btn-default' type='button' value='取消' >");
+						$(".buts")
+								.append(
+										"<input onclick='submitData()' class='btn btn-default' type='button' value='修改订单' >"
+												+ "<input onclick='cancelUpdate()' class='btn btn-default' type='button' value='取消' >");
 					}
 				})
 	}
 	getDate();
 	var allHardware;
 	function getDate() {
-		$.ajax({
-			type : "GET",
-			url : "user_group.do",
-			success : function(data) {
-				allHardware=data;
-				//console.log(data);
-				//遍历共有几个功能
-				for(var k in allData){
-					var str="";
-					//遍历一个功能中有多少个类
-					for(var i=0;i<data[allData[k]].length;i++){
-						//获取类
-						var mark=data[allData[k]][i].mark;
-						//获取类中的物料集合对象
-						var hardware=data[allData[k]][i].hardwareList;
-						var markSize=data[allData[k]][i].hardwareList.length;
-						//查看该类是否标配
-						var state=data[allData[k]][i].states;
-						if(state==1){
-							if(markSize==1){
-								str+="<tr><td rowspan='"+markSize+"'>标配</td>";
-							}else{
-								str+="<tr><td rowspan='"+markSize+"'>"+markSize+"选1<br>标配</td>";
-							}
-						}else{
-							if(markSize==1){
-								str+="<tr><td rowspan='"+markSize+"'></td>";
-							}else{
-								str+="<tr><td rowspan='"+markSize+"'>"+markSize+"选1<br></td>";
-							}
-						}
-						//遍历一个类中有多少个物料 
-						for(var j=0;j<markSize;j++){
-							//网络功能必须勾选
-							if(allData[k]=="internets"){
-								if(j==0){
-									if(state==1){
-										str+="<td><input class='"+hardware[j].id+"' type='radio' checked='' name='"+mark+"' value='"+hardware[j].id+"'>"+hardware[j].name+"</td><td>"+hardware[j].type+"</td><td>"+hardware[j].unit+"</td>"+
-										"<td>"+hardware[j].num+"</td><td>"+hardware[j].brand+"</td><td>"+hardware[j].price+"</td></tr>";
-									}else{
-										str+="<td><input class='"+hardware[j].id+"' type='checkbox' name='"+mark+"' value='"+hardware[j].id+"'>"+hardware[j].name+"</td><td>"+hardware[j].type+"</td><td>"+hardware[j].unit+"</td>"+
-										"<td>"+hardware[j].num+"</td><td>"+hardware[j].brand+"</td><td>"+hardware[j].price+"</td></tr>";
+		$
+				.ajax({
+					type : "GET",
+					url : "user_group.do",
+					success : function(data) {
+						allHardware = data;
+						//console.log(data);
+						//遍历共有几个功能
+						for ( var k in allData) {
+							var str = "";
+							//遍历一个功能中有多少个类
+							for (var i = 0; i < data[allData[k]].length; i++) {
+								//获取类
+								var mark = data[allData[k]][i].mark;
+								//获取类中的物料集合对象
+								var hardware = data[allData[k]][i].hardwareList;
+								var markSize = data[allData[k]][i].hardwareList.length;
+								//查看该类是否标配
+								var state = data[allData[k]][i].states;
+								if (state == 1) {
+									if (markSize == 1) {
+										str += "<tr><td rowspan='"+markSize+"'>标配</td>";
+									} else {
+										str += "<tr><td rowspan='"+markSize+"'>"
+												+ markSize + "选1<br>标配</td>";
 									}
-								}else{
-									str+="<td><input class='"+hardware[j].id+"' type='radio' name='"+mark+"' value='"+hardware[j].id+"'>"+hardware[j].name+"</td><td>"+hardware[j].type+"</td><td>"+hardware[j].unit+"</td>"+
-									"<td>"+hardware[j].num+"</td><td>"+hardware[j].brand+"</td><td>"+hardware[j].price+"</td></tr>";
+								} else {
+									if (markSize == 1) {
+										str += "<tr><td rowspan='"+markSize+"'></td>";
+									} else {
+										str += "<tr><td rowspan='"+markSize+"'>"
+												+ markSize + "选1<br></td>";
+									}
 								}
-							}else{
-								str+="<td><input class='"+hardware[j].id+"' type='checkbox' name='"+mark+"' value='"+hardware[j].id+"'>"+hardware[j].name+"</td><td>"+hardware[j].type+"</td><td>"+hardware[j].unit+"</td>"+
-								"<td>"+hardware[j].num+"</td><td>"+hardware[j].brand+"</td><td>"+hardware[j].price+"</td></tr>";
+								//遍历一个类中有多少个物料 
+								for (var j = 0; j < markSize; j++) {
+									//网络功能必须勾选
+									if (allData[k] == "internets") {
+										if (j == 0) {
+											if (state == 1) {
+												str += "<td><input class='"+hardware[j].id+"' type='radio' onchange='sumPrice("+hardware[j].num+")' checked='' name='"+mark+"' value='"+hardware[j].id+"'>";
+											} else {
+												str += "<td><input class='"+hardware[j].id+"' type='checkbox' onchange='sumPrice("+hardware[j].num+")' name='"+mark+"' value='"+hardware[j].id+"'>";
+											}
+										} else {
+											str += "<td><input class='"+hardware[j].id+"' type='radio' onchange='sumPrice("+hardware[j].num+")' name='"+mark+"' value='"+hardware[j].id+"'>";
+										}
+									} else {
+										str += "<td><input class='"+hardware[j].id+"' type='checkbox' onchange='sumPrice("+hardware[j].num+")' name='"+mark+"' value='"+hardware[j].id+"'>";			
+									}
+									str+=hardware[j].name
+									+ "</td><td>"
+									+ hardware[j].num+"X<input class='hardwarenum' value='1' type='number' value='' min='1'>"
+									+ "</td><td>"
+									+ hardware[j].unit
+									+ "</td><td>"
+									+ hardware[j].brand
+									+ "</td>"
+									+ "<td>"
+									+ hardware[j].type
+									+ "</td><td class='price'>"
+									+ hardware[j].price
+									+ "</td></tr>";
+								}
 							}
+							//往功能表中添加
+							$(".table").eq(k - 1).append(str);
 						}
-					}
-					//往功能表中添加
-					$(".table").eq(k-1).append(str);
-				}
-				$("input[type='checkbox']").on('click',function() { //选取同一name下的input
-					var name=$(this).attr('name');			
-					if($('input[name="'+name+'"]').is(':checked')) { //判断input是否选中
-					$('input[name="'+name+'"]').prop('checked', false); //清除所有的选中状态
-					$(this).prop('checked',true); //设置点击的input为选中状态
+						$("input[type='checkbox']").on(
+								'click',
+								function() { //选取同一name下的input
+									var name = $(this).attr('name');
+									if ($('input[name="' + name + '"]').is(
+											':checked')) { //判断input是否选中
+										$('input[name="' + name + '"]').prop(
+												'checked', false); //清除所有的选中状态
+										$(this).prop('checked', true); //设置点击的input为选中状态
+									}
+								})
+						$.ajax({
+							type : "GET",
+							url : "user_showDetailOrder.do",
+							data : {
+								oId : oId
+							},
+							dataType : "json",
+							success : function(data) {
+								console.log(data);
+								for ( var key in data) {
+									$("." + data[key].hardware_id).parent().parent().find("input[type=number]").val(data[key].multiple);
+									$("." + data[key].hardware_id).prop(
+											'checked', true);
+								}
+							}
+						})
 					}
 				})
-					$.ajax({
-						type : "GET",
-						url : "user_showDetailOrder.do",
-						data:{oId:oId},
-						dataType : "json",
-						success : function(data) {
-							for ( var key in data) {
-								console.log(data[key].hardware_id);
-								$("."+data[key].hardware_id).prop('checked',true);
-							}
-						}
-					})
-			}
-		})
 	}
-	function submitData(){
+	function submitData() {
 		//设置一个数组传递给后台
-		var ids=new Array();
-		$("[type='radio']:checked").each(function(index,element){
+		var ids = new Array();
+		$("[type='radio']:checked").each(function(index, element) {
 			//将选中的物料的id写进数组中
-			ids[index]=$(this).val();
+			ids[index] = $(this).val()+"*"+ $(this).parent().parent().find("input[type=number]").val();
 		})
-		var len=ids.length;
-		$("[type='checkbox']:checked").each(function(){
+		var len = ids.length;
+		$("[type='checkbox']:checked").each(function() {
 			//将选中的物料的id写进数组中
-			ids[len]=$(this).val();
+			ids[len] = $(this).val()+"*"+ $(this).parent().parent().find("input[type=number]").val();
 			len++;
 		})
-		console.log(ids);
 		$.ajax({
-			type:"POST",
-			url:"user_changeOrder.do",           
-			data:{ids:ids,oId:oId},
-			success:function(data){
-				if(data==1){
+			type : "POST",
+			url : "user_changeOrder.do",
+			data : {
+				id_Multiple : ids,
+				oId : oId
+			},
+			success : function(data) {
+				if (data == 1) {
 					alert("修改成功！！！");
-					location.href="user_forward.do?name=checkOrder";
+					location.href = "user_forward.do?name=orders";
 				}
 			}
-		}) 
+		})
 	}
-	function cancelUpdate(){
-		location.href="user_forward.do?name=orders";
+	function cancelUpdate() {
+		location.href = "user_forward.do?name=orders";
+	}
+	var sum=0;
+	function sumPrice(num){
+		$("[type='radio']:checked").each(function(index, element){
+			 var num1=num*$(this).parent().parent().find("input[type=number]").val()
+			 sum+=num*$(this).parent().parent().find("td:nth-child(7)").html();
+		}) 
+		$("[type='checkbox']:checked").each(function() {
+			 var num1=num*$(this).parent().parent().find("input[type=number]").val()
+			 sum+=num*$(this).parent().parent().find(".price").html();
+		})
+		$(".buts").append("<span class='sumPrice'>总价："+sum+"</span>");
 	}
 </script>
 </html>

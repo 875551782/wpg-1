@@ -59,4 +59,8 @@ public class Water_DivisionService {
 	public void addPicByWid(int wid) {
 		water_DivisionDao.addPicByWid(wid);
 	}
+
+	public int updatePic(int wId,String name,String tel) {
+		return water_DivisionDao.updatePic(wId,name,tel);
+	}
 }

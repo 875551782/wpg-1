@@ -9,8 +9,9 @@ body {
 	width: 90%;
 	margin: 0px auto;
 	background: #F5F7FB;
-	height:650px;
-	padding-top: 30px;
+	min-height:650px;
+	padding-top:40px;
+	padding-bottom:40px;
 }
 .foot {
 	width: 100%;
@@ -34,4 +35,14 @@ body {
 }
 .area{
 	margin-bottom: 30px;
+}
+.nav{
+	width: 95%;
+	padding-left: 5%;
+	height: 50px;
+	line-height: 50px;
+	font-size: 16px;
+}
+.nav>a{
+	margin-right:50px;
 }

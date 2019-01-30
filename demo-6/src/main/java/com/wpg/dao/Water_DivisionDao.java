@@ -35,4 +35,6 @@ public interface Water_DivisionDao {
 	int selectWidByname(String rname);
 	
 	void addPicByWid(int wid);
+
+	int updatePic(int wId, String name, String tel);
 }
