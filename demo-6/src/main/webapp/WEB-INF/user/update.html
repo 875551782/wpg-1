@@ -18,7 +18,7 @@
 		margin:20px auto;
 	}
 	.buts>input:nth-child(2){
-		margin-left:40px;
+		margin-right:40px;
 	}
 </style>
 <link
@@ -38,7 +38,7 @@
 	<div class="container">
 		<div class="panel-group" id="accordion" role="tablist"
 				aria-multiselectable="true"></div>
-		<div class="buts">
+		<div class="buts"><span class='sumPrice'></span>
 		</div>
 	</div>
 	<div class="foot">
@@ -149,7 +149,7 @@
 									}
 									str+=hardware[j].name
 									+ "</td><td>"
-									+ hardware[j].num+"X<input class='hardwarenum' value='1' type='number' value='' min='1'>"
+									+ hardware[j].num+"X<input class='hardwarenum' value='1' type='number' value='' min='1' onchange='sumPrice("+hardware[j].num+")'>"
 									+ "</td><td>"
 									+ hardware[j].unit
 									+ "</td><td>"
@@ -226,17 +226,17 @@
 	function cancelUpdate() {
 		location.href = "user_forward.do?name=orders";
 	}
-	var sum=0;
 	function sumPrice(num){
+		var sum=0;
 		$("[type='radio']:checked").each(function(index, element){
-			 var num1=num*$(this).parent().parent().find("input[type=number]").val()
-			 sum+=num*$(this).parent().parent().find("td:nth-child(7)").html();
+			 var num1=num*$(this).parent().parent().find("input[type=number]").val();
+			 sum+=num1*$(this).parent().parent().find(".price").html();
 		}) 
 		$("[type='checkbox']:checked").each(function() {
-			 var num1=num*$(this).parent().parent().find("input[type=number]").val()
-			 sum+=num*$(this).parent().parent().find(".price").html();
+			 var num1=num*$(this).parent().parent().find("input[type=number]").val();
+			 sum+=num1*$(this).parent().parent().find(".price").html();
 		})
-		$(".buts").append("<span class='sumPrice'>总价："+sum+"</span>");
+		$(".sumPrice").html("总价："+sum);
 	}
 </script>
 </html>
