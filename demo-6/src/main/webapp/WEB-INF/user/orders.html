@@ -39,6 +39,7 @@
 	}
 	.btn-default{
 		margin-right:20px;
+		width: 95px;
 	}
 	.cover{
 		background:rgb(16,16,16,0.6);
@@ -119,9 +120,7 @@
 				for (var i = 0; i <data.length; i++) {
 					var str="<div class='panel panel-default'><div class='panel-heading' role='tab' id='heading"+i+"'><h4 class='panel-title'>";
 					var str1 = data[i].wId+",\""+data[i].pic.pName+"\",\""+data[i].pic.pTel+"\"";
-					console.log(str1);
 					if(i==0){
-						
 						str+="<a role='button' data-toggle='collapse' data-parent='#accordion' href='#collapse"+i+"' aria-expanded='true' aria-controls='collapse"+i+"'>"+
 						data[i].wName+"负责人："+data[i].pic.pName+"电话："+data[i].pic.pTel+"</a></h4></div><div id='collapse"+i+"' class='panel-collapse collapse in' role='tabpanel' aria-labelledby='heading"+i+"'><div class='panel-body'>"+
 						"<table class='table table-bordered'><tr><th>订单编号</th><th>订单信息</th><th>订单总价 </th><th>订单数量</th><th></th></tr></table><button class='btn btn-default' type='button' onclick='createOrder("+data[i].wId+")'>生成订单</button>"+
