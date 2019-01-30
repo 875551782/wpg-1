@@ -7,14 +7,11 @@ import org.springframework.stereotype.Service;
 import com.wpg.dao.HardwareDao;
 import com.wpg.pojo.Hardware;
 import com.wpg.pojo.Hardware_Group;
-import org.apache.log4j.Logger;
 
 @Service
 public class HardwareService {
 	@Autowired
 	private HardwareDao hardwareDao;
-	
-	private static Logger logger = Logger.getLogger(HardwareService.class);
 	
 	// 查询所有物料
 	public List<Hardware> selAllHardware() {
@@ -64,7 +61,6 @@ public class HardwareService {
 
 	// 假删除物料信息
 	public void fdelHardware(int id) {
-		logger.info("删除了物料");
 		hardwareDao.fdelHardware(id);
 	}
 	//查找类的序号

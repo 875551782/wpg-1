@@ -3,7 +3,10 @@ package com.wpg.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -12,13 +15,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wpg.pojo.Hardware;
 import com.wpg.pojo.Hardware_Group;
+import com.wpg.pojo.OperationDetails;
+import com.wpg.pojo.Users;
 import com.wpg.service.HardwareService;
+import com.wpg.util.SerTest;
 
 @Controller
 public class Back_Controller {
 	
 	@Autowired
 	private HardwareService hardwareService;
+	public final static Logger logger = LoggerFactory.getLogger(Back_Controller.class);
+	
 	
 	@RequestMapping("init.do")
 	public String init() {
@@ -51,7 +59,7 @@ public class Back_Controller {
 	
 	//增加一个新类
 	@RequestMapping("admin_addHardware_Group.do")
-	public String addHardware_Group(Hardware group,HttpServletRequest req,String flag,String mark) {
+	public String addHardware_Group(Hardware group,HttpServletRequest req,String flag,String mark,HttpSession session) {
 		if(flag.equals("1")) {
 			int i=hardwareService.selMarkByModule(group.getModule());
 			group.setMark(i+1);
@@ -76,13 +84,17 @@ public class Back_Controller {
 			group.setdFlag(1);
 			hardwareService.addHardWare(group);
 		}
+		Users user=(Users) session.getAttribute("admin");
+		logger.info(user.getUserName()+"增加了一个新类");
 		return "manager/index";
 	}
 	
+
+
 	//修改物料信息
 	@ResponseBody
 	@RequestMapping("admin_updateHardware.do")
-	public String updateHardWare(String id,String name,String type,String unit,String num,String brand,String price,String desct,String states,String mark,String module) {
+	public String updateHardWare(String id,String name,String type,String unit,String num,String brand,String price,String desct,String states,String mark,String module,HttpSession session) {
 		Hardware h=new Hardware();
 		h.setName(name);
 		h.setType(type);
@@ -116,6 +128,8 @@ public class Back_Controller {
 		hg.setStates(s);
 		hg.setMark(m);
 		hardwareService.updateHardware_Group(hg);
+		Users user=(Users) session.getAttribute("admin");
+		logger.info(user.getUserName()+"修改了"+module);
 		return module;
 	}
 	
@@ -129,8 +143,10 @@ public class Back_Controller {
 	//假删除物料信息
 	@ResponseBody
 	@RequestMapping("admin_delHardware.do")
-	public String fdelHardware(String module,int id) {
+	public String fdelHardware(String module,int id,HttpSession session) {
 		hardwareService.fdelHardware(id);
+		Users user=(Users) session.getAttribute("admin");
+		logger.info(user.getUserName()+"删除了物料");
 		return module;
 	}
 }
