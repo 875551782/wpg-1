@@ -21,4 +21,16 @@ public class UsersService {
 	public Users selUser(String username){
 		return usersDao.selUser(username);
 	}
+	public List<Users> selAllUsersByRname(String rname){
+		List<Users> list=usersDao.selAllUsersByRname(rname);
+		return list;
+	}
+	
+	public void delManagerById(int id) {
+		usersDao.delManagerById(id);
+	}
+	
+	public void addManager(Users u) {
+		usersDao.addManager(u);
+	}
 }

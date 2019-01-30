@@ -11,6 +11,7 @@
 	<script type="text/javascript" src="v3/scripts.min.js"></script>
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<script type="text/javascript" src="jquery-1.8.3/jquery.min.js"></script>
+	<script src="https://unpkg.com/vue/dist/vue.js"></script>
 	<style>
 	.addw,.edit{
 		display:none;
@@ -21,12 +22,25 @@
 		display: none;
 		background:white;
 	}
-
+	.clear{
+		clear:both;
+		content:"";
+		display:block;
+	}
+	.clear-div:hover{
+		background-color: skyblue;
+		color:white;
+	}
 </style>
 </head>
 <body>
-	<div class="container">
-	<div class="row clearfix">
+<div class="container">
+	<div class="clear" style="float:left;">
+		<div class="clear-div" style="margin-top:30px;height:50px;border:1px solid;width:100px;text-align:center;line-height:50px;border-radius:5%;" id="matter">物料管理</div>
+		<div class="clear-div" style="margin-top:30px;height:50px;border:1px solid;width:100px;text-align:center;line-height:50px;border-radius:5%;" id="water-manager">水司管理</div>
+		<div class="clear-div" style="margin-top:30px;height:50px;border:1px solid;width:100px;text-align:center;line-height:50px;border-radius:5%;" id="manager">管理员管理</div>
+	</div>
+	<div class="row clearfix"  style="float:left;margin-left:10px;" id="matter-container">
 		<div class="col-md-12 column">
 			<div class="tabbable" id="tabs-362670">
 				<ul class="nav nav-tabs">
@@ -67,7 +81,7 @@
 			</div>
 			
 			<div id="addWare" class="addw">
-				<form method="post" id="form" action="admin_addHardware_Group.do" onsubmit="return check()">
+				<form method="post" id="form" action="admin_addHardware_Group.do">
 				  <div class="form-group">
 				    <label for="exampleInputEmail1">物料名称</label>
 				    <input type="text" class="form-control" id="exampleInputEmail1"  name="name">
@@ -105,8 +119,7 @@
 				    <input type="hidden" class="form-control"  name="flag" id="flag">
 				    <input type="hidden" class="form-control"  name="mark" id="mark">
 				 </div>
-			  	<button type="submit" class="btn btn-success" style="margin-left:180px;" id="submit" onclick="check()">提交</button>
-			  	</form>
+			  	<button type="submit" class="btn btn-success" style="margin-left:180px;" id="submit">提交</button>
 			</div>
 			
 			
@@ -155,26 +168,125 @@
 			</div>
 		</div>
 	</div>
+	<div id="water-container" style="display:none;float:left;margin-left:10px;">
+		<div class="tabbable" id="tabs-362670">
+				<ul class="nav nav-tabs">
+					<li class="active">
+						 <a href="#panel-2" data-toggle="tab" id="华东大区" name="place">华东大区</a>
+					</li>
+					<li>
+						 <a href="#panel-2" data-toggle="tab" id="华南大区" name="place">华南大区</a>
+					</li>
+					<li>
+						 <a href="#panel-2" data-toggle="tab" id="华北大区" name="place">华北大区</a>
+					</li>
+					<li>
+						 <a href="#panel-2" data-toggle="tab" id="华中大区" name="place">华中大区</a>
+					</li>
+					<li>
+						 <a href="#panel-2" data-toggle="tab" id="东北大区" name="place">东北大区</a>
+					</li>
+					<li>
+						 <a href="#panel-2" data-toggle="tab" id="西北大区" name="place">西北大区</a>
+					</li>
+					<li>
+						 <a href="#panel-2" data-toggle="tab" id="西南大区" name="place">西南大区</a>
+					</li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane active" id="panel-2">
+						
+					</div>
+
+				</div>
+			</div>
+			<div id="addwaterd" style="display:none;margin-left:200px;margin-top:100px;">
+					<div class="input-group">
+						<span class="input-group-addon">姓名</span> <input type="text"
+							class="form-control" aria-describedby="basic-addon1" name="rname" style="width:200px;">
+					</div>
+					<div class="input-group" style="margin-top:20px;">
+						<span class="input-group-addon">大区</span>
+						 <select type="text" class="form-control" aria-describedby="basic-addon1" name="region" style="width:200px;">
+						 	<option value="华东大区">华东大区</option>
+						 	<option value="华南大区">华南大区</option>
+						 	<option value="华北大区">华北大区</option>
+						 	<option value="华中大区">华中大区</option>
+						 	<option value="东北大区">东北大区</option>
+						 	<option value="西北大区">西北大区</option>
+						 	<option value="西南大区">西南大区</option>
+						</select>
+					</div>
+					<input class="btn btn-primary" style="margin-left:40px;margin-top:20px;" id="add-submit" value="提交">
+			</div>
+	</div>
+	<div id="manager-container" style="display:none;float:left;margin-left:10px;">
+				<div class="tabbable" id="tabs-362670">
+				<ul class="nav nav-tabs">
+					<li class="active">
+						 <a href="#panel-3" data-toggle="tab" name="华东大区">华东大区</a>
+					</li>
+					<li>
+						 <a href="#panel-3" data-toggle="tab" name="华南大区">华南大区</a>
+					</li>
+					<li>
+						 <a href="#panel-3" data-toggle="tab" name="华北大区">华北大区</a>
+					</li>
+					<li>
+						 <a href="#panel-3" data-toggle="tab" name="华中大区">华中大区</a>
+					</li>
+					<li>
+						 <a href="#panel-3" data-toggle="tab" name="东北大区" >东北大区</a>
+					</li>
+					<li>
+						 <a href="#panel-3" data-toggle="tab" name="西北大区">西北大区</a>
+					</li>
+					<li>
+						 <a href="#panel-3" data-toggle="tab" name="西南大区">西南大区</a>
+					</li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane active" id="panel-3">
+					
+					</div>
+
+				</div>
+			</div>
+			
+			<div id="addmanager" style="display:none;margin-left:200px;margin-top:100px;">
+					<div class="input-group">
+						<span class="input-group-addon">用户名</span> <input type="text"
+							class="form-control" aria-describedby="basic-addon1" name="username" style="width:200px;">
+					</div> 
+					<div class="input-group" style="margin-top:20px;">
+						<span class="input-group-addon">密码</span> <input type="text"
+							class="form-control" aria-describedby="basic-addon1" name="password" style="width:210px;">
+					</div>
+					<div class="input-group" style="margin-top:20px;">
+						<span class="input-group-addon">大区</span>
+						 <select type="text" class="form-control" aria-describedby="basic-addon1" name="regionname" style="width:200px;">
+						 	<option value="华东大区">华东大区</option>
+						 	<option value="华南大区">华南大区</option>
+						 	<option value="华北大区">华北大区</option>
+						 	<option value="华中大区">华中大区</option>
+						 	<option value="东北大区">东北大区</option>
+						 	<option value="西北大区">西北大区</option>
+						 	<option value="西南大区">西南大区</option>
+						</select>
+					</div>
+					<input class="btn btn-primary" style="margin-left:40px;margin-top:20px;" id="add-msubmit" value="提交">
+			</div>
+	</div>
 </div>
+
 </body>
 </html>
 <script>
 
-function check(){
-	var num=/^[1-9]+$/;
-	if(!num.test($("input[name=num]").val())){
-		alert("数量必须为数字")
-		return false;
-	}else if(!num.test($("input[name=price]").val())){
-		alert("价格必须为数字")
-		return false;
-	}
-	else{
-		 return true;
-	}
-}
-
-$("a").click(function(){
+$("a[href='#panel-1']").click(function(){
+	$("#matter").css("display","block");
+	$("#water-manager").css("display","block");
+	$("#manager").css("display","block");
 	$("#addWare").css("display","none");
 	$("#edit").css("display","none");
 	$.ajax({
@@ -209,7 +321,7 @@ $("a").click(function(){
 										str+="<td rowspan='"+data[i].hardwareList.length+"' style='vertical-align:middle;text-align:center;'>"+data[i].desct+"</td>";
 										flag2=0;
 								}
-							str+="<td><button type='button' class='btn btn-warning' onclick=update('"+data[i].hardwareList[j].id+"','"+data[i].hardwareList[j].name+"','"+Trim(data[i].hardwareList[j].type)+"','"+data[i].hardwareList[j].unit+"','"+data[i].hardwareList[j].num+"','"+data[i].hardwareList[j].brand+"','"+data[i].hardwareList[j].price+"','"+data[i].hardwareList[j].desct+"','"+data[i].mark+"','"+data[i].hardwareList[j].module+"')>修改</button></td><td>"+
+							str+="<td><button type='button' class='btn btn-warning' onclick=update('"+data[i].hardwareList[j].id+"','"+data[i].hardwareList[j].name+"','"+data[i].hardwareList[j].unit+"','"+data[i].hardwareList[j].num+"','"+data[i].hardwareList[j].brand+"','"+data[i].hardwareList[j].price+"','"+data[i].hardwareList[j].desct+"','"+data[i].mark+"','"+data[i].hardwareList[j].module+"')>修改</button></td><td>"+
 							"<button type='button' class='btn btn-danger' onclick=deldata('"+data[i].hardwareList[j].module+"',"+data[i].hardwareList[j].id+")>删除</button></td>";
 							if(data[i].hardwareList.length>=1&&flag==1){
 								str+="<td rowspan='"+data[i].hardwareList.length+"'  style='vertical-align:middle;text-align:center;'>"
@@ -224,9 +336,11 @@ $("a").click(function(){
 			"<th>数量</th><th>品牌</th><th>是否标配</th><th>价格</th><th>说明</th><th></th><th></th><th></th></tr>"+str+"</table><button type='button' class='btn btn-primary' id='add' name='"+data[0].hardwareList[0].module+"'>添加物料</button>");
 		}
 	})
-	
 })
 function getdata(module){
+	$("#matter").css("display","block");
+	$("#water-manager").css("display","block");
+	$("#manager").css("display","block");
 	$.ajax({
 		url:"admin_viewHardwareAll.do",
 		data:{"module":module},
@@ -275,6 +389,7 @@ function getdata(module){
 		}
 	})
 }
+
 function deldata(module,id){
 	if(confirm("删除是不可恢复的，你确认要删除吗？")){
 		$.ajax({
@@ -293,7 +408,7 @@ $("#add").live("click",function(){
 	$("#add").css("display","none");
 	$("#module").attr("value",this.name);
 	$("#flag").attr("value",1);
-})
+});
 function fun(mark,module){
 	$("#addWare").css("display","block");
 	$("#content").css("display","none");
@@ -301,22 +416,24 @@ function fun(mark,module){
 	$("#module").attr("value",module);
 	$("#mark").attr("value",mark);
 	$("#flag").attr("value",0);
-}
-function update(id,name,type,unit,num,brand,price,desct,mark,module){
+};
+function update(id,name,unit,num,brand,price,desct,mark,module){
 	$("#edit").css("display","block");
 	$("#content").css("display","none");
 	$("#add").css("display","none");
+	$("#matter").css("display","none");
+	$("#water-manager").css("display","none");
+	$("#manager").css("display","none");
 	$("input[name=name1]").val(name);
 	$("input[name=unit1]").val(unit);
 	$("input[name=num1]").val(num);
-	$("input[name=type1]").val(type);
 	$("input[name=brand1]").val(brand);
 	$("input[name=price1]").val(price);
 	$("input[name=desct1]").val(desct);
 	$("input[name=mark1]").val(mark);
 	$("input[name=module1]").val(module);
 	$("input[name=id1]").val(id);
-}
+};
 	$("#save").live("click",function(){
 		var name1=$("input[name=name1]").val();
 		var unit1=$("input[name=unit1]").val();
@@ -328,35 +445,180 @@ function update(id,name,type,unit,num,brand,price,desct,mark,module){
 		var mark=$("input[name=mark1]").val();
 		var module=$("input[name=module1]").val();
 		var id=$("input[name=id1]").val();
-		var num=/^[1-9]+$/;
-		if(!num.test($("input[name=num1]").val())){
-			alert("数量必须为数字")
-		}else if(!num.test($("input[name=price1]").val())){
-			alert("价格必须为数字")
-		}else{
-			$.ajax({
-				url:"admin_updateHardware.do",
-				data:{
-					"id":id,
-					"name":name1,
-					"type":type1,
-					"unit":unit1,
-					"num":num1,
-					"brand":brand1,
-					"price":price1,
-					"states":states1,
-					"mark":mark,
-					"module":module
-				},
-				success:function(data){
-					$("#edit").css("display","none");
-					getdata(data);
+		$("#matter").css("display","block");
+		$("#water-manager").css("display","block");
+		$("#manager").css("display","none");
+		$.ajax({
+			url:"admin_updateHardware.do",
+			data:{
+				"id":id,
+				"name":name1,
+				"type":type1,
+				"unit":unit1,
+				"num":num1,
+				"brand":brand1,
+				"price":price1,
+				"states":states1,
+				"mark":mark,
+				"module":module
+			},
+			success:function(data){
+				$("#edit").css("display","none");
+				getdata(data);
+			}
+		})
+	});
+	$("#matter").live("click",function(){
+		$("#water-container").css("display","none");
+		$("#matter-container").css("display","block");
+		$("#manager-container").css("display","none");
+	});
+	$("#water-manager").live("click",function(){
+		$("#matter-container").css("display","none");
+		$("#water-container").css("display","block");
+		$("#manager-container").css("display","none");
+	});
+	$("a[name=place]").live("click",function(){
+		$("#matter").css("display","block");
+		$("#water-manager").css("display","block");
+		$("#manager").css("display","block");
+		$("#addwaterd").css("display","none");
+ 		$.ajax({
+			url:"selUsers.do",
+			data:{"region":this.id},
+			success:function(data){
+				var str="";
+				for(var i=0;i<data.length;i++){
+					str+="<tr><td>"+i+"</td><td>"+data[i].wName+"</td><td>"+data[i].region+"</td><td style='vertical-align:middle;text-align:center;'><button type='button' class='btn btn-danger' id='delWater' name='"+data[i].wId+"' value='"+data[i].region+"'>删除</button></td><td></td>";
+			
 				}
-			})
-		}
+				$("#panel-2").html("<table class='table table-bordered' id='waterma'><tr><th>序号</th><th>名称</th><th>大区</th><th>删除</th><th style='vertical-align:middle;text-align:center;'><button type='button' class='btn btn-primary' id='add-waters'>添加</button></th>"+
+						"</tr>"+str+"</table>");
+			}
+		}) 
 	})
-	function Trim(str)
-	 { 
-	  return str.replace(/(^\s*)|(\s*$)/g, ""); 
+	function fun1(region){
+		$("#matter").css("display","block");
+		$("#water-manager").css("display","block");
+		$("#manager").css("display","block");
+		$("#addwaterd").css("display","none");
+		$.ajax({
+			url:"selUsers.do",
+			data:{"region":region},
+			success:function(data){
+				var str="";
+				for(var i=0;i<data.length;i++){
+					str+="<tr><td>"+i+"</td><td>"+data[i].wName+"</td><td>"+data[i].region+"</td><td style='vertical-align:middle;text-align:center;'><button type='button' class='btn btn-danger' id='delWater' name='"+data[i].wId+"' value='"+data[i].region+"'>删除</button></td><td></td>";
+			
+				}
+				$("#panel-2").html("<table class='table table-bordered' id='waterma'><tr><th>序号</th><th>名称</th><th>大区</th><th>删除</th><th style='vertical-align:middle;text-align:center;'><button type='button' class='btn btn-primary'  id='add-waters'>添加</button></th>"+
+						"</tr>"+str+"</table>");
+			}
+		}) 
 	}
+	fun1("华东大区");
+	getdata("datas");
+	$("#delWater").live("click",function(){
+		$.ajax({
+			url:"delWater_divison.do",
+			data:{"id":this.name,"region":this.value},
+			success:function(data){
+				fun1(data);
+			}
+		})
+	})
+	$("#add-waters").live("click",function(){
+		$("#addwaterd").css("display","block");
+		$("#waterma").css("display","none");
+		$("#matter").css("display","none");
+		$("#water-manager").css("display","none");
+		$("#manager").css("display","none");
+	})
+	$("#add-submit").live("click",function(){
+		var rname=$("input[name=rname]").val();
+		var region=$("select[name=region]").val();
+		$.ajax({
+			url:"addwater_division.do",
+			data:{"rname":rname,"region":region},
+			success:function(data){
+				fun1(data)
+			}
+		})
+	})
+	$("#manager").live("click",function(){
+		$("#matter-container").css("display","none");
+		$("#water-container").css("display","none");
+		$("#manager-container").css("display","block");
+	})
+	$("a[href='#panel-3']").click(function(){
+		$("#matter").css("display","block");
+		$("#water-manager").css("display","block");
+		$("#manager").css("display","block");
+		$("#addmanager").css("display","none");
+		$.ajax({
+			url:"selAllUsers.do",
+			data:{"rname":this.name},
+			success:function(data){
+				var str="";
+				for(var i=0;i<data.length;i++){
+					str+="<tr><td>"+i+"</td><td>"+data[i].userName+"</td><td>"+data[i].password+"</td><td>"+data[i].rName+"</td><td style='vertical-align:middle;text-align:center;'><button type='button' class='btn btn-danger' id='delmanager'>删除</button></td><td></td>";
+				}
+				$("#panel-3").html("<table class='table table-bordered' id='tablema'><tr><th>序号</th><th>用户名</th><th>密码</th><th>大区</th><th>删除</th><th style='vertical-align:middle;text-align:center;'><button type='button' class='btn btn-primary'  id='add-manager'>添加</button></th>"+
+						"</tr>"+str+"</table>");
+			}
+		})
+		
+	})
+	function fun3(rname){
+		$("#matter").css("display","block");
+		$("#water-manager").css("display","block");
+		$("#manager").css("display","block");
+		$.ajax({
+			url:"selAllUsers.do",
+			data:{"rname":rname},
+			success:function(data){
+				var str="";
+				for(var i=0;i<data.length;i++){
+					str+="<tr><td>"+i+"</td><td>"+data[i].userName+"</td><td>"+data[i].password+"</td><td>"+data[i].rName+"</td><td style='vertical-align:middle;text-align:center;'><button type='button' class='btn btn-danger' id='delmanager' value='"+data[i].id+"' name='"+data[i].rName+"'>删除</button></td><td></td>";
+				}
+				$("#panel-3").html("<table class='table table-bordered' id='tablema'><tr><th>序号</th><th>用户名</th><th>密码</th><th>大区</th><th>删除</th><th style='vertical-align:middle;text-align:center;'><button type='button' class='btn btn-primary'  id='add-manager'>添加</button></th>"+
+						"</tr>"+str+"</table>");
+			}
+		})
+	}
+	fun3("华东大区");
+	$("#delmanager").live("click",function(){
+		$("#matter").css("display","block");
+		$("#water-manager").css("display","block");
+		$("#manager").css("display","block");
+		alert(111);
+		$.ajax({
+			url:"delManager.do",
+			data:{"id":this.value,"rname":this.name},
+			success:function(data){
+				fun3(data);
+			}
+		})
+	})
+	$("#add-manager").live("click",function(){
+		$("#addmanager").css("display","block");
+		$("#tablema").css("display","none");
+		$("#matter").css("display","none");
+		$("#water-manager").css("display","none");
+		$("#manager").css("display","none");
+
+	})
+	$("#add-msubmit").live("click",function(){
+		$("#addmanager").css("display","none");
+		var username=$("input[name=username]").val();
+		var password=$("input[name=password]").val();
+		var rname=$("select[name=regionname]").val();
+		$.ajax({
+			url:"addmanager.do",
+			data:{"username":username,"password":password,"rname":rname},
+			success:function(data){
+				fun3(data);
+			}
+		})
+	})
 </script>

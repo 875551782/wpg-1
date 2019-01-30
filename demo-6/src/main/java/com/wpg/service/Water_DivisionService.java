@@ -33,4 +33,10 @@ public class Water_DivisionService {
 	public List<Order_WaterInfo> getOrder_WaterInfos(String rName){
 		return water_DivisionDao.getOrder_WaterInfos(rName);
 	}
+	public void delWater_DivisionById(int id) {
+		water_DivisionDao.delWater_DivisionById(id);
+	}
+	public void addWater_Division(Water_Division w) {
+		water_DivisionDao.addWater_Division(w);
+	}
 }

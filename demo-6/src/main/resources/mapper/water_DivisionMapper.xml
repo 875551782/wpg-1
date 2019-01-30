@@ -58,4 +58,11 @@
 				</association> 
 			</collection>
 	</resultMap>
+	
+	<delete id="delWater_DivisionById" parameterType="Integer">
+		delete from water_division	where wid=#{0}
+	</delete>
+	<insert id="addWater_Division" parameterType="com.wpg.pojo.Water_Division">
+		insert into water_division(wname,region) value(#{wName},#{region})
+	</insert>
 </mapper>

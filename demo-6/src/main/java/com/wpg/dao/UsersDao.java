@@ -12,4 +12,11 @@ public interface UsersDao {
 	// 根据用户名查询用户信息
 	Users selUser(String username);
 
-}
+	public List<Users> selAllUsersByRname(String rname);
+	
+	//删除大区管理
+	public void delManagerById(int id);
+	
+	//添加大区管理
+	public void addManager(Users u);
+ }

@@ -8,8 +8,6 @@ public class Users {
 	private String password;
 	private String rName;
 	
-	
-	
 	public String getrName() {
 		return rName;
 	}

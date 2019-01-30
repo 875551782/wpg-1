@@ -14,4 +14,13 @@
 		parameterType="String">
 		select * from users where username=#{username}
 	</select>
+	<select id="selAllUsersByRname" resultType="com.wpg.pojo.Users">
+		select * from users where rname=#{0} and role=0
+	</select>
+	<delete id="delManagerById">
+		delete from users where id=#{0} 
+	</delete>
+	<insert id="addManager" parameterType="com.wpg.pojo.Users">
+		insert into users(username,password,rname,role) values(#{userName},#{password},#{rName},#{role})
+	</insert>
 </mapper>
