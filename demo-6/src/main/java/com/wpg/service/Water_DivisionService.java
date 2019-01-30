@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.wpg.bean.OrderInfo;
 import com.wpg.bean.Order_WaterInfo;
 import com.wpg.dao.Water_DivisionDao;
 import com.wpg.pojo.Order_Hardware;
@@ -32,6 +33,9 @@ public class Water_DivisionService {
 	
 	public List<Order_WaterInfo> getOrder_WaterInfos(String rName){
 		return water_DivisionDao.getOrder_WaterInfos(rName);
+	}
+	public List<OrderInfo> getOrderInf(int wId){
+		return water_DivisionDao.getOrder_HardwaresByWId(wId);
 	}
 	public void delWater_DivisionById(int id) {
 		water_DivisionDao.delWater_DivisionById(id);

@@ -60,6 +60,7 @@
 			</collection>
 	</resultMap>
 	
+	
 	<delete id="delWater_DivisionById" parameterType="Integer">
 		delete from water_division	where wid=#{0}
 	</delete>
