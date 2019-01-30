@@ -19,18 +19,18 @@
 		select * from orders where user_id=#{0}
 	</select>
 	
-	<insert id="insertOrders" parameterType="com.wpg.pojo.Orders">
+	<insert id="insertOrders" parameterType="com.wpg.pojo.Order_Water">
 		
-		insert into orders values(null,#{order.user_Id})
-		<selectKey order="AFTER"  keyColumn="order_id" keyProperty="order.order_Id" resultType="java.lang.Integer">
+		insert into order_water values(null,#{order_Water.wId},#{order_Water.num})
+		<selectKey order="AFTER"  keyColumn="oId" keyProperty="order_Water.oId" resultType="java.lang.Integer">
 			select LAST_INSERT_ID()
 		</selectKey>
 	</insert>
 	
-	<insert id="insertOrder_Hardware" parameterType="com.wpg.pojo.Orders">
+	<insert id="insertOrder_Hardware">
 	insert into order_hardware values
-		<foreach collection="ids" item="id" separator=",">
-			(#{order.order_Id},#{id})
+		<foreach collection="order_Hardwares" item="order_Hardware" separator=",">
+			(#{order_Water.oId},#{order_Hardware.hardware_id},#{order_Hardware.multiple})
 		</foreach>
 	</insert>
 	<delete id="deleteOrder_HardwareById">
@@ -44,6 +44,7 @@
 	<resultMap type="com.wpg.pojo.Order_Hardware" id="order_HardwareDetail">
 		<id column="order_id" property="order_Id"></id>
 		<result column="hardware_id" property="hardware_id"></result>
+		<result column="multiple" property="multiple"/>
 		<association  column="hardware_id" property="hardware_Group" select="com.wpg.dao.HardwareDao.selHardwareById">
 		</association>
 	</resultMap>	

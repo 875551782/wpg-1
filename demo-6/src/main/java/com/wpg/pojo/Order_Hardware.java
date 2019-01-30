@@ -4,6 +4,8 @@ public class Order_Hardware {
 	
 	private Integer order_Id;
 	private Integer hardware_id;
+	private Integer multiple;
+	
 	private Hardware_Group hardware_Group;
 	public Hardware_Group getHardware_Group() {
 		return hardware_Group;
@@ -23,6 +25,11 @@ public class Order_Hardware {
 	public void setHardware_id(Integer hardware_id) {
 		this.hardware_id = hardware_id;
 	}
-
+	public Integer getMultiple() {
+		return multiple;
+	}
+	public void setMultiple(Integer multiple) {
+		this.multiple = multiple;
+	}
 	
 }

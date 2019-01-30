@@ -1,6 +1,7 @@
 package com.wpg.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -108,7 +109,7 @@ public class Front_Controller {
 	@ResponseBody
 	public List<Order_Hardware> showDetailOrders(int oId){
 		return ordersService.getOrder_HardwaresByOrdersId(oId);
-		
+
 	}
 	/**
 	 * @param ids
@@ -117,14 +118,11 @@ public class Front_Controller {
 	 */
 	@RequestMapping("user_submitOrder.do")
 	@ResponseBody
-	public int submitOrder(@RequestParam(value="ids[]")int[] ids,HttpSession session) {
-		Users user = new Users();
-		user.setId(1);
-		if(session.getAttribute("user") != null) {
-			user = (Users) session.getAttribute("user");
-		}
+	public int submitOrder(@RequestParam(value="id_Multiple[]")String[] id_Multiple,int wId) {
+		List<Order_Hardware> order_Hardwares = parseString(id_Multiple);
+		int num = 1;
+		int i = ordersService.insertOrders(wId, num, order_Hardwares);
 		
-		int i = ordersService.insertOrders(ids,user.getId());
 		if(i>0) {
 			return 1;
 		}
@@ -135,13 +133,9 @@ public class Front_Controller {
 	}
 	@RequestMapping("user_changeOrder.do")
 	@ResponseBody
-	public int updateOrder_Hardware(HttpSession session,int oId,@RequestParam(value="ids[]")int[] ids) {
-		Users user = new Users();
-		user.setId(1);
-		if(session.getAttribute("user") != null) {
-			user = (Users) session.getAttribute("user");
-		}
-		int i = ordersService.updateOrder_Hardware(oId,ids);
+	public int updateOrder_Hardware(@RequestParam(value="id_Multiple[]")String[] id_Multiple,int oId) {
+		List<Order_Hardware> order_Hardwares = parseString(id_Multiple);
+		int i = ordersService.updateOrder_Hardware(oId,order_Hardwares);
 		
 		if(i>0) {
 			return 1;
@@ -151,15 +145,42 @@ public class Front_Controller {
 		}
 	}
 	
+	
+	
 	@ResponseBody
 	@RequestMapping("user_showWater_Division.do")
-	public List<Order_WaterInfo> get(HttpSession session) {
+	public List<Order_WaterInfo> showWater_Division(HttpSession session) {
 		Users user = (Users) session.getAttribute("user");
 		String rName = user.getrName();
 		List<Order_WaterInfo> order_WaterInfos = water_DivisionService.getOrder_WaterInfos(rName);
 		return order_WaterInfos;
 	}
 	
+	@RequestMapping("user_updateOrderNum.do")
+	@ResponseBody
+	public int updateOrder_Water(int oId,int wId,int num) {
+		int i = water_DivisionService.updateOrder_Water(oId, wId, num);
+		if(i>0) {
+			return 1;
+		}else {
+			return 0;
+		}
+	}
+	@ResponseBody
+	@RequestMapping("user_updateOrderHardwareNum.do")
+	public int changeOrder_HardwareNum(@RequestParam(value="id_Multiple[]")String[] id_Multiple,int oId) {
+		List<Order_Hardware> order_Hardwares = parseString(id_Multiple);
+		for(int i=0;i<order_Hardwares.size();i++) {
+			order_Hardwares.get(i).setOrder_Id(oId);
+		}
+		int i = water_DivisionService.updateOrder_HardwareMultiple(order_Hardwares);
+		if(i>0) {
+			return 1;
+		}
+		else{
+			return 0;
+		}
+	}
 	
 	@RequestMapping("user_orderUpload.do")
 	@ResponseBody
@@ -198,12 +219,28 @@ public class Front_Controller {
 		rows.createCell(7).setCellValue(sum);
 		//File file = new File("E:/test.xls");
 		//FileOutputStream xlsStream = new FileOutputStream(file);
-		
-
         response.setContentType("application/octet-stream");
         response.setHeader("Content-disposition", "attachment;filename=plan.xls");
         response.flushBuffer();
         workbook.write(response.getOutputStream());
+		
+	}
+	/**
+	 * 	解析 id_Multiple
+	 * @return
+	 */
+	private List<Order_Hardware> parseString(String[] id_Multiple){
+		int length = id_Multiple.length;
+		List<Order_Hardware> order_Hardwares = new ArrayList<>(length);
+		for(int i=0;i<length;i++) {
+			Order_Hardware order_Hardware = new Order_Hardware();
+			int id = Integer.parseInt(id_Multiple[i].split("\\*")[0]);
+			int multiple = Integer.parseInt(id_Multiple[i].split("\\*")[1]);
+			order_Hardware.setHardware_id(id);
+			order_Hardware.setMultiple(multiple);
+			order_Hardwares.add(order_Hardware);
+		}
+		return order_Hardwares;
 		
 	}
 }

@@ -25,4 +25,8 @@ public interface Water_DivisionDao {
 	public void delWater_DivisionById(int id);
 	
 	public void addWater_Division(Water_Division w);
+	
+	int updateOrder_Water(int oId,int wId,int num);
+	
+	int updateOrder_HardwareMultiple(@Param("order_Hardwares")List<Order_Hardware> order_Hardwares);
 }
