@@ -71,21 +71,24 @@
 			type : "GET",
 			url : "user_showWater_Division.do",
 			success : function(data) {
-				console.log(data);
+				//console.log(data);
 				if(data.length>0){
 					$(".area").html("<h3>"+data[0].region+"</h3>");
 				}
+				$("#accordion").html("");
 				//data为当前大区的所有水司数据
 				for (var i = 0; i <data.length; i++) {
 					var str="<div class='panel panel-default'><div class='panel-heading' role='tab' id='heading"+i+"'><h4 class='panel-title'>";
 					if(i==0){
 						str+="<a role='button' data-toggle='collapse' data-parent='#accordion' href='#collapse"+i+"' aria-expanded='true' aria-controls='collapse"+i+"'>"+
 						data[i].wName+"负责人："+data[i].pic.pName+"电话："+data[i].pic.pTel+"</a></h4></div><div id='collapse"+i+"' class='panel-collapse collapse in' role='tabpanel' aria-labelledby='heading"+i+"'><div class='panel-body'>"+
-						"<table class='table table-bordered'><tr><th>订单编号</th><th>订单信息</th><th>订单总价 </th><th>订单数量</th><th></th></tr></table><button class='btn btn-default' type='button' onclick='createOrder("+data[i].wId+")'>生成订单</button></div></div></div>";
+						"<table class='table table-bordered'><tr><th>订单编号</th><th>订单信息</th><th>订单总价 </th><th>订单数量</th><th></th></tr></table><button class='btn btn-default' type='button' onclick='createOrder("+data[i].wId+")'>生成订单</button>"+
+						"<button class='btn btn-default' type='button' onclick='downloadOrder("+data[i].wId+")'>下载订单</button><button class='btn btn-default' type='button' onclick='updatePic("+data[i].wId+")'>修改负责人</button></div></div></div>";
 					}else{
 						str+="<a  class='collapsed' role='button' data-toggle='collapse' data-parent='#accordion' href='#collapse"+i+"' aria-expanded='false' aria-controls='collapse"+i+"'>"+
 						data[i].wName+"负责人："+data[i].pic.pName+"电话："+data[i].pic.pTel+"</a></h4></div><div id='collapse"+i+"' class='panel-collapse collapse' role='tabpanel' aria-labelledby='heading"+i+"'><div class='panel-body'>"+
-						"<table class='table table-bordered'><tr><th>订单编号</th><th>订单信息</th><th>订单总价 </th><th>订单数量</th><th></th></tr></table><button class='btn btn-default' type='button' onclick='createOrder("+data[i].wId+")'>生成订单</button></div></div></div>";
+						"<table class='table table-bordered'><tr><th>订单编号</th><th>订单信息</th><th>订单总价 </th><th>订单数量</th><th></th></tr></table><button class='btn btn-default' type='button' onclick='createOrder("+data[i].wId+")'>生成订单</button>"+
+						"<button class='btn btn-default' type='button' onclick='downloadOrder("+data[i].wId+")'>下载订单</button><button class='btn btn-default' type='button' onclick='updatePic("+data[i].wId+")'>修改负责人</button></div></div></div>";
 					}
 					$("#accordion").append(str);
 					//该水司的订单对象
@@ -104,8 +107,8 @@
 							hStr+=hardware[k].hardware_Group.hardwareList[0].name+"X"+num+" ";
 						}
 						$(".table").eq(i).append("<tr><td>"+j+"</td><td class='order_info'>"+hStr+"</td><td>"+sprice+"</td><td>"+
-						"<input class='order_num' type='number' onchange='changeNum("+data[i].wId+","+order[j].oId+",this)' value='"+order[j].num+"'>"+
-						"</td><td><button class='btn btn-default' type='button' onclick='checkInfo("+order[j].oId+")'>查看详细信息</button></td></tr>");
+						"<input class='order_num' type='number' onchange='changeNum("+data[i].wId+","+order[j].oId+","+order[j].num+",this)' value='"+order[j].num+"'>"+
+						"</td><td><a href='javascript:checkInfo("+order[j].oId+")'>查看详细信息</a>&nbsp;|&nbsp;<a href='javascript:delOrder("+order[j].oId+")'>删除</a></td></tr>");
 					}
 				}
 			}
@@ -152,7 +155,7 @@
 		$("#accordion").css("display","block");
 		$(".det_info").css("display","none");
 	}
-	function changeNum(wId,oId,obj){
+	function changeNum(wId,oId,num,obj){
 		if(window.confirm("您确定要修改该订单数量吗")){
 			$.ajax({
 				type:"GET",
@@ -167,7 +170,31 @@
 					}
 				}
 			})
+		}else{
+			$(obj).val(num);
 		}
+	}
+	function delOrder(oId){
+		$.ajax({
+			type:"GET",
+			url:"user_deleteOrder.do",
+			data:{oId:oId},
+			success:function(data){
+				if(data==1){
+					alert("删除成功");
+					init();
+				}else{
+					alert("删除失败");
+				}
+			}
+		})
+	}
+	function downloadOrder(wId){
+		console.log("下载");
+		console.log(wId);
+	}
+	function updatePic(wId){
+		console.log(wId);
 	}
 </script>
 </html>
