@@ -80,6 +80,7 @@ public class User_Controller {
 		Users user=(Users) session.getAttribute("admin");
 		logger.info(user.getUserName()+"删除了水司，水司id为"+id+"大区是"+region);
 		return region;
+		
 	}
 	
 	@ResponseBody
