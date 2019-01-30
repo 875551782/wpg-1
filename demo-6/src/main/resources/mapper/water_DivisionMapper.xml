@@ -89,7 +89,7 @@
 		delete from pic	where wid=#{0}
 	</delete>
 	
-	<select id="selectWidByname">
+	<select id="selectWidByname" resultType="Integer">
 		select wid from water_division 
 		where wname=#{0}
 	</select>

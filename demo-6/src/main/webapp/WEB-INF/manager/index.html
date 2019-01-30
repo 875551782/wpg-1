@@ -591,7 +591,6 @@ function update(id,name,unit,num,brand,price,desct,mark,module){
 		$("#matter").css("display","block");
 		$("#water-manager").css("display","block");
 		$("#manager").css("display","block");
-		alert(111);
 		$.ajax({
 			url:"delManager.do",
 			data:{"id":this.value,"rname":this.name},

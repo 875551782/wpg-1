@@ -151,7 +151,7 @@
 							hStr+=hardware[k].hardware_Group.hardwareList[0].name+"X"+num+" ";
 						}
 						$(".table").eq(i).append("<tr><td>"+j+"</td><td class='order_info'>"+hStr+"</td><td>"+sprice+"</td><td>"+
-						"<input class='order_num' type='number' onchange='changeNum("+data[i].wId+","+order[j].oId+","+order[j].num+",this)' value='"+order[j].num+"'>"+
+						"<input class='order_num' type='number' min='1' onchange='changeNum("+data[i].wId+","+order[j].oId+","+order[j].num+",this)' value='"+order[j].num+"'>"+
 						"</td><td><a href='javascript:checkInfo("+order[j].oId+")'>查看详细信息</a>&nbsp;|&nbsp;<a href='javascript:delOrder("+order[j].oId+")'>删除</a></td></tr>");
 					}
 				}
