@@ -136,20 +136,20 @@
 									if (allData[k] == "internets") {
 										if (j == 0) {
 											if (state == 1) {
-												str += "<td><input type='radio' onchange='sumPrice("+hardware[j].num+")' checked='' name='"+mark+"' value='"+hardware[j].id+"'>";
+												str += "<td><input type='radio' onchange='sumPrice()' checked='' name='"+mark+"' value='"+hardware[j].id+"'>";
 											} else {
-												str += "<td><input class='d1' onchange='sumPrice("+hardware[j].num+")' type='checkbox' name='"+mark+"' value='"+hardware[j].id+"'>";
+												str += "<td><input class='d1' onchange='sumPrice()' type='checkbox' name='"+mark+"' value='"+hardware[j].id+"'>";
 											}
 										} else {
-											str += "<td><input type='radio' onchange='sumPrice("+hardware[j].num+")' name='"+mark+"' value='"+hardware[j].id+"'>";
+											str += "<td><input type='radio' onchange='sumPrice()' name='"+mark+"' value='"+hardware[j].id+"'>";
 										}
 									} else {
-										str += "<td><input type='checkbox' onchange='sumPrice("+hardware[j].num+")' name='"+mark+"' value='"+hardware[j].id+"'>";
+										str += "<td><input type='checkbox' onchange='sumPrice()' name='"+mark+"' value='"+hardware[j].id+"'>";
 									}
 									str+=hardware[j].name
 										+ "</td><td>"
 										+ hardware[j].num
-										+ "X<input class='hardwarenum "+hardware[j].id+"' type='number' value='1' min='1' onchange='sumPrice("+hardware[j].num+")'></td><td>"
+										+ "X<input class='hardwarenum "+hardware[j].id+"' type='number' value='1' min='1' onchange='sumPrice()'></td><td>"
 										+ hardware[j].unit
 										+ "</td><td>"
 										+ hardware[j].brand
@@ -163,6 +163,7 @@
 							}
 							//往功能表中添加
 							$(".table").eq(k - 1).append(str);
+							sumPrice();
 						}
 						$("input[type='checkbox']").on(
 								'click',
@@ -211,15 +212,20 @@
 	function cancel(){
 		location.href="user_forward.do?name=orders";
 	}
-	function sumPrice(num){
+	sumPrice();
+	function sumPrice(){
 		var sum=0;
 		$("[type='radio']:checked").each(function(index, element){
-			 var num1=num*$(this).parent().parent().find("input[type=number]").val();
-			 sum+=num1*$(this).parent().parent().find(".price").html();
+			var num=parseInt($(this).parent().next().html().split("X")[0]);
+			//console.log(num);
+			var num1=num*$(this).parent().parent().find("input[type=number]").val();
+			sum+=num1*$(this).parent().parent().find(".price").html();
 		}) 
 		$("[type='checkbox']:checked").each(function() {
-			 var num1=num*$(this).parent().parent().find("input[type=number]").val();
-			 sum+=num1*$(this).parent().parent().find(".price").html();
+			var num=parseInt($(this).parent().next().html().split("X")[0]);
+			//console.log(num);
+			var num1=num*$(this).parent().parent().find("input[type=number]").val();
+			sum+=num1*$(this).parent().parent().find(".price").html();
 		})
 		$(".sumPrice").html("总价："+sum);
 	}
