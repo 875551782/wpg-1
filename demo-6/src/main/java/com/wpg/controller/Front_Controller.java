@@ -272,12 +272,12 @@ public class Front_Controller {
 			HSSFRow row = sheet.createRow(0);
 			row.createCell(0).setCellValue("功能");
 			row.createCell(1).setCellValue("物料名称");
-			row.createCell(2).setCellValue("规格型号");
-			row.createCell(3).setCellValue("单位");
-			row.createCell(4).setCellValue("数量");
-			row.createCell(5).setCellValue("品牌");
+			row.createCell(2).setCellValue("品牌");
+			row.createCell(3).setCellValue("规格型号");
+			row.createCell(4).setCellValue("单位");
+			row.createCell(5).setCellValue("数量");
 			row.createCell(6).setCellValue("说明");
-			row.createCell(7).setCellValue("价格");
+			row.createCell(7).setCellValue("单价");
 			double sum = 0;
 			List<Order_Hardware> list = orderInfos.get(j).getOrder_Hardwares();
 			for (int i = 1; i <= list.size(); i++) {
@@ -286,11 +286,11 @@ public class Front_Controller {
 				Hardware hardware = hardware_Group.getHardwareList().get(0);
 				rows.createCell(0).setCellValue(hardware.getModule());
 				rows.createCell(1).setCellValue(hardware.getName());
-				rows.createCell(2).setCellValue(hardware.getType());
-				rows.createCell(3).setCellValue(hardware.getUnit());
-				int num = hardware.getNum()*list.get(j).getMultiple();
-				rows.createCell(4).setCellValue(num);
-				rows.createCell(5).setCellValue(hardware.getBrand());
+				rows.createCell(2).setCellValue(hardware.getBrand());
+				rows.createCell(3).setCellValue(hardware.getType());
+				rows.createCell(4).setCellValue(hardware.getUnit());
+				int num = hardware.getNum()*list.get(i-1).getMultiple();
+				rows.createCell(5).setCellValue(num);
 				rows.createCell(6).setCellValue(hardware_Group.getDesct());
 				rows.createCell(7).setCellValue(hardware.getPrice());
 				sum+=hardware.getPrice()*num;
