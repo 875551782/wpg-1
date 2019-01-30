@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.wpg.pojo.Hardware_Group;
 import com.wpg.pojo.Order_Hardware;
+import com.wpg.pojo.Order_Water;
 import com.wpg.pojo.Orders;
 
 public interface OrdersDao {
@@ -35,9 +36,9 @@ public interface OrdersDao {
 	public List<Orders> getAllOrdersByUserId(int userId);
 	
 	
-	public int insertOrders(@Param("order")Orders order);
+	public int insertOrders(@Param("order_Water")Order_Water order_Water);
 	
-	public int insertOrder_Hardware(@Param("ids")int[] ids,@Param("order")Orders order);
+	public int insertOrder_Hardware(@Param("order_Hardwares")List<Order_Hardware> order_Hardwares,@Param("order_Water")Order_Water order_Water);
 	
 	public int deleteOrder_HardwareById(int ordersId);
 }

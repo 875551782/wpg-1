@@ -67,7 +67,9 @@
 	
 	<update id="updateOrder_HardwareMultiple">
 		<foreach collection="order_Hardwares" separator=";" item="order_Hardware">
-			update order_hardware set multiple=#{order_Hardware.multiple} 
+			update order_hardware <set>
+				multiple=#{order_Hardware.multiple} 
+				</set> 
 			where hardware_id=#{order_Hardware.hardware_id} 
 			and order_id=#{order_Hardware.order_Id}
 		</foreach>

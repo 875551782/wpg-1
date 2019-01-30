@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.wpg.dao.OrdersDao;
 import com.wpg.pojo.Hardware_Group;
 import com.wpg.pojo.Order_Hardware;
+import com.wpg.pojo.Order_Water;
 import com.wpg.pojo.Orders;
 import com.wpg.pojo.Users;
 
@@ -37,20 +38,22 @@ public class OrdersService {
 	public List<Order_Hardware> getOrder_HardwaresByOrdersId(int ordersId){
 		return ordersDao.getOrder_HardwaresByOrdersId(ordersId);
 	}
+	
 	@Transactional
-	public int insertOrders(int[] ids,int user_Id) {
-		Orders order = new Orders();
-		order.setUser_Id(user_Id);
-		ordersDao.insertOrders(order);
-		System.out.println(order.getOrder_Id());
-		return ordersDao.insertOrder_Hardware(ids, order);
+	public int insertOrders(int wId,int num,List<Order_Hardware> order_Hardwares) {
+		Order_Water order_Water = new Order_Water();
+		order_Water.setwId(wId);
+		order_Water.setNum(num);
+		ordersDao.insertOrders(order_Water);
+		//System.out.println(order.getOrder_Id());
+		return ordersDao.insertOrder_Hardware(order_Hardwares, order_Water);
 	}
 	
-	public int updateOrder_Hardware(int oId,int[] ids) {
+	public int updateOrder_Hardware(int oId,List<Order_Hardware> order_Hardwares) {
 		ordersDao.deleteOrder_HardwareById(oId);
-		Orders order = new Orders();
-		order.setOrder_Id(oId);
-		return ordersDao.insertOrder_Hardware(ids, order);
+		Order_Water order_Water = new Order_Water();
+		order_Water.setoId(oId);
+		return ordersDao.insertOrder_Hardware(order_Hardwares, order_Water);
 		
 	}
 	
