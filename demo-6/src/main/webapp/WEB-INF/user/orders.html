@@ -111,7 +111,7 @@
 			type : "GET",
 			url : "user_showWater_Division.do",
 			success : function(data) {
-				//console.log(data);
+				console.log(data);
 				if(data.length>0){
 					$(".area").html("<h3>"+data[0].region+"</h3>");
 				}
@@ -145,7 +145,8 @@
 						//记录物料的总价
 						var sprice=0;
 						for(var k=0;k<hardware.length;k++){
-							sprice+=hardware[k].hardware_Group.hardwareList[0].price;
+							var uprice=hardware[k].hardware_Group.hardwareList[0].price*hardware[k].multiple*hardware[k].hardware_Group.hardwareList[0].num;
+							sprice+=uprice;
 							var num=hardware[k].hardware_Group.hardwareList[0].num*hardware[k].multiple;
 							hStr+=hardware[k].hardware_Group.hardwareList[0].name+"X"+num+" ";
 						}
@@ -175,14 +176,14 @@
 				success : function(data) {
 					//console.log(data);
 					$(".det_info").html("");
-					$(".det_info").html("<table class='table table-bordered order-table'><tr><th>物料名称</th><th>规格型号 </th><th>单位</th><th>数量</th><th>品牌</th>"+
+					$(".det_info").html("<table class='table table-bordered order-table'><tr><th>物料名称</th><th>数量</th><th>单位</th><th>品牌</th><th>规格型号 </th>"+
 					"<th>价格</th></tr></table>");
 					var str="";
 					for(var i=0;i<data.length;i++){
 						var hardware=data[i].hardware_Group.hardwareList[0];
 						var num=hardware.num*data[i].multiple;
-						$(".order-table").append("<tr><td>"+hardware.name+"</td><td>"+hardware.type+"</td><td>"+hardware.unit+"</td>"+
-						"<td>"+num+"</td><td>"+hardware.brand+"</td><td>"+hardware.price+"</td></tr>");
+						$(".order-table").append("<tr><td>"+hardware.name+"</td><td>"+num+"</td><td>"+hardware.unit+"</td>"+
+						"<td>"+hardware.brand+"</td><td>"+hardware.type+"</td><td>"+hardware.price+"</td></tr>");
 					}
 					$(".det_info").append("<button class='btn btn-default' type='button' onclick='updateShow("+oId+")'>修改订单 </button>"+
 							"<button class='btn btn-default' type='button' onclick='cancel()'>返回 </button>");
