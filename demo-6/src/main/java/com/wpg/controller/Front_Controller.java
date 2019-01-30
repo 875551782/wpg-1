@@ -2,6 +2,7 @@ package com.wpg.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,10 +10,12 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.catalina.User;
+
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,6 +44,8 @@ public class Front_Controller {
 	@Autowired
 	private Water_DivisionService water_DivisionService;
 	
+	private static final Logger log = LoggerFactory.getLogger(Front_Controller.class);
+
 	@RequestMapping("user_showOrders.do")
 	@ResponseBody
 	public List<Orders> show(){
@@ -82,10 +87,13 @@ public class Front_Controller {
 	
 	@RequestMapping("user_deleteOrder.do")
 	@ResponseBody
-	public int deleteOrder(int oId) {
-		
+	public int deleteOrder(int oId,HttpSession session) {
+		Users user = (Users)session.getAttribute("user");
 		int i = ordersService.deleteOrder_Hardware(oId);
 		if(i>0) {
+			String str = formatLog(user);
+			String message = str+":delete"+"表:order_hardware";
+			log.info(message);
 			return 1;
 		}
 		return 0;
@@ -118,12 +126,16 @@ public class Front_Controller {
 	 */
 	@RequestMapping("user_submitOrder.do")
 	@ResponseBody
-	public int submitOrder(@RequestParam(value="id_Multiple[]")String[] id_Multiple,int wId) {
+	public int submitOrder(HttpSession session,@RequestParam(value="id_Multiple[]")String[] id_Multiple,int wId) {
+		Users user = (Users)session.getAttribute("user");
 		List<Order_Hardware> order_Hardwares = parseString(id_Multiple);
 		int num = 1;
 		int i = ordersService.insertOrders(wId, num, order_Hardwares);
 		
 		if(i>0) {
+			String str = formatLog(user);
+			String message = str+":insert"+"表:order_hardware和order_water";
+			log.info(message);
 			return 1;
 		}
 		else{
@@ -133,11 +145,15 @@ public class Front_Controller {
 	}
 	@RequestMapping("user_changeOrder.do")
 	@ResponseBody
-	public int updateOrder_Hardware(@RequestParam(value="id_Multiple[]")String[] id_Multiple,int oId) {
+	public int updateOrder_Hardware(HttpSession session,@RequestParam(value="id_Multiple[]")String[] id_Multiple,int oId) {
+		Users user = (Users)session.getAttribute("user");
 		List<Order_Hardware> order_Hardwares = parseString(id_Multiple);
 		int i = ordersService.updateOrder_Hardware(oId,order_Hardwares);
 		
 		if(i>0) {
+			String str = formatLog(user);
+			String message = str+":update"+"表:order_hardware";
+			log.info(message);
 			return 1;
 		}
 		else{
@@ -158,9 +174,13 @@ public class Front_Controller {
 	
 	@RequestMapping("user_updateOrderNum.do")
 	@ResponseBody
-	public int updateOrder_Water(int oId,int wId,int num) {
+	public int updateOrder_Water(HttpSession session,int oId,int wId,int num) {
+		Users user = (Users)session.getAttribute("user");
 		int i = water_DivisionService.updateOrder_Water(oId, wId, num);
 		if(i>0) {
+			String str = formatLog(user);
+			String message = str+":update"+"表:order_water";
+			log.info(message);
 			return 1;
 		}else {
 			return 0;
@@ -180,6 +200,21 @@ public class Front_Controller {
 			return 0;
 		}
 	}*/
+	@RequestMapping("user_updatePic.do")
+	@ResponseBody
+	public int updatePic(HttpSession session,int wId,String name,String tel) {
+		Users user = (Users)session.getAttribute("user");
+		int i = water_DivisionService.updatePic(wId,name,tel);
+		if(i>0) {
+			String str = formatLog(user);
+			String message = str+":update"+"表:pic";
+			log.info(message);
+			return 1;
+		}else {
+			return 0;
+		}
+	}
+	
 	
 	@RequestMapping("user_orderUpload.do")
 	@ResponseBody
@@ -241,5 +276,11 @@ public class Front_Controller {
 		}
 		return order_Hardwares;
 		
+	}
+	
+	private String formatLog(Users user) {
+		String userName = user.getUserName();
+		String rName = user.getrName();
+		return rName+" "+userName;
 	}
 }

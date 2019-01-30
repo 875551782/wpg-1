@@ -81,4 +81,8 @@
 		</foreach>
 		
 	</update>
+	
+	<update id="updatePic">
+		update pic set pname=#{1},tel=#{2} where wid=#{0}
+	</update>
 </mapper>
