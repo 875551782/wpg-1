@@ -20,6 +20,17 @@
 		width: 40px;
 		text-align: center;
 	}
+	.sumPrice{
+		float: right;
+		font-size: 20px;
+	}
+	.buts{
+		width: 96%;
+		margin:20px auto;
+	}
+	.buts>input:nth-child(2){
+		margin-left:40px;
+	}
 </style>
 </head>
 <body>
@@ -28,6 +39,8 @@
 		<!-- 添加手风琴样式内容 -->
 		<div class="panel-group" id="accordion" role="tablist"
 			aria-multiselectable="true"></div>
+		<div class="buts">
+		</div>
 	</div>
 	<div class="foot">
 		Copyright ©2019 <a href="#">威派格智慧水务</a>. All rights reserved.
@@ -74,7 +87,7 @@
 														+ "<th>价格</th></tr></table></div></div></div>");
 							}
 						}
-						$("#accordion")
+						$(".buts")
 								.append(
 										"<input onclick='submitData()' class='btn btn-default' type='button' value='生成订单'><input onclick='cancel()' class='btn btn-default' type='button' value='取消'>");
 						getDate();
@@ -123,68 +136,29 @@
 									if (allData[k] == "internets") {
 										if (j == 0) {
 											if (state == 1) {
-												str += "<td><input type='radio' onchange='sumPrice("+hardware[j].price+","+hardware[j].num+","+hardware[j].id+")' checked='' name='"+mark+"' value='"+hardware[j].id+"'>"
-														+ hardware[j].name
-														+ "</td><td>"
-														+ hardware[j].num
-														+ "X<input class='hardwarenum "+hardware[j].id+"' type='number' value='1' min='1'></td><td>"
-														+ hardware[j].unit
-														+ "</td><td>"
-														+ hardware[j].brand
-														+ "</td>"
-														+ "<td>"
-														+ hardware[j].type
-														+ "</td><td>"
-														+ hardware[j].price
-														+ "</td></tr>";
+												str += "<td><input type='radio' onchange='sumPrice("+hardware[j].num+")' checked='' name='"+mark+"' value='"+hardware[j].id+"'>";
 											} else {
-												str += "<td><input class='d1' type='checkbox' name='"+mark+"' value='"+hardware[j].id+"'>"
-														+ hardware[j].name
-														+ "</td><td>"
-														+ hardware[j].num
-														+ "X<input class='hardwarenum "+hardware[j].id+"' type='number' value='1' min='1'></td><td>"
-														+ hardware[j].unit
-														+ "</td><td>"
-														+ hardware[j].brand
-														+ "</td>"
-														+ "<td>"
-														+ hardware[j].type
-														+ "</td><td>"
-														+ hardware[j].price
-														+ "</td></tr>";
+												str += "<td><input class='d1' onchange='sumPrice("+hardware[j].num+")' type='checkbox' name='"+mark+"' value='"+hardware[j].id+"'>";
 											}
 										} else {
-											str += "<td><input type='radio' name='"+mark+"' value='"+hardware[j].id+"'>"
-														+ hardware[j].name
-														+ "</td><td>"
-														+ hardware[j].num
-														+ "X<input class='hardwarenum "+hardware[j].id+"' type='number' value='1' min='1'></td><td>"
-														+ hardware[j].unit
-														+ "</td><td>"
-														+ hardware[j].brand
-														+ "</td>"
-														+ "<td>"
-														+ hardware[j].type
-														+ "</td><td>"
-														+ hardware[j].price
-														+ "</td></tr>";
+											str += "<td><input type='radio' onchange='sumPrice("+hardware[j].num+")' name='"+mark+"' value='"+hardware[j].id+"'>";
 										}
 									} else {
-										str += "<td><input type='checkbox' name='"+mark+"' value='"+hardware[j].id+"'>"
-														+ hardware[j].name
-														+ "</td><td>"
-														+ hardware[j].num
-														+ "X<input class='hardwarenum "+hardware[j].id+"' type='number' value='1' min='1'></td><td>"
-														+ hardware[j].unit
-														+ "</td><td>"
-														+ hardware[j].brand
-														+ "</td>"
-														+ "<td>"
-														+ hardware[j].type
-														+ "</td><td>"
-														+ hardware[j].price
-														+ "</td></tr>";
+										str += "<td><input type='checkbox' onchange='sumPrice("+hardware[j].num+")' name='"+mark+"' value='"+hardware[j].id+"'>";
 									}
+									str+=hardware[j].name
+										+ "</td><td>"
+										+ hardware[j].num
+										+ "X<input class='hardwarenum "+hardware[j].id+"' type='number' value='1' min='1'></td><td>"
+										+ hardware[j].unit
+										+ "</td><td>"
+										+ hardware[j].brand
+										+ "</td>"
+										+ "<td>"
+										+ hardware[j].type
+										+ "</td><td class='price'>"
+										+ hardware[j].price
+										+ "</td></tr>";
 								}
 							}
 							//往功能表中添加
@@ -237,9 +211,17 @@
 	function cancel(){
 		location.href="user_forward.do?name=orders";
 	}
-	$("input").change(function(){
-		console.log(123);
-		console.log($(this));
-	})
+	var sum=0;
+	function sumPrice(num){
+		$("[type='radio']:checked").each(function(index, element){
+			 var num1=num*$(this).parent().parent().find("input[type=number]").val()
+			 sum+=num*$(this).parent().parent().find("td:nth-child(7)").html();
+		}) 
+		$("[type='checkbox']:checked").each(function() {
+			 var num1=num*$(this).parent().parent().find("input[type=number]").val()
+			 sum+=num*$(this).parent().parent().find(".price").html();
+		})
+		$(".buts").append("<span class='sumPrice'>总价："+sum+"</span>");
+	}
 </script>
 </html>
